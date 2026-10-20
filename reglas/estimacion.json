@@ -1,0 +1,42 @@
+{
+  "version": "0.3.1-borrador",
+  "status": "draft",
+  "maturity": {
+    "description": "Base elegida por el usuario: 11 dimensiones y 109 criterios del Excel, escala 0–3 con rúbricas, pesos internos y de dimensión. A1 evalúa cuánto permite dimensionar el requerimiento, genera preguntas priorizadas y recalcula con nueva evidencia. Núcleo sin puntaje cuenta 0; complementaria sin números se excluye. Promedio ponderado normalizado; niveles N1–N5; núcleo <40% limita el nivel a N3. Paso acordado: primero preguntas orientadas de N3 hacia N4 y revisión del experto; solo instrucción explícita permite componentes. Alcanzar N4 no dispara A2, y el experto puede autorizar con brechas visibles. Conservar condiciones conocidas separadas de preguntas faltantes.",
+    "source": "Modelo_Madurez_Estimacion.xlsx: Guia, Parametros, Dimensiones, Rubricas; indicado por el usuario",
+    "model_file": "reglas/modelo-madurez.json",
+    "review_status": "user_supplied_base_pending_operating_decisions"
+  },
+  "components": {
+    "description": "Partes reconocibles y estimables C-001… con propósito, inclusiones, exclusiones, resultado esperado, dependencias, fuentes y pendientes. No son historias. Cubrir el alcance una sola vez y separar transversales justificados.",
+    "source": "Propuesta propia v0.2, propuesta-inicial.md A2; pendiente de aprobación",
+    "review_status": "proposed"
+  },
+  "dimensions": {
+    "description": "A3 clasifica cada componente con D1 tipo de desarrollo, D2 arquetipo, D3 tamaño funcional, D4 complejidad, D5 integración, D6 reutilización, D7 entorno tecnológico, D8 madurez del alcance, D9 ejecución, D10 sector y D11 evidencia histórica. Usar escalas y rúbricas del catálogo embebido, indicando valores, evidencias, herencia global y pendientes. No confundir madurez con valor de caracterización. D12 riesgo se registra aparte, sin peso en esta madurez. Ver modelo-madurez.md para límites sin acordar.",
+    "source": "Modelo_Madurez_Estimacion.xlsx: Dimensiones!A4:K14 y Rubricas!A4:P112",
+    "review_status": "user_supplied_base_pending_operating_decisions"
+  },
+  "method": {
+    "description": "PROPUESTA HÍBRIDA: COCOMO II para software con tamaño/conversión defendibles, factores y calibración declarados; descomposición o analogía para trabajo no cubierto. No sumar contraste sobre igual cobertura. Acordar variante Early Design/Post-Architecture, fases, conversión personas-mes a horas y reparto por componente/rol. No convertir madurez o etiquetas del Excel en multiplicadores COCOMO. COSMIC no equivale a UFP IFPUG; no convertir automáticamente. El caso básico PM=A*Size^E*producto(EM), E=B+0.01*suma(SF), requiere tablas de la misma versión y tratamiento adecuado de reuso/agregación. Para juicio experto sigue a revisión O/M/P: base=(O+4*M+P)/6, conservador=P. Sin datos no calcular ni asignar nominales silenciosamente.",
+    "cost": "Horas por tarifa horaria del rol en moneda acordada, más costos directos únicos. Separar costo de ejecución de precio comercial. Sin datos: por confirmar, no cero.",
+    "presentation": "Markdown legible: resumen de negocio, alcance, componentes, tabla de dos escenarios con unidades, supuestos/pendientes y anexo de cálculos/fuentes. Horas a una decimal; costos según decimales de la moneda; duración aproximada según datos. Explicar redondeo y siglas.",
+    "source": "Solicitud del usuario sobre COCOMO II; propuesta de integración en cocomo-ii.md, pendiente de aprobación",
+    "review_status": "proposed"
+  },
+  "effort_unit": "hora-persona",
+  "currency": null,
+  "rates": [],
+  "capacity": {
+    "description": "PROPUESTA: personas por rol, horas efectivas semanales y asignación al proyecto. Planificar actividades según dependencias sin sobreasignar personas; esperas externas separadas. Horas/capacidad de actividad da semanas de trabajo; max(horas por rol/capacidad del rol) solo es límite inferior, no duración comprometida. Sin equipo y dependencias suficientes: duración por confirmar.",
+    "source": "Propuesta propia v0.2, propuesta-inicial.md A4; pendiente de datos y aprobación",
+    "team": [],
+    "review_status": "proposed"
+  },
+  "cfo_parameters": null,
+  "scenarios": [
+    {"name": "Base", "description": "Mismo alcance; entradas principales justificadas por método. COCOMO pendiente de parametrización. O/M/P solo para partidas por juicio experto si se acuerda; sin superponer coberturas.", "source": "Propuesta v0.3; pendiente de aprobación"},
+    {"name": "Conservador", "description": "Mismo alcance; entradas adversas explícitas dentro de cada método. No añadir O/M/P ni porcentajes automáticamente encima de COCOMO. Recalcular costo y calendario; no es garantía ni percentil.", "source": "Propuesta v0.3; pendiente de aprobación"}
+  ],
+  "pending_decisions": ["Resolver límites y condiciones conocidas de modelo-madurez.md", "Definir variante, tamaño/conversión y calibración COCOMO II", "Definir moneda y tarifas", "Definir equipo y capacidad efectiva", "Definir cobertura por método, costos directos, impuestos y margen"]
+}

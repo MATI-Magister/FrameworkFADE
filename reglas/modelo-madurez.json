@@ -1,0 +1,2362 @@
+{
+  "version": "excel-1.0",
+  "status": "user_supplied_model_pending_operating_decisions",
+  "source": {
+    "file": "Modelo_Madurez_Estimacion.xlsx",
+    "sha256": "5fd12c93fb672d6cd900f5d658d3e762423c4e4e699efd717426b2f758ee1494"
+  },
+  "dimensions": [
+    {
+      "id": "D1",
+      "name": "Tipo de desarrollo",
+      "core": true,
+      "weight": 0.12,
+      "purpose": "Qué se está haciendo sobre el activo de software.",
+      "how": "Identificar qué porcentaje del alcance corresponde a crear, modificar, reemplazar o corregir software existente.",
+      "classification": "Nuevo desarrollo / Enhancement-evolutivo / Modernización-redevelopment / Mantenimiento (componente predominante > 50%).",
+      "subdimensions": "Composición del cambio · Línea base del activo · Frontera y componentes · Impacto y regresión",
+      "source": "Dimensiones!A4:K4; Parametros!D5"
+    },
+    {
+      "id": "D2",
+      "name": "Tipo de solución / arquetipo",
+      "core": true,
+      "weight": 0.11,
+      "purpose": "Naturaleza predominante de lo que se construye.",
+      "how": "Determinar el objeto tecnológico predominante del esfuerzo con la pregunta dominante del catálogo.",
+      "classification": "Aplicaciones · Integración · Datos/IA · Plataforma · Seguridad · Modernización (principal + secundarios).",
+      "subdimensions": "Objeto predominante · Distribución del esfuerzo · Drivers de esfuerzo · Validación de la clasificación",
+      "source": "Dimensiones!A5:K5; Parametros!D6"
+    },
+    {
+      "id": "D3",
+      "name": "Tamaño funcional",
+      "core": true,
+      "weight": 0.18,
+      "purpose": "Cuánto producto debe construirse o modificarse.",
+      "how": "Medir la cantidad de funcionalidad mediante procesos funcionales y movimientos de datos (o unidad interna calibrada).",
+      "classification": "XS (1–5) · S (6–15) · M (16–30) · L (31–60) · XL (>60) procesos funcionales; tamaño en puntos de función.",
+      "subdimensions": "Estrategia de medición · Usuarios funcionales y frontera · Procesos funcionales · Datos · Movimientos de datos · Requisitos no funcionales · Consolidación",
+      "source": "Dimensiones!A6:K6; Parametros!D7"
+    },
+    {
+      "id": "D4",
+      "name": "Complejidad",
+      "core": true,
+      "weight": 0.15,
+      "purpose": "Qué tan difícil es implementar ese tamaño.",
+      "how": "Calificar 5 factores de 0 a 2 (reglas, arquitectura, seguridad, procesamiento, dependencias).",
+      "classification": "0–2 Baja · 3–5 Media · 6–8 Alta · 9–10 Muy alta.",
+      "subdimensions": "Reglas de negocio · Procesamiento · Arquitectura · Seguridad · Calidad y operación · Cumplimiento · Dependencias · Consolidación",
+      "source": "Dimensiones!A7:K7; Parametros!D8"
+    },
+    {
+      "id": "D5",
+      "name": "Integración / interdependencia",
+      "core": true,
+      "weight": 0.14,
+      "purpose": "Cuánto depende la solución de otros sistemas.",
+      "how": "Contar interfaces y evaluar su dificultad (cantidad + dificultad).",
+      "classification": "I0 sin interfaces · I1 1–2 simples · I2 3–5 o alguna compleja · I3 >5, sistemas críticos, protocolos no conocidos o múltiples terceros.",
+      "subdimensions": "Inventario de interfaces · Contratos y protocolos · Transformación de datos · Comportamiento y errores · Seguridad de integración · Terceros y ambientes · Consolidación",
+      "source": "Dimensiones!A8:K8; Parametros!D9"
+    },
+    {
+      "id": "D6",
+      "name": "Novedad y reutilización",
+      "core": false,
+      "weight": 0.05,
+      "purpose": "Cuánto puede aprovecharse de activos existentes.",
+      "how": "Estimar qué porcentaje del alcance puede resolverse con conocimiento, código, componentes o patrones existentes.",
+      "classification": "R1 >70% · R2 40–70% · R3 10–40% · R4 <10% reutilizable.",
+      "subdimensions": "Inventario de activos · Clasificación del reuso · Calidad del activo · Consolidación",
+      "source": "Dimensiones!A9:K9; Parametros!D10"
+    },
+    {
+      "id": "D7",
+      "name": "Entorno tecnológico",
+      "core": false,
+      "weight": 0.05,
+      "purpose": "Contexto técnico en que será implementado.",
+      "how": "Identificar tecnología y grado de familiaridad del equipo.",
+      "classification": "T1 Conocido · T2 Parcialmente conocido · T3 Nuevo · T4 Experimental.",
+      "subdimensions": "Stack · Plataforma y datos · Familiaridad · Herramientas y ambientes · Restricciones",
+      "source": "Dimensiones!A10:K10; Parametros!D11"
+    },
+    {
+      "id": "D8",
+      "name": "Madurez del alcance",
+      "core": false,
+      "weight": 0.07,
+      "purpose": "Cuánto se conoce realmente de lo solicitado.",
+      "how": "Checklist de 8 elementos del catálogo (objetivo, roles, funcionalidades, reglas, integraciones, datos, RNF, criterios de aceptación).",
+      "classification": "M1 Idea (0–2) · M2 Preliminar (3–4) · M3 Definido (5–6) · M4 Validado (7–8) elementos con puntaje ≥ 2.",
+      "subdimensions": "Definición del problema · Requisitos funcionales · Datos e integraciones · Requisitos no funcionales · Criterios de aceptación · Límites y validación",
+      "source": "Dimensiones!A11:K11; Parametros!D12"
+    },
+    {
+      "id": "D9",
+      "name": "Contexto de ejecución",
+      "core": false,
+      "weight": 0.05,
+      "purpose": "Condiciones bajo las cuales se desarrollará.",
+      "how": "Evaluar condiciones del equipo y forma de ejecución (8 variables del catálogo).",
+      "classification": "Estable · Parcialmente conocido · Incierto.",
+      "subdimensions": "Equipo · Forma de trabajo · Dependencias externas",
+      "source": "Dimensiones!A12:K12; Parametros!D13"
+    },
+    {
+      "id": "D10",
+      "name": "Sector / contexto de negocio",
+      "core": false,
+      "weight": 0.03,
+      "purpose": "Condiciones externas que afectan el proyecto.",
+      "how": "Clasificar dominio y restricciones externas.",
+      "classification": "Gobierno · Financiero · Salud · Comercio · Telecomunicaciones · Otros.",
+      "subdimensions": "Dominio · Regulación · Contratación y gobierno del proyecto",
+      "source": "Dimensiones!A13:K13; Parametros!D14"
+    },
+    {
+      "id": "D11",
+      "name": "Evidencia histórica disponible",
+      "core": false,
+      "weight": 0.05,
+      "purpose": "Qué tan comparable es el histórico utilizado.",
+      "how": "Evaluar cantidad, similitud y calidad de los proyectos comparables (p. ej. Jira).",
+      "classification": "E1 0–1 · E2 2–3 · E3 4–7 · E4 ≥8 comparables.",
+      "subdimensions": "Cantidad y similitud · Calidad del dato · Explotación del histórico",
+      "source": "Dimensiones!A14:K14; Parametros!D15"
+    }
+  ],
+  "criteria": [
+    {
+      "id": "D1.01",
+      "dimension": "D1",
+      "subdimension": "Composición del cambio",
+      "name": "Composición del alcance cuantificada",
+      "question": "¿Se conoce qué porcentaje del alcance corresponde a crear, modificar, reemplazar/transformar o corregir software?",
+      "expected_evidence": "Tabla de composición por tipo de cambio que suma 100%.",
+      "ratings": {
+        "0": "No se conoce la naturaleza del cambio.",
+        "1": "Se describe cualitativamente (p. ej. «es un desarrollo nuevo») sin cuantificar.",
+        "2": "Porcentajes estimados por juicio, sin detalle por funcionalidad.",
+        "3": "Porcentajes derivados del inventario de funcionalidades clasificadas por tipo de cambio."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "No está cuantificada la proporción nuevo / modificado / reemplazado / correctivo. Clasificar cada funcionalidad del inventario por tipo de cambio y totalizar.",
+      "source": "Rubricas!A4:P4"
+    },
+    {
+      "id": "D1.02",
+      "dimension": "D1",
+      "subdimension": "Composición del cambio",
+      "name": "Tipo de desarrollo asignado y justificado",
+      "question": "¿El tipo de desarrollo (Nuevo, Enhancement/evolutivo, Modernización/redevelopment, Mantenimiento) está asignado según el componente predominante?",
+      "expected_evidence": "Clasificación registrada con justificación trazable a la composición.",
+      "ratings": {
+        "0": "No asignado.",
+        "1": "Asignado por el nombre del proyecto o por percepción.",
+        "2": "Asignado según la composición, sin justificación documentada.",
+        "3": "Asignado por el componente predominante (>50%) y justificado; componentes secundarios registrados."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "El tipo de desarrollo no está asignado o no se justifica con la composición del alcance. Asignarlo según el tipo de cambio que concentra la mayor proporción.",
+      "source": "Rubricas!A5:P5"
+    },
+    {
+      "id": "D1.03",
+      "dimension": "D1",
+      "subdimension": "Línea base del activo",
+      "name": "Línea base funcional del sistema existente",
+      "question": "¿Existe inventario de las funcionalidades actuales del sistema que se modifica, reemplaza o mantiene?",
+      "expected_evidence": "Inventario funcional, manual de usuario o medición previa del sistema.",
+      "ratings": {
+        "0": "No hay información del sistema actual.",
+        "1": "Solo conocimiento tácito de personas clave.",
+        "2": "Documentación parcial o desactualizada.",
+        "3": "Inventario funcional actualizado (idealmente con tamaño medido)."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No hay línea base funcional del activo existente; sin ella no puede medirse el tamaño del cambio ni el alcance de regresión. Levantar el inventario de funcionalidades actuales.",
+      "source": "Rubricas!A6:P6"
+    },
+    {
+      "id": "D1.04",
+      "dimension": "D1",
+      "subdimension": "Composición del cambio",
+      "name": "Funcionalidades nuevas identificadas",
+      "question": "¿Se listan las funcionalidades que se agregan, desagregadas al nivel de proceso funcional?",
+      "expected_evidence": "Listado de funcionalidades nuevas con identificador único.",
+      "ratings": {
+        "0": "No se han identificado.",
+        "1": "Descritas como módulos o épicas.",
+        "2": "Listadas con granularidad heterogénea.",
+        "3": "Listadas a nivel de proceso funcional (responde a un evento y termina al completar su respuesta) con ID."
+      },
+      "weight": 3,
+      "allow_na": true,
+      "gap": "Las funcionalidades nuevas no están desagregadas a nivel de proceso funcional. Descomponer módulos/épicas en acciones completas iniciadas por un evento.",
+      "source": "Rubricas!A7:P7"
+    },
+    {
+      "id": "D1.05",
+      "dimension": "D1",
+      "subdimension": "Composición del cambio",
+      "name": "Funcionalidades modificadas y naturaleza del cambio",
+      "question": "Para cada funcionalidad existente que cambia, ¿se identifica qué datos que entran, salen, se consultan o se almacenan se agregan, modifican o eliminan?",
+      "expected_evidence": "Lista de funcionalidades impactadas con el detalle de los movimientos de datos afectados.",
+      "ratings": {
+        "0": "No identificadas.",
+        "1": "Se sabe que hay cambios en ciertos módulos, sin listar funcionalidades.",
+        "2": "Funcionalidades impactadas listadas, sin detalle del cambio.",
+        "3": "Funcionalidades y movimientos de datos agregados / modificados / eliminados identificados."
+      },
+      "weight": 3,
+      "allow_na": true,
+      "gap": "No se detalla qué cambia en las funcionalidades existentes. En evolutivos el tamaño es la suma de movimientos de datos agregados, modificados y eliminados; identificarlos.",
+      "source": "Rubricas!A8:P8"
+    },
+    {
+      "id": "D1.06",
+      "dimension": "D1",
+      "subdimension": "Composición del cambio",
+      "name": "Funcionalidades retiradas",
+      "question": "¿Se identifican funcionalidades, interfaces o datos que se eliminan o dan de baja (o se declara explícitamente que no existen)?",
+      "expected_evidence": "Listado de retiros o declaración explícita de ausencia.",
+      "ratings": {
+        "0": "No se ha analizado.",
+        "1": "Se mencionan retiros sin detalle.",
+        "2": "Retiros listados sin análisis de impacto (o ausencia no confirmada).",
+        "3": "Retiros listados con impacto en datos, usuarios e interfaces, o ausencia confirmada."
+      },
+      "weight": 1,
+      "allow_na": true,
+      "gap": "No se ha analizado si hay funcionalidad a retirar; los retiros también consumen esfuerzo (movimientos eliminados, datos, pruebas). Confirmarlo explícitamente.",
+      "source": "Rubricas!A9:P9"
+    },
+    {
+      "id": "D1.07",
+      "dimension": "D1",
+      "subdimension": "Frontera y componentes",
+      "name": "Frontera del software definida",
+      "question": "¿Está claro qué software se construye o modifica (dentro del alcance) y qué sistemas, usuarios o componentes quedan fuera?",
+      "expected_evidence": "Diagrama de contexto con piezas de software en alcance y actores externos.",
+      "ratings": {
+        "0": "No definida.",
+        "1": "Implícita o ambigua.",
+        "2": "Diagrama de contexto sin validar o con ambigüedades menores.",
+        "3": "Frontera validada con piezas en alcance y usuarios externos explícitos."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "La frontera del software no es explícita; hay riesgo de contar de más o de menos. Elaborar diagrama de contexto con piezas en alcance y sistemas externos.",
+      "source": "Rubricas!A10:P10"
+    },
+    {
+      "id": "D1.08",
+      "dimension": "D1",
+      "subdimension": "Frontera y componentes",
+      "name": "Capas y componentes afectados",
+      "question": "¿Se identifican las capas (presentación, negocio, servicios, datos) y los componentes que se crean o modifican?",
+      "expected_evidence": "Vista de arquitectura con componentes marcados como nuevos o modificados.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Se mencionan tecnologías sin ubicar componentes.",
+        "2": "Componentes identificados sin clasificar nuevo/modificado.",
+        "3": "Componentes por capa identificados y clasificados."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se identifican componentes/capas afectados; cada componente con frontera propia puede requerir medición y pruebas independientes.",
+      "source": "Rubricas!A11:P11"
+    },
+    {
+      "id": "D1.09",
+      "dimension": "D1",
+      "subdimension": "Línea base del activo",
+      "name": "Documentación técnica y código del activo",
+      "question": "¿Están disponibles y actualizados el código fuente, la documentación técnica y los ambientes del sistema existente?",
+      "expected_evidence": "Acceso confirmado a repositorio, arquitectura y modelo de datos.",
+      "ratings": {
+        "0": "No disponible.",
+        "1": "Disponible parcialmente o sin acceso confirmado.",
+        "2": "Disponible con vacíos conocidos.",
+        "3": "Disponible, actualizado y con acceso confirmado."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No se confirma acceso ni estado del código/documentación del activo existente; aumenta el esfuerzo de análisis. Solicitar acceso y evaluar su estado.",
+      "source": "Rubricas!A12:P12"
+    },
+    {
+      "id": "D1.10",
+      "dimension": "D1",
+      "subdimension": "Impacto y regresión",
+      "name": "Alcance de regresión",
+      "question": "¿Se conocen las funcionalidades existentes que deben volver a probarse por efecto de los cambios?",
+      "expected_evidence": "Matriz de impacto o suite de regresión identificada.",
+      "ratings": {
+        "0": "No se ha considerado.",
+        "1": "Se reconoce la necesidad sin identificar funcionalidades.",
+        "2": "Funcionalidades a regresionar identificadas, sin estrategia.",
+        "3": "Alcance y estrategia de regresión definidos (manual/automatizada, suites existentes)."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No está definido el alcance de regresión; en evolutivos y modernizaciones es un driver de esfuerzo relevante.",
+      "source": "Rubricas!A13:P13"
+    },
+    {
+      "id": "D1.11",
+      "dimension": "D1",
+      "subdimension": "Impacto y regresión",
+      "name": "Equivalencia funcional en modernización",
+      "question": "Cuando se transforma un activo, ¿se define qué comportamiento debe preservarse y cómo se verificará la equivalencia?",
+      "expected_evidence": "Criterios de equivalencia y casos de referencia.",
+      "ratings": {
+        "0": "No definido.",
+        "1": "Se asume «igual al actual» sin detalle.",
+        "2": "Funcionalidades a preservar listadas, sin criterio de verificación.",
+        "3": "Funcionalidades a preservar, cambios aceptados y método de verificación definidos."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "En la modernización no se define qué debe preservarse ni cómo verificar la equivalencia funcional.",
+      "source": "Rubricas!A14:P14"
+    },
+    {
+      "id": "D1.12",
+      "dimension": "D1",
+      "subdimension": "Composición del cambio",
+      "name": "Separación correctivo vs. evolutivo",
+      "question": "¿Se distinguen las correcciones de defectos de los cambios y nuevas funcionalidades?",
+      "expected_evidence": "Backlog clasificado (defecto / cambio / nueva funcionalidad).",
+      "ratings": {
+        "0": "Mezclado sin clasificar.",
+        "1": "Separación parcial.",
+        "2": "Separado sin criterio formal.",
+        "3": "Clasificado con criterio acordado."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "Correcciones y nuevos requerimientos no están separados; distorsiona el tipo de desarrollo y la comparación con el histórico.",
+      "source": "Rubricas!A15:P15"
+    },
+    {
+      "id": "D2.01",
+      "dimension": "D2",
+      "subdimension": "Objeto predominante",
+      "name": "Objeto tecnológico predominante",
+      "question": "¿Se identifica qué concentra el trabajo: funcionalidades y reglas, intercambio entre sistemas, datos/modelos, capacidades compartidas, controles/identidad o transformación de un activo existente?",
+      "expected_evidence": "Respuesta a la pregunta dominante del catálogo con evidencia del alcance.",
+      "ratings": {
+        "0": "No identificado.",
+        "1": "Inferido del nombre del proyecto.",
+        "2": "Identificado a partir del alcance, sin evidencia cuantitativa.",
+        "3": "Identificado y soportado con evidencia (inventario, drivers)."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "No está identificado el objeto tecnológico predominante. Aplicar la pregunta dominante del catálogo sobre el inventario del alcance.",
+      "source": "Rubricas!A16:P16"
+    },
+    {
+      "id": "D2.02",
+      "dimension": "D2",
+      "subdimension": "Objeto predominante",
+      "name": "Arquetipo principal según esfuerzo",
+      "question": "¿El arquetipo principal corresponde al trabajo que explica la mayor proporción del esfuerzo esperado, y no al componente más visible?",
+      "expected_evidence": "Justificación basada en el esfuerzo esperado.",
+      "ratings": {
+        "0": "No asignado.",
+        "1": "Asignado por el componente más visible o la tecnología.",
+        "2": "Asignado por esfuerzo con justificación cualitativa.",
+        "3": "Asignado por esfuerzo con distribución cuantificada."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "El arquetipo principal se asignó por el componente más visible o no se asignó. Reasignarlo según la mayor proporción del esfuerzo esperado.",
+      "source": "Rubricas!A17:P17"
+    },
+    {
+      "id": "D2.03",
+      "dimension": "D2",
+      "subdimension": "Distribución del esfuerzo",
+      "name": "Distribución del alcance por arquetipo",
+      "question": "¿Se estima qué porcentaje del alcance o esfuerzo corresponde a cada arquetipo?",
+      "expected_evidence": "Porcentajes por arquetipo.",
+      "ratings": {
+        "0": "No estimada.",
+        "1": "Se reconoce una mezcla sin porcentajes.",
+        "2": "Porcentajes aproximados por juicio.",
+        "3": "Porcentajes derivados del inventario funcional o la WBS."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se estima la distribución del alcance entre arquetipos; impide seleccionar comparables y drivers adecuados.",
+      "source": "Rubricas!A18:P18"
+    },
+    {
+      "id": "D2.04",
+      "dimension": "D2",
+      "subdimension": "Distribución del esfuerzo",
+      "name": "Arquetipos secundarios",
+      "question": "¿Se registran los arquetipos secundarios cuando una parte significativa (≈ ≥15%) del alcance pertenece a otras categorías?",
+      "expected_evidence": "Arquetipos secundarios con peso aproximado.",
+      "ratings": {
+        "0": "No analizados.",
+        "1": "Mencionados sin peso.",
+        "2": "Identificados con peso aproximado.",
+        "3": "Identificados, ponderados y con sus drivers."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se analizaron arquetipos secundarios; su esfuerzo (p. ej. seguridad o integración embebidas) puede quedar subestimado.",
+      "source": "Rubricas!A19:P19"
+    },
+    {
+      "id": "D2.05",
+      "dimension": "D2",
+      "subdimension": "Validación de la clasificación",
+      "name": "Independencia del nombre comercial",
+      "question": "¿La clasificación se contrastó contra el contenido real del alcance y no depende del nombre del proyecto?",
+      "expected_evidence": "Contraste documentado contra el inventario.",
+      "ratings": {
+        "0": "Basada solo en el nombre.",
+        "1": "Contraste superficial.",
+        "2": "Contrastada contra la lista de funcionalidades.",
+        "3": "Contrastada contra inventario y drivers, con discrepancias resueltas."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "La clasificación parece depender del nombre del proyecto. Contrastarla con el inventario funcional y los drivers.",
+      "source": "Rubricas!A20:P20"
+    },
+    {
+      "id": "D2.06",
+      "dimension": "D2",
+      "subdimension": "Drivers de esfuerzo",
+      "name": "Drivers del arquetipo principal",
+      "question": "¿Se identifican y cuantifican los drivers típicos del arquetipo principal (p. ej. Aplicaciones: funcionalidades, reglas, roles, pantallas, flujos; Integración: interfaces, protocolos, transformaciones; Datos/IA: fuentes, volumen, calidad, modelos; Plataforma: ambientes, componentes, SLA; Seguridad: identidades, controles, certificados; Modernización: tamaño del activo, deuda técnica, datos a migrar)?",
+      "expected_evidence": "Tabla de drivers con valores y fuente.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Nombrados sin cuantificar.",
+        "2": "La mayoría cuantificados.",
+        "3": "Todos cuantificados con fuente."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "Los drivers de esfuerzo del arquetipo principal no están cuantificados. Registrar los valores de cada driver típico del catálogo.",
+      "source": "Rubricas!A21:P21"
+    },
+    {
+      "id": "D2.07",
+      "dimension": "D2",
+      "subdimension": "Drivers de esfuerzo",
+      "name": "Drivers de arquetipos secundarios",
+      "question": "¿Se identifican y cuantifican los drivers de los arquetipos secundarios?",
+      "expected_evidence": "Tabla de drivers de secundarios.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Nombrados sin cuantificar.",
+        "2": "Parcialmente cuantificados.",
+        "3": "Cuantificados con fuente."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "Los drivers de los arquetipos secundarios no están cuantificados.",
+      "source": "Rubricas!A22:P22"
+    },
+    {
+      "id": "D2.08",
+      "dimension": "D2",
+      "subdimension": "Objeto predominante",
+      "name": "Tipo de usuario funcional predominante",
+      "question": "¿Se identifica quién intercambia datos con la solución (personas por rol, otros sistemas, dispositivos) y es coherente con el arquetipo (p. ej. en Integración predominan sistemas)?",
+      "expected_evidence": "Lista de usuarios funcionales por tipo y rol.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Solo usuarios humanos genéricos.",
+        "2": "Identificados por tipo.",
+        "3": "Identificados por tipo y rol, coherentes con el arquetipo."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No están caracterizados los usuarios funcionales (personas, sistemas, dispositivos) o no son coherentes con el arquetipo asignado.",
+      "source": "Rubricas!A23:P23"
+    },
+    {
+      "id": "D2.09",
+      "dimension": "D2",
+      "subdimension": "Distribución del esfuerzo",
+      "name": "Componentes de terceros / SaaS",
+      "question": "¿Se identifican productos de terceros, paquetes o SaaS y se distingue configuración de desarrollo a medida?",
+      "expected_evidence": "Lista de productos con alcance de configuración vs. desarrollo.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Mencionados.",
+        "2": "Identificados con nivel de personalización aproximado.",
+        "3": "Identificados con configuración y desarrollo diferenciados."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No se diferencian configuración de terceros y desarrollo a medida; su esfuerzo se comporta distinto.",
+      "source": "Rubricas!A24:P24"
+    },
+    {
+      "id": "D2.10",
+      "dimension": "D2",
+      "subdimension": "Distribución del esfuerzo",
+      "name": "Entregables no software separados",
+      "question": "¿Se separan del alcance de software los entregables que no son funcionalidad (licencias, infraestructura, capacitación, migración manual, soporte, documentación)?",
+      "expected_evidence": "Lista de entregables no funcionales separada.",
+      "ratings": {
+        "0": "No considerados.",
+        "1": "Mencionados mezclados con el alcance.",
+        "2": "Separados parcialmente.",
+        "3": "Separados y dimensionados aparte."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "Entregables que no son funcionalidad están mezclados con el alcance de software; deben estimarse por separado.",
+      "source": "Rubricas!A25:P25"
+    },
+    {
+      "id": "D2.11",
+      "dimension": "D2",
+      "subdimension": "Validación de la clasificación",
+      "name": "Resolución de solapamientos",
+      "question": "Cuando el trabajo cae entre categorías (IA vs. Datos, DevOps vs. Plataforma, SaaS personalizado vs. Aplicación, middleware vs. Integración), ¿se aplicó la regla de consolidación del catálogo?",
+      "expected_evidence": "Decisión de consolidación documentada.",
+      "ratings": {
+        "0": "Ambigüedad no resuelta.",
+        "1": "Resuelta por preferencia sin criterio.",
+        "2": "Resuelta con criterio, sin documentar.",
+        "3": "Resuelta con la regla del catálogo y documentada."
+      },
+      "weight": 1,
+      "allow_na": true,
+      "gap": "Existe ambigüedad entre arquetipos sin resolver; aplicar la regla de consolidación del catálogo.",
+      "source": "Rubricas!A26:P26"
+    },
+    {
+      "id": "D2.12",
+      "dimension": "D2",
+      "subdimension": "Validación de la clasificación",
+      "name": "Clasificación validada",
+      "question": "¿La clasificación fue revisada por al menos dos roles (p. ej. arquitecto y estimador) y registrada?",
+      "expected_evidence": "Registro de revisión.",
+      "ratings": {
+        "0": "Sin revisión.",
+        "1": "Un solo rol, sin registro.",
+        "2": "Dos roles sin registro formal, o un rol con registro.",
+        "3": "Validada por ≥ 2 roles y registrada."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "La clasificación no ha sido validada por un segundo rol.",
+      "source": "Rubricas!A27:P27"
+    },
+    {
+      "id": "D3.01",
+      "dimension": "D3",
+      "subdimension": "Estrategia de medición",
+      "name": "Propósito y alcance de la medición",
+      "question": "¿Está definido para qué se mide (cotización/estimación), qué piezas de software y capas se incluyen y qué se excluye?",
+      "expected_evidence": "Declaración de propósito, alcance y exclusiones.",
+      "ratings": {
+        "0": "No definido.",
+        "1": "Implícito.",
+        "2": "Definido sin exclusiones explícitas.",
+        "3": "Definido con piezas, capas y exclusiones explícitas."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "No están definidos el propósito ni el alcance de la medición; distintos estimadores medirán cosas distintas.",
+      "source": "Rubricas!A28:P28"
+    },
+    {
+      "id": "D3.02",
+      "dimension": "D3",
+      "subdimension": "Estrategia de medición",
+      "name": "Nivel de granularidad homogéneo",
+      "question": "¿Los requisitos tienen un nivel de detalle homogéneo que permite identificar procesos funcionales (sin mezclar épicas con tareas técnicas)?",
+      "expected_evidence": "Backlog/requisitos revisados por nivel.",
+      "ratings": {
+        "0": "Solo objetivos o épicas.",
+        "1": "Mezcla de niveles.",
+        "2": "Mayoría a nivel de funcionalidad.",
+        "3": "Todos a nivel de proceso funcional."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "La granularidad de los requisitos es heterogénea; medir con requisitos a distinto nivel genera errores de tamaño. Normalizar al nivel de proceso funcional.",
+      "source": "Rubricas!A29:P29"
+    },
+    {
+      "id": "D3.03",
+      "dimension": "D3",
+      "subdimension": "Usuarios funcionales y frontera",
+      "name": "Usuarios funcionales identificados",
+      "question": "¿Se identifican los emisores y receptores de datos (personas por rol, sistemas, dispositivos) de cada pieza de software?",
+      "expected_evidence": "Lista de usuarios funcionales por pieza.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Solo usuarios humanos genéricos.",
+        "2": "Identificados parcialmente (faltan sistemas o dispositivos).",
+        "3": "Identificados todos, por tipo y rol."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "No están identificados todos los usuarios funcionales; sin ellos no se reconocen entradas y salidas de datos.",
+      "source": "Rubricas!A30:P30"
+    },
+    {
+      "id": "D3.04",
+      "dimension": "D3",
+      "subdimension": "Procesos funcionales",
+      "name": "Eventos desencadenantes",
+      "question": "¿Se identifica para cada funcionalidad el evento que la inicia (acción de usuario, mensaje de otro sistema, evento de tiempo)?",
+      "expected_evidence": "Evento desencadenante por proceso.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Implícitos en algunas historias.",
+        "2": "Identificados para la mayoría.",
+        "3": "Identificados para todos los procesos."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se identifican los eventos desencadenantes; es la base para delimitar correctamente cada proceso funcional.",
+      "source": "Rubricas!A31:P31"
+    },
+    {
+      "id": "D3.05",
+      "dimension": "D3",
+      "subdimension": "Procesos funcionales",
+      "name": "Inventario de procesos funcionales",
+      "question": "¿Existe un inventario completo de procesos funcionales (conjunto de movimientos de datos que responde a un evento desencadenante) con ID?",
+      "expected_evidence": "Inventario con ID, usuario y evento.",
+      "ratings": {
+        "0": "No existe.",
+        "1": "Lista de módulos o épicas.",
+        "2": "Inventario parcial (≈ ≥70% del alcance).",
+        "3": "Inventario completo y validado."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "No hay inventario de procesos funcionales; es el insumo principal del tamaño. Construirlo a partir de requisitos y talleres.",
+      "source": "Rubricas!A32:P32"
+    },
+    {
+      "id": "D3.06",
+      "dimension": "D3",
+      "subdimension": "Datos",
+      "name": "Objetos de interés y grupos de datos",
+      "question": "¿Se identifican los objetos de negocio sobre los que se maneja información y sus grupos de datos (modelo conceptual)?",
+      "expected_evidence": "Modelo conceptual de datos.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Entidades principales mencionadas.",
+        "2": "Modelo conceptual parcial.",
+        "3": "Modelo conceptual completo con atributos principales."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No están identificados los objetos de interés ni los grupos de datos; sin ellos no pueden contarse movimientos de datos.",
+      "source": "Rubricas!A33:P33"
+    },
+    {
+      "id": "D3.07",
+      "dimension": "D3",
+      "subdimension": "Movimientos de datos",
+      "name": "Movimientos de datos por proceso",
+      "question": "¿Para cada proceso funcional se identifican Entradas, Salidas, Lecturas y Escrituras de grupos de datos?",
+      "expected_evidence": "Matriz proceso × movimientos.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Solo en ejemplos aislados.",
+        "2": "En una muestra representativa (≈ ≥30%) de procesos.",
+        "3": "En todos los procesos."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "No se identifican los movimientos de datos (Entradas, Salidas, Lecturas, Escrituras); el tamaño queda como aproximación. Medir al menos una muestra representativa.",
+      "source": "Rubricas!A34:P34"
+    },
+    {
+      "id": "D3.08",
+      "dimension": "D3",
+      "subdimension": "Consolidación del tamaño",
+      "name": "Unidad objetiva y clase de tamaño",
+      "question": "¿El tamaño se expresa en una unidad objetiva (puntos de función o unidad interna calibrada) con clase XS–XL?",
+      "expected_evidence": "Tamaño y clase registrados con método.",
+      "ratings": {
+        "0": "Sin medida.",
+        "1": "Medida subjetiva (horas, tallas por intuición).",
+        "2": "Conteo de funcionalidades/historias con clase asignada.",
+        "3": "Puntos de función medidos o aproximados con método documentado."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "El tamaño no está expresado en una unidad objetiva; no puede compararse con histórico ni convertirse a esfuerzo.",
+      "source": "Rubricas!A35:P35"
+    },
+    {
+      "id": "D3.09",
+      "dimension": "D3",
+      "subdimension": "Consolidación del tamaño",
+      "name": "Tamaño del cambio en evolutivos",
+      "question": "En evolutivos o mantenimiento, ¿se cuantifican por separado los movimientos de datos agregados, modificados y eliminados?",
+      "expected_evidence": "Tamaño del cambio desagregado.",
+      "ratings": {
+        "0": "No cuantificado.",
+        "1": "Estimado globalmente.",
+        "2": "Desagregado parcialmente.",
+        "3": "Desagregado en agregados, modificados y eliminados."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "El tamaño del cambio no está desagregado en agregados, modificados y eliminados.",
+      "source": "Rubricas!A36:P36"
+    },
+    {
+      "id": "D3.10",
+      "dimension": "D3",
+      "subdimension": "Requisitos no funcionales",
+      "name": "RNF que se convierten en funcionalidad",
+      "question": "¿Se identificaron requisitos aparentemente no funcionales que generan funcionalidad (auditoría/bitácora, notificaciones, gestión de usuarios y permisos, parametrización, exportaciones) y se incluyeron en el tamaño?",
+      "expected_evidence": "Lista de RNF analizados y su tratamiento.",
+      "ratings": {
+        "0": "No analizados.",
+        "1": "Mencionados, no incluidos.",
+        "2": "Algunos incluidos.",
+        "3": "Todos analizados e incluidos o descartados con justificación."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "Requisitos como auditoría, notificaciones o gestión de permisos no se trasladaron al tamaño funcional; suelen omitirse y generar subestimación.",
+      "source": "Rubricas!A37:P37"
+    },
+    {
+      "id": "D3.11",
+      "dimension": "D3",
+      "subdimension": "Procesos funcionales",
+      "name": "Funcionalidad de administración y soporte",
+      "question": "¿Se incluyen procesos de mantenimiento de maestros, parámetros, catálogos y consultas de soporte?",
+      "expected_evidence": "Procesos de administración en el inventario.",
+      "ratings": {
+        "0": "No considerados.",
+        "1": "Mencionados en general.",
+        "2": "Parcialmente listados.",
+        "3": "Listados y medidos."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se incluyen procesos de administración (maestros, parámetros, catálogos).",
+      "source": "Rubricas!A38:P38"
+    },
+    {
+      "id": "D3.12",
+      "dimension": "D3",
+      "subdimension": "Movimientos de datos",
+      "name": "Reportes, consultas y mensajes",
+      "question": "¿Se identifican reportes, consultas, exportaciones y mensajes al usuario asociados a los procesos?",
+      "expected_evidence": "Lista de salidas por proceso.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Mencionados sin detalle.",
+        "2": "Mayoría identificados.",
+        "3": "Todos identificados con su contenido."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "No se identifican reportes, consultas y exportaciones; son salidas de datos que aportan tamaño.",
+      "source": "Rubricas!A39:P39"
+    },
+    {
+      "id": "D3.13",
+      "dimension": "D3",
+      "subdimension": "Consolidación del tamaño",
+      "name": "Trazabilidad requisito – medición",
+      "question": "¿Existe trazabilidad entre cada requisito, el proceso funcional que lo implementa y su tamaño?",
+      "expected_evidence": "Matriz de trazabilidad.",
+      "ratings": {
+        "0": "No existe.",
+        "1": "Parcial e informal.",
+        "2": "Para la mayoría de requisitos.",
+        "3": "Completa."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No hay trazabilidad requisito–proceso–tamaño; dificulta auditar la medición y gestionar cambios de alcance.",
+      "source": "Rubricas!A40:P40"
+    },
+    {
+      "id": "D3.14",
+      "dimension": "D3",
+      "subdimension": "Consolidación del tamaño",
+      "name": "Revisión de la medición",
+      "question": "¿La medición fue revisada por un segundo medidor o contrastada con el histórico y se documentó la variación?",
+      "expected_evidence": "Registro de revisión y variación.",
+      "ratings": {
+        "0": "Sin revisión.",
+        "1": "Revisión informal.",
+        "2": "Revisada sin documentar variación.",
+        "3": "Revisada y variación documentada."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "La medición no ha sido revisada por un segundo medidor.",
+      "source": "Rubricas!A41:P41"
+    },
+    {
+      "id": "D4.01",
+      "dimension": "D4",
+      "subdimension": "Reglas de negocio",
+      "name": "Inventario de reglas de negocio",
+      "question": "¿Las reglas de negocio están identificadas con ID y asociadas a las funcionalidades?",
+      "expected_evidence": "Catálogo de reglas con ID.",
+      "ratings": {
+        "0": "No identificadas.",
+        "1": "Mencionadas en narrativa.",
+        "2": "Catálogo parcial.",
+        "3": "Catálogo completo asociado a funcionalidades."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "Las reglas de negocio no están inventariadas; su complejidad no puede calificarse.",
+      "source": "Rubricas!A42:P42"
+    },
+    {
+      "id": "D4.02",
+      "dimension": "D4",
+      "subdimension": "Reglas de negocio",
+      "name": "Caracterización de reglas",
+      "question": "¿Se conocen condiciones, excepciones, cálculos y fuentes normativas de las reglas para calificarlas como simples, moderadas o complejas?",
+      "expected_evidence": "Reglas con condiciones y excepciones.",
+      "ratings": {
+        "0": "Desconocidas.",
+        "1": "Solo casos principales.",
+        "2": "Casos principales y algunas excepciones.",
+        "3": "Condiciones, excepciones y fuentes documentadas."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "Las reglas no están caracterizadas (faltan excepciones o cálculos); la calificación de complejidad no es confiable.",
+      "source": "Rubricas!A43:P43"
+    },
+    {
+      "id": "D4.03",
+      "dimension": "D4",
+      "subdimension": "Procesamiento",
+      "name": "Manipulación de datos y algoritmos",
+      "question": "¿Se identifican cálculos, algoritmos, motores de reglas o validaciones complejas? (su dificultad no se refleja en el tamaño funcional y debe capturarse aquí)",
+      "expected_evidence": "Lista de algoritmos o cálculos especiales.",
+      "ratings": {
+        "0": "No analizados.",
+        "1": "Mencionados.",
+        "2": "Identificados sin especificar.",
+        "3": "Identificados y especificados."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se identifican los cálculos o algoritmos especiales; el tamaño funcional no refleja esta dificultad.",
+      "source": "Rubricas!A44:P44"
+    },
+    {
+      "id": "D4.04",
+      "dimension": "D4",
+      "subdimension": "Procesamiento",
+      "name": "Tipo de procesamiento",
+      "question": "¿Se define si el procesamiento es en línea, por lotes, asíncrono o en tiempo real, y su exigencia?",
+      "expected_evidence": "Definición por proceso o componente.",
+      "ratings": {
+        "0": "No definido.",
+        "1": "Supuesto.",
+        "2": "Definido sin exigencias.",
+        "3": "Definido con exigencias cuantificadas."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No está definido el tipo de procesamiento (en línea, lotes, tiempo real).",
+      "source": "Rubricas!A45:P45"
+    },
+    {
+      "id": "D4.05",
+      "dimension": "D4",
+      "subdimension": "Arquitectura",
+      "name": "Arquitectura objetivo y novedad",
+      "question": "¿La arquitectura está definida (estilo, componentes, patrones) y se califica su novedad (conocida / algunas novedades / nueva o sofisticada)?",
+      "expected_evidence": "Documento o diagrama de arquitectura.",
+      "ratings": {
+        "0": "No definida.",
+        "1": "Idea general.",
+        "2": "Definida sin calificar novedad.",
+        "3": "Definida y novedad calificada."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "La arquitectura objetivo no está definida o no se calificó su novedad.",
+      "source": "Rubricas!A46:P46"
+    },
+    {
+      "id": "D4.06",
+      "dimension": "D4",
+      "subdimension": "Seguridad",
+      "name": "Requisitos de seguridad clasificados",
+      "question": "¿Se conocen los requisitos de autenticación, autorización, cifrado, firma, PKI y auditoría, y su nivel (estándar / elevada / crítica)?",
+      "expected_evidence": "Requisitos de seguridad con nivel.",
+      "ratings": {
+        "0": "Desconocidos.",
+        "1": "Enunciados genéricos («debe ser seguro»).",
+        "2": "Identificados sin nivel o con vacíos.",
+        "3": "Identificados, especificados y clasificados."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "Los requisitos de seguridad no están especificados ni clasificados.",
+      "source": "Rubricas!A47:P47"
+    },
+    {
+      "id": "D4.07",
+      "dimension": "D4",
+      "subdimension": "Calidad y operación",
+      "name": "Desempeño y volumen cuantificados",
+      "question": "¿Se cuantifican usuarios concurrentes, transacciones, tiempos de respuesta y volumen de datos?",
+      "expected_evidence": "Valores numéricos de desempeño.",
+      "ratings": {
+        "0": "Desconocidos.",
+        "1": "Cualitativos («rápido»).",
+        "2": "Algunos cuantificados.",
+        "3": "Todos cuantificados."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "Los requisitos de desempeño y volumen no están cuantificados.",
+      "source": "Rubricas!A48:P48"
+    },
+    {
+      "id": "D4.08",
+      "dimension": "D4",
+      "subdimension": "Calidad y operación",
+      "name": "Disponibilidad, escalabilidad y continuidad",
+      "question": "¿Se definen SLA, alta disponibilidad, escalabilidad, RTO/RPO?",
+      "expected_evidence": "Valores de disponibilidad y continuidad.",
+      "ratings": {
+        "0": "No definidos.",
+        "1": "Enunciados cualitativos.",
+        "2": "Parcialmente definidos.",
+        "3": "Definidos y cuantificados."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "No se definen disponibilidad ni continuidad (SLA, RTO/RPO).",
+      "source": "Rubricas!A49:P49"
+    },
+    {
+      "id": "D4.09",
+      "dimension": "D4",
+      "subdimension": "Dependencias",
+      "name": "Dependencias identificadas y calificadas",
+      "question": "¿Se identifican dependencias técnicas, funcionales y organizacionales y se califican (pocas / varias / críticas)?",
+      "expected_evidence": "Lista de dependencias con calificación.",
+      "ratings": {
+        "0": "No identificadas.",
+        "1": "Mencionadas.",
+        "2": "Identificadas sin calificar.",
+        "3": "Identificadas y calificadas."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "Las dependencias no están identificadas o calificadas.",
+      "source": "Rubricas!A50:P50"
+    },
+    {
+      "id": "D4.10",
+      "dimension": "D4",
+      "subdimension": "Cumplimiento",
+      "name": "Requisitos regulatorios y de cumplimiento",
+      "question": "¿Se identifican exigencias normativas (protección de datos, normativa sectorial, accesibilidad, retención documental)?",
+      "expected_evidence": "Lista de normas y su impacto.",
+      "ratings": {
+        "0": "No analizados.",
+        "1": "Mencionados en general.",
+        "2": "Identificados sin impacto.",
+        "3": "Identificados con impacto en requisitos."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se identifican los requisitos regulatorios aplicables ni su impacto en la solución.",
+      "source": "Rubricas!A51:P51"
+    },
+    {
+      "id": "D4.11",
+      "dimension": "D4",
+      "subdimension": "Calidad y operación",
+      "name": "Variabilidad de la solución",
+      "question": "¿Se define si hay multicanal, multidispositivo, multi-idioma, multi-entidad/multi-tenant o múltiples navegadores?",
+      "expected_evidence": "Definición de canales y variantes.",
+      "ratings": {
+        "0": "No analizada.",
+        "1": "Supuesta.",
+        "2": "Parcialmente definida.",
+        "3": "Definida."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "No se definen canales, dispositivos o variantes (idioma, multi-entidad).",
+      "source": "Rubricas!A52:P52"
+    },
+    {
+      "id": "D4.12",
+      "dimension": "D4",
+      "subdimension": "Consolidación",
+      "name": "Calificación de complejidad por factores",
+      "question": "¿Se calificaron los 5 factores (reglas, arquitectura, seguridad, procesamiento, dependencias) de 0 a 2 con justificación y se obtuvo el nivel?",
+      "expected_evidence": "Tabla de 5 factores con justificación.",
+      "ratings": {
+        "0": "Sin calificar.",
+        "1": "Nivel global asignado por percepción.",
+        "2": "Factores calificados sin justificación.",
+        "3": "Factores calificados y justificados; nivel calculado."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "La complejidad no se calificó factor por factor; calificar los 5 factores del catálogo con justificación.",
+      "source": "Rubricas!A53:P53"
+    },
+    {
+      "id": "D5.01",
+      "dimension": "D5",
+      "subdimension": "Inventario de interfaces",
+      "name": "Inventario de interfaces",
+      "question": "¿Se tiene la lista completa de interfaces con sistema contraparte, dirección (entrada/salida), propósito y frecuencia?",
+      "expected_evidence": "Inventario de interfaces.",
+      "ratings": {
+        "0": "No existe.",
+        "1": "Sistemas mencionados sin interfaces.",
+        "2": "Interfaces listadas con datos incompletos.",
+        "3": "Inventario completo con dirección, propósito y frecuencia."
+      },
+      "weight": 3,
+      "allow_na": true,
+      "gap": "No hay inventario de interfaces; levantar sistema, dirección, propósito y frecuencia de cada una.",
+      "source": "Rubricas!A54:P54"
+    },
+    {
+      "id": "D5.02",
+      "dimension": "D5",
+      "subdimension": "Inventario de interfaces",
+      "name": "Intercambios mapeados a datos y procesos",
+      "question": "¿Cada interfaz se asocia a los procesos funcionales que la usan y a los grupos de datos que cruzan la frontera (entradas/salidas)?",
+      "expected_evidence": "Matriz interfaz × proceso × grupo de datos.",
+      "ratings": {
+        "0": "No mapeados.",
+        "1": "Mapeo parcial informal.",
+        "2": "Mapeados para la mayoría.",
+        "3": "Mapeados en su totalidad."
+      },
+      "weight": 3,
+      "allow_na": true,
+      "gap": "Las interfaces no están asociadas a procesos ni a los datos intercambiados; el tamaño de la integración queda sin sustento.",
+      "source": "Rubricas!A55:P55"
+    },
+    {
+      "id": "D5.03",
+      "dimension": "D5",
+      "subdimension": "Contratos y protocolos",
+      "name": "Contratos de interfaz",
+      "question": "¿Están disponibles los contratos (OpenAPI, WSDL, esquemas, estructura de archivos)?",
+      "expected_evidence": "Especificaciones técnicas.",
+      "ratings": {
+        "0": "No disponibles.",
+        "1": "Disponibles para pocas interfaces.",
+        "2": "Disponibles para la mayoría.",
+        "3": "Disponibles y validados para todas."
+      },
+      "weight": 3,
+      "allow_na": true,
+      "gap": "No se cuenta con contratos de interfaz; solicitar especificaciones (OpenAPI, WSDL, esquemas).",
+      "source": "Rubricas!A56:P56"
+    },
+    {
+      "id": "D5.04",
+      "dimension": "D5",
+      "subdimension": "Contratos y protocolos",
+      "name": "Protocolos y tecnologías",
+      "question": "¿Se definen los protocolos (REST, SOAP, colas, eventos, archivos/SFTP) y se conoce si el equipo los domina?",
+      "expected_evidence": "Protocolo por interfaz.",
+      "ratings": {
+        "0": "Desconocidos.",
+        "1": "Supuestos.",
+        "2": "Definidos, con alguno no conocido por el equipo.",
+        "3": "Definidos y conocidos por el equipo."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No están definidos los protocolos de integración o hay protocolos desconocidos para el equipo.",
+      "source": "Rubricas!A57:P57"
+    },
+    {
+      "id": "D5.05",
+      "dimension": "D5",
+      "subdimension": "Comportamiento y errores",
+      "name": "Modo de interacción",
+      "question": "¿Se define sincronía/asincronía, frecuencia y volumen por interfaz?",
+      "expected_evidence": "Definición por interfaz.",
+      "ratings": {
+        "0": "No definido.",
+        "1": "Supuesto.",
+        "2": "Parcial.",
+        "3": "Definido con volúmenes."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No se definen sincronía, frecuencia ni volumen de las interfaces.",
+      "source": "Rubricas!A58:P58"
+    },
+    {
+      "id": "D5.06",
+      "dimension": "D5",
+      "subdimension": "Transformación de datos",
+      "name": "Transformaciones y mapeos",
+      "question": "¿Se especifican los mapeos campo a campo, homologaciones y reglas de conversión?",
+      "expected_evidence": "Documento de mapeo.",
+      "ratings": {
+        "0": "No especificados.",
+        "1": "Mencionados.",
+        "2": "Parcialmente especificados.",
+        "3": "Especificados y validados."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "Las transformaciones y mapeos de datos no están especificados.",
+      "source": "Rubricas!A59:P59"
+    },
+    {
+      "id": "D5.07",
+      "dimension": "D5",
+      "subdimension": "Comportamiento y errores",
+      "name": "Manejo de errores y recuperación",
+      "question": "¿Se definen reintentos, idempotencia, compensación y conciliación?",
+      "expected_evidence": "Estrategia de errores.",
+      "ratings": {
+        "0": "No definido.",
+        "1": "Mencionado.",
+        "2": "Parcial.",
+        "3": "Definido por interfaz."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No está definido el manejo de errores (reintentos, idempotencia, conciliación).",
+      "source": "Rubricas!A60:P60"
+    },
+    {
+      "id": "D5.08",
+      "dimension": "D5",
+      "subdimension": "Seguridad de integración",
+      "name": "Seguridad de las integraciones",
+      "question": "¿Se define la autenticación y protección de cada integración (OAuth2, certificados, mTLS, VPN, firma de mensajes)?",
+      "expected_evidence": "Mecanismo por interfaz.",
+      "ratings": {
+        "0": "No definido.",
+        "1": "Supuesto.",
+        "2": "Definido para algunas.",
+        "3": "Definido para todas."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No está definida la seguridad de las integraciones.",
+      "source": "Rubricas!A61:P61"
+    },
+    {
+      "id": "D5.09",
+      "dimension": "D5",
+      "subdimension": "Terceros y ambientes",
+      "name": "Ambientes de prueba de terceros",
+      "question": "¿Está confirmada la disponibilidad de sandbox o ambientes de prueba y datos de prueba de las contrapartes?",
+      "expected_evidence": "Confirmación de ambientes.",
+      "ratings": {
+        "0": "No confirmados.",
+        "1": "Solicitados.",
+        "2": "Confirmados para algunas.",
+        "3": "Confirmados para todas."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No está confirmada la disponibilidad de ambientes de prueba de las contrapartes.",
+      "source": "Rubricas!A62:P62"
+    },
+    {
+      "id": "D5.10",
+      "dimension": "D5",
+      "subdimension": "Terceros y ambientes",
+      "name": "Contrapartes y compromisos",
+      "question": "¿Se conocen los responsables técnicos de cada contraparte y sus compromisos de respuesta?",
+      "expected_evidence": "Lista de contactos y acuerdos.",
+      "ratings": {
+        "0": "Desconocidos.",
+        "1": "Contacto general.",
+        "2": "Contactos identificados sin acuerdos.",
+        "3": "Contactos y acuerdos definidos."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No se conocen responsables ni compromisos de las contrapartes.",
+      "source": "Rubricas!A63:P63"
+    },
+    {
+      "id": "D5.11",
+      "dimension": "D5",
+      "subdimension": "Inventario de interfaces",
+      "name": "Criticidad de sistemas integrados",
+      "question": "¿Se evalúa la criticidad de cada sistema integrado (sistema crítico, SLA, impacto de fallo)?",
+      "expected_evidence": "Calificación por sistema.",
+      "ratings": {
+        "0": "No evaluada.",
+        "1": "Supuesta.",
+        "2": "Evaluada para algunos.",
+        "3": "Evaluada para todos."
+      },
+      "weight": 1,
+      "allow_na": true,
+      "gap": "No se evaluó la criticidad de los sistemas integrados.",
+      "source": "Rubricas!A64:P64"
+    },
+    {
+      "id": "D5.12",
+      "dimension": "D5",
+      "subdimension": "Consolidación",
+      "name": "Nivel de integración asignado",
+      "question": "¿Se asignó el nivel I0–I3 con base en la cantidad y dificultad de las interfaces?",
+      "expected_evidence": "Nivel con justificación.",
+      "ratings": {
+        "0": "No asignado.",
+        "1": "Asignado por percepción.",
+        "2": "Asignado por cantidad, sin dificultad.",
+        "3": "Asignado por cantidad y dificultad."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se asignó el nivel de integración (I0–I3) con cantidad y dificultad.",
+      "source": "Rubricas!A65:P65"
+    },
+    {
+      "id": "D5.13",
+      "dimension": "D5",
+      "subdimension": "Terceros y ambientes",
+      "name": "Estado de las interfaces",
+      "question": "¿Se sabe si cada interfaz existe, requiere cambios o debe construirla la contraparte?",
+      "expected_evidence": "Estado por interfaz.",
+      "ratings": {
+        "0": "Desconocido.",
+        "1": "Supuesto.",
+        "2": "Conocido para algunas.",
+        "3": "Conocido para todas."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No se conoce si las interfaces existen o deben construirlas las contrapartes.",
+      "source": "Rubricas!A66:P66"
+    },
+    {
+      "id": "D6.01",
+      "dimension": "D6",
+      "subdimension": "Inventario de activos",
+      "name": "Activos reutilizables identificados",
+      "question": "¿Se identifican código, componentes, librerías, plantillas o APIs internas reutilizables?",
+      "expected_evidence": "Lista de activos.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Mencionados.",
+        "2": "Identificados sin ubicación/versión.",
+        "3": "Identificados con ubicación y versión."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se identifican activos reutilizables.",
+      "source": "Rubricas!A67:P67"
+    },
+    {
+      "id": "D6.02",
+      "dimension": "D6",
+      "subdimension": "Clasificación del reuso",
+      "name": "Clasificación por funcionalidad",
+      "question": "¿Cada funcionalidad se clasifica como nueva, adaptada, reutilizada o autogenerada?",
+      "expected_evidence": "Clasificación en el inventario.",
+      "ratings": {
+        "0": "No clasificada.",
+        "1": "Estimación global.",
+        "2": "Clasificación parcial.",
+        "3": "Clasificación completa."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "El reuso no está clasificado por funcionalidad; el porcentaje reutilizable es una suposición.",
+      "source": "Rubricas!A68:P68"
+    },
+    {
+      "id": "D6.03",
+      "dimension": "D6",
+      "subdimension": "Calidad del activo",
+      "name": "Estado de los activos",
+      "question": "¿Se evaluó la calidad, documentación, pruebas, deuda técnica y licencias de los activos a reutilizar?",
+      "expected_evidence": "Evaluación de activos.",
+      "ratings": {
+        "0": "No evaluado.",
+        "1": "Supuesto por experiencia.",
+        "2": "Evaluado parcialmente.",
+        "3": "Evaluado."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No se evaluó el estado de los activos a reutilizar; un activo deficiente puede costar más que construirlo.",
+      "source": "Rubricas!A69:P69"
+    },
+    {
+      "id": "D6.04",
+      "dimension": "D6",
+      "subdimension": "Calidad del activo",
+      "name": "Esfuerzo de adaptación considerado",
+      "question": "¿Se estimó el esfuerzo de adaptar, integrar y probar los componentes reutilizados?",
+      "expected_evidence": "Esfuerzo de adaptación.",
+      "ratings": {
+        "0": "No considerado.",
+        "1": "Mencionado.",
+        "2": "Estimado globalmente.",
+        "3": "Estimado por activo."
+      },
+      "weight": 2,
+      "allow_na": true,
+      "gap": "No se consideró el esfuerzo de adaptación del reuso.",
+      "source": "Rubricas!A70:P70"
+    },
+    {
+      "id": "D6.05",
+      "dimension": "D6",
+      "subdimension": "Clasificación del reuso",
+      "name": "Generación automática / low-code",
+      "question": "¿Se identifica el alcance resuelto por generación de código o plataformas low-code?",
+      "expected_evidence": "Alcance autogenerado.",
+      "ratings": {
+        "0": "No analizado.",
+        "1": "Mencionado.",
+        "2": "Identificado parcialmente.",
+        "3": "Identificado."
+      },
+      "weight": 1,
+      "allow_na": true,
+      "gap": "No se identifica el alcance autogenerado.",
+      "source": "Rubricas!A71:P71"
+    },
+    {
+      "id": "D6.06",
+      "dimension": "D6",
+      "subdimension": "Consolidación",
+      "name": "Nivel de reutilización asignado",
+      "question": "¿Se asignó el nivel R1–R4 con evidencia?",
+      "expected_evidence": "Nivel con porcentaje y evidencia.",
+      "ratings": {
+        "0": "No asignado.",
+        "1": "Por percepción.",
+        "2": "Por juicio documentado.",
+        "3": "Por clasificación del inventario."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se asignó el nivel de reutilización (R1–R4) con evidencia.",
+      "source": "Rubricas!A72:P72"
+    },
+    {
+      "id": "D6.07",
+      "dimension": "D6",
+      "subdimension": "Inventario de activos",
+      "name": "Soluciones o patrones previos",
+      "question": "¿Se identifican proyectos o patrones previos de la organización aplicables?",
+      "expected_evidence": "Referencias a proyectos previos.",
+      "ratings": {
+        "0": "No identificadas.",
+        "1": "Mencionadas.",
+        "2": "Identificadas.",
+        "3": "Identificadas con lecciones aprendidas."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "No se identifican soluciones previas aplicables.",
+      "source": "Rubricas!A73:P73"
+    },
+    {
+      "id": "D7.01",
+      "dimension": "D7",
+      "subdimension": "Stack",
+      "name": "Stack tecnológico definido",
+      "question": "¿Se definen lenguajes, frameworks y versiones?",
+      "expected_evidence": "Stack con versiones.",
+      "ratings": {
+        "0": "No definido.",
+        "1": "Parcial.",
+        "2": "Definido sin versiones.",
+        "3": "Definido con versiones."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "El stack tecnológico no está definido.",
+      "source": "Rubricas!A74:P74"
+    },
+    {
+      "id": "D7.02",
+      "dimension": "D7",
+      "subdimension": "Plataforma y datos",
+      "name": "Plataforma de despliegue",
+      "question": "¿Se define cloud / on-premise / híbrido y el proveedor?",
+      "expected_evidence": "Plataforma.",
+      "ratings": {
+        "0": "No definida.",
+        "1": "Supuesta.",
+        "2": "Definida sin proveedor.",
+        "3": "Definida con proveedor y servicios."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "La plataforma de despliegue no está definida.",
+      "source": "Rubricas!A75:P75"
+    },
+    {
+      "id": "D7.03",
+      "dimension": "D7",
+      "subdimension": "Plataforma y datos",
+      "name": "Base de datos y almacenamiento",
+      "question": "¿Se definen motor de base de datos y almacenamiento?",
+      "expected_evidence": "Tecnologías de datos.",
+      "ratings": {
+        "0": "No definido.",
+        "1": "Supuesto.",
+        "2": "Definido parcialmente.",
+        "3": "Definido."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se definen la base de datos ni el almacenamiento.",
+      "source": "Rubricas!A76:P76"
+    },
+    {
+      "id": "D7.04",
+      "dimension": "D7",
+      "subdimension": "Familiaridad",
+      "name": "Familiaridad del equipo por tecnología",
+      "question": "¿Se evaluó la experiencia del equipo en cada tecnología (T1–T4)?",
+      "expected_evidence": "Matriz tecnología × experiencia.",
+      "ratings": {
+        "0": "No evaluada.",
+        "1": "Global por percepción.",
+        "2": "Por tecnología sin evidencia.",
+        "3": "Por tecnología con evidencia."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "No se evaluó la familiaridad del equipo con cada tecnología.",
+      "source": "Rubricas!A77:P77"
+    },
+    {
+      "id": "D7.05",
+      "dimension": "D7",
+      "subdimension": "Herramientas y ambientes",
+      "name": "Herramientas de desarrollo y CI/CD",
+      "question": "¿Se definen herramientas de construcción, integración continua, pruebas y versionamiento?",
+      "expected_evidence": "Herramientas definidas.",
+      "ratings": {
+        "0": "No definidas.",
+        "1": "Supuestas.",
+        "2": "Parcialmente.",
+        "3": "Definidas."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "No se definen las herramientas de desarrollo, CI/CD y pruebas.",
+      "source": "Rubricas!A78:P78"
+    },
+    {
+      "id": "D7.06",
+      "dimension": "D7",
+      "subdimension": "Herramientas y ambientes",
+      "name": "Ambientes y aprovisionamiento",
+      "question": "¿Se definen los ambientes (desarrollo, pruebas, preproducción, producción) y quién los aprovisiona?",
+      "expected_evidence": "Ambientes y responsables.",
+      "ratings": {
+        "0": "No definidos.",
+        "1": "Supuestos.",
+        "2": "Definidos sin responsable.",
+        "3": "Definidos con responsable y fechas."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No están definidos los ambientes ni el responsable de aprovisionarlos.",
+      "source": "Rubricas!A79:P79"
+    },
+    {
+      "id": "D7.07",
+      "dimension": "D7",
+      "subdimension": "Restricciones",
+      "name": "Restricciones tecnológicas del cliente",
+      "question": "¿Se conocen estándares, arquitectura corporativa y licenciamiento exigidos por el cliente?",
+      "expected_evidence": "Lineamientos del cliente.",
+      "ratings": {
+        "0": "Desconocidos.",
+        "1": "Mencionados.",
+        "2": "Parcialmente recibidos.",
+        "3": "Recibidos y analizados."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se conocen las restricciones tecnológicas del cliente.",
+      "source": "Rubricas!A80:P80"
+    },
+    {
+      "id": "D8.01",
+      "dimension": "D8",
+      "subdimension": "Definición del problema",
+      "name": "Objetivo definido",
+      "question": "¿El objetivo del proyecto está definido y aprobado?",
+      "expected_evidence": "Objetivo documentado.",
+      "ratings": {
+        "0": "No definido.",
+        "1": "Enunciado general.",
+        "2": "Documentado sin aprobación.",
+        "3": "Documentado y aprobado."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "El objetivo del proyecto no está definido o aprobado.",
+      "source": "Rubricas!A81:P81"
+    },
+    {
+      "id": "D8.02",
+      "dimension": "D8",
+      "subdimension": "Definición del problema",
+      "name": "Usuarios y roles identificados",
+      "question": "¿Se identifican los usuarios y roles?",
+      "expected_evidence": "Lista de roles.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Genéricos.",
+        "2": "Mayoría identificados.",
+        "3": "Todos identificados con permisos."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No están identificados los usuarios y roles.",
+      "source": "Rubricas!A82:P82"
+    },
+    {
+      "id": "D8.03",
+      "dimension": "D8",
+      "subdimension": "Requisitos funcionales",
+      "name": "Funcionalidades identificadas",
+      "question": "¿Las funcionalidades están identificadas?",
+      "expected_evidence": "Backlog o lista de requisitos.",
+      "ratings": {
+        "0": "No identificadas.",
+        "1": "Módulos/épicas.",
+        "2": "Mayoría identificadas.",
+        "3": "Todas identificadas y descritas."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "Las funcionalidades no están identificadas.",
+      "source": "Rubricas!A83:P83"
+    },
+    {
+      "id": "D8.04",
+      "dimension": "D8",
+      "subdimension": "Requisitos funcionales",
+      "name": "Reglas de negocio conocidas",
+      "question": "¿Se conocen las reglas de negocio?",
+      "expected_evidence": "Reglas documentadas.",
+      "ratings": {
+        "0": "Desconocidas.",
+        "1": "Solo las principales enunciadas.",
+        "2": "Principales documentadas, faltan excepciones.",
+        "3": "Documentadas con excepciones."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "Las reglas de negocio no se conocen o faltan excepciones.",
+      "source": "Rubricas!A84:P84"
+    },
+    {
+      "id": "D8.05",
+      "dimension": "D8",
+      "subdimension": "Datos e integraciones",
+      "name": "Integraciones conocidas",
+      "question": "¿Se conocen las integraciones?",
+      "expected_evidence": "Lista de integraciones.",
+      "ratings": {
+        "0": "Desconocidas.",
+        "1": "Mencionadas.",
+        "2": "Identificadas sin detalle.",
+        "3": "Identificadas con detalle."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "Las integraciones no se conocen con suficiente detalle.",
+      "source": "Rubricas!A85:P85"
+    },
+    {
+      "id": "D8.06",
+      "dimension": "D8",
+      "subdimension": "Datos e integraciones",
+      "name": "Datos conocidos",
+      "question": "¿Se conocen los datos (entidades, fuentes, volúmenes, calidad)?",
+      "expected_evidence": "Modelo o inventario de datos.",
+      "ratings": {
+        "0": "Desconocidos.",
+        "1": "Entidades mencionadas.",
+        "2": "Entidades principales definidas.",
+        "3": "Definidos con fuentes y volúmenes."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "Los datos no se conocen (entidades, fuentes, volumen).",
+      "source": "Rubricas!A86:P86"
+    },
+    {
+      "id": "D8.07",
+      "dimension": "D8",
+      "subdimension": "Requisitos no funcionales",
+      "name": "Requisitos no funcionales conocidos",
+      "question": "¿Se conocen los requisitos no funcionales?",
+      "expected_evidence": "RNF documentados.",
+      "ratings": {
+        "0": "Desconocidos.",
+        "1": "Enunciados genéricos.",
+        "2": "Principales cuantificados.",
+        "3": "Todos cuantificados."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "Los requisitos no funcionales no se conocen o no se cuantifican.",
+      "source": "Rubricas!A87:P87"
+    },
+    {
+      "id": "D8.08",
+      "dimension": "D8",
+      "subdimension": "Criterios de aceptación",
+      "name": "Criterios de aceptación definidos",
+      "question": "¿Se definieron criterios de aceptación verificables?",
+      "expected_evidence": "Criterios por funcionalidad.",
+      "ratings": {
+        "0": "No definidos.",
+        "1": "Generales para el proyecto.",
+        "2": "Para la mayoría de funcionalidades.",
+        "3": "Para todas, verificables."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "No hay criterios de aceptación verificables; sin ellos el alcance de pruebas y la aceptación son inciertos.",
+      "source": "Rubricas!A88:P88"
+    },
+    {
+      "id": "D8.09",
+      "dimension": "D8",
+      "subdimension": "Límites y validación",
+      "name": "Fuera de alcance explícito",
+      "question": "¿Se declara explícitamente lo que no está incluido?",
+      "expected_evidence": "Lista de exclusiones.",
+      "ratings": {
+        "0": "No declarado.",
+        "1": "Implícito.",
+        "2": "Declarado parcialmente.",
+        "3": "Declarado y aceptado."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se declara lo que está fuera de alcance.",
+      "source": "Rubricas!A89:P89"
+    },
+    {
+      "id": "D8.10",
+      "dimension": "D8",
+      "subdimension": "Límites y validación",
+      "name": "Supuestos, restricciones y dependencias",
+      "question": "¿Se documentan supuestos, restricciones y dependencias del alcance?",
+      "expected_evidence": "Registro de supuestos.",
+      "ratings": {
+        "0": "No documentados.",
+        "1": "Algunos verbales.",
+        "2": "Documentados parcialmente.",
+        "3": "Documentados y aceptados."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "No se documentan supuestos ni restricciones del alcance.",
+      "source": "Rubricas!A90:P90"
+    },
+    {
+      "id": "D8.11",
+      "dimension": "D8",
+      "subdimension": "Límites y validación",
+      "name": "Validación formal del alcance",
+      "question": "¿El alcance fue validado formalmente por el cliente o sponsor?",
+      "expected_evidence": "Acta o aprobación.",
+      "ratings": {
+        "0": "Sin validar.",
+        "1": "Revisión informal.",
+        "2": "Revisado en taller sin aprobación.",
+        "3": "Aprobado formalmente."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "El alcance no ha sido validado formalmente por el cliente.",
+      "source": "Rubricas!A91:P91"
+    },
+    {
+      "id": "D9.01",
+      "dimension": "D9",
+      "subdimension": "Equipo",
+      "name": "Equipo identificado",
+      "question": "¿El equipo que ejecutará está identificado?",
+      "expected_evidence": "Equipo nominado.",
+      "ratings": {
+        "0": "No asignado.",
+        "1": "Perfiles definidos.",
+        "2": "Parcialmente asignado.",
+        "3": "Asignado completo."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "El equipo no está identificado.",
+      "source": "Rubricas!A92:P92"
+    },
+    {
+      "id": "D9.02",
+      "dimension": "D9",
+      "subdimension": "Equipo",
+      "name": "Experiencia en proyectos similares",
+      "question": "¿El equipo tiene experiencia en proyectos similares (arquetipo, tecnología, dominio)?",
+      "expected_evidence": "Historial del equipo.",
+      "ratings": {
+        "0": "Sin experiencia.",
+        "1": "Experiencia genérica.",
+        "2": "1–2 proyectos similares.",
+        "3": "≥ 3 proyectos similares."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "El equipo no tiene experiencia demostrada en proyectos similares.",
+      "source": "Rubricas!A93:P93"
+    },
+    {
+      "id": "D9.03",
+      "dimension": "D9",
+      "subdimension": "Equipo",
+      "name": "Dedicación",
+      "question": "¿Se conoce la dedicación de cada integrante?",
+      "expected_evidence": "Plan de dedicación.",
+      "ratings": {
+        "0": "Desconocida.",
+        "1": "Supuesta.",
+        "2": "Conocida para el núcleo.",
+        "3": "Conocida para todos."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se conoce la dedicación del equipo.",
+      "source": "Rubricas!A94:P94"
+    },
+    {
+      "id": "D9.04",
+      "dimension": "D9",
+      "subdimension": "Forma de trabajo",
+      "name": "Metodología de ejecución",
+      "question": "¿Está definida la metodología (ágil, tradicional, híbrida) y sus ceremonias?",
+      "expected_evidence": "Metodología acordada.",
+      "ratings": {
+        "0": "No definida.",
+        "1": "Supuesta.",
+        "2": "Definida sin acuerdo con el cliente.",
+        "3": "Definida y acordada."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No está definida la metodología de ejecución.",
+      "source": "Rubricas!A95:P95"
+    },
+    {
+      "id": "D9.05",
+      "dimension": "D9",
+      "subdimension": "Forma de trabajo",
+      "name": "Disponibilidad del cliente",
+      "question": "¿Está asegurada la disponibilidad del cliente / product owner para decisiones y validaciones?",
+      "expected_evidence": "Compromiso de disponibilidad.",
+      "ratings": {
+        "0": "Desconocida.",
+        "1": "Parcial sin compromiso.",
+        "2": "Comprometida parcialmente.",
+        "3": "Comprometida."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No está asegurada la disponibilidad del cliente para decisiones.",
+      "source": "Rubricas!A96:P96"
+    },
+    {
+      "id": "D9.06",
+      "dimension": "D9",
+      "subdimension": "Dependencias externas",
+      "name": "Proveedores y subcontratistas",
+      "question": "¿Están identificados y contratados los proveedores o subcontratistas?",
+      "expected_evidence": "Contratos o compromisos.",
+      "ratings": {
+        "0": "No identificados.",
+        "1": "Identificados.",
+        "2": "En contratación.",
+        "3": "Contratados."
+      },
+      "weight": 1,
+      "allow_na": true,
+      "gap": "Los proveedores o subcontratistas no están identificados o contratados.",
+      "source": "Rubricas!A97:P97"
+    },
+    {
+      "id": "D9.07",
+      "dimension": "D9",
+      "subdimension": "Forma de trabajo",
+      "name": "Distribución geográfica y horaria",
+      "question": "¿Se conoce la distribución del equipo y su impacto en la coordinación?",
+      "expected_evidence": "Ubicación y husos horarios.",
+      "ratings": {
+        "0": "Desconocida.",
+        "1": "Supuesta.",
+        "2": "Conocida sin plan de coordinación.",
+        "3": "Conocida con plan."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "No se conoce la distribución geográfica del equipo.",
+      "source": "Rubricas!A98:P98"
+    },
+    {
+      "id": "D9.08",
+      "dimension": "D9",
+      "subdimension": "Dependencias externas",
+      "name": "Dependencias externas de ejecución",
+      "question": "¿Se conocen dependencias como aprobaciones, compras, accesos y sus tiempos?",
+      "expected_evidence": "Lista con tiempos.",
+      "ratings": {
+        "0": "Desconocidas.",
+        "1": "Mencionadas.",
+        "2": "Identificadas sin tiempos.",
+        "3": "Identificadas con tiempos."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se conocen las dependencias externas de ejecución ni sus tiempos.",
+      "source": "Rubricas!A99:P99"
+    },
+    {
+      "id": "D10.01",
+      "dimension": "D10",
+      "subdimension": "Dominio",
+      "name": "Sector y dominio identificados",
+      "question": "¿Se identifica el sector y el dominio funcional?",
+      "expected_evidence": "Sector registrado.",
+      "ratings": {
+        "0": "No identificado.",
+        "1": "Genérico.",
+        "2": "Sector identificado.",
+        "3": "Sector y dominio identificados."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "No se identifica el sector del proyecto.",
+      "source": "Rubricas!A100:P100"
+    },
+    {
+      "id": "D10.02",
+      "dimension": "D10",
+      "subdimension": "Regulación",
+      "name": "Regulación sectorial aplicable",
+      "question": "¿Se identifica la regulación del sector que impacta la solución?",
+      "expected_evidence": "Normas y su impacto.",
+      "ratings": {
+        "0": "No analizada.",
+        "1": "Mencionada.",
+        "2": "Identificada sin impacto.",
+        "3": "Identificada con impacto."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "No se identifica la regulación sectorial aplicable.",
+      "source": "Rubricas!A101:P101"
+    },
+    {
+      "id": "D10.03",
+      "dimension": "D10",
+      "subdimension": "Contratación y gobierno",
+      "name": "Modalidad contractual",
+      "question": "¿Se conoce la modalidad (licitación, precio fijo, tiempo y materiales, bolsa de horas)?",
+      "expected_evidence": "Modalidad y condiciones.",
+      "ratings": {
+        "0": "Desconocida.",
+        "1": "Supuesta.",
+        "2": "Conocida sin condiciones.",
+        "3": "Conocida con condiciones."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se conoce la modalidad contractual.",
+      "source": "Rubricas!A102:P102"
+    },
+    {
+      "id": "D10.04",
+      "dimension": "D10",
+      "subdimension": "Contratación y gobierno",
+      "name": "Stakeholders y aprobaciones",
+      "question": "¿Se conocen los stakeholders y el ciclo de aprobaciones?",
+      "expected_evidence": "Mapa de stakeholders.",
+      "ratings": {
+        "0": "Desconocidos.",
+        "1": "Mencionados.",
+        "2": "Identificados sin ciclo.",
+        "3": "Identificados con ciclo de aprobación."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se conocen los stakeholders ni el ciclo de aprobaciones.",
+      "source": "Rubricas!A103:P103"
+    },
+    {
+      "id": "D10.05",
+      "dimension": "D10",
+      "subdimension": "Contratación y gobierno",
+      "name": "Restricciones de calendario",
+      "question": "¿Se conocen fechas límite, hitos o ventanas de despliegue?",
+      "expected_evidence": "Calendario.",
+      "ratings": {
+        "0": "Desconocidas.",
+        "1": "Mencionadas.",
+        "2": "Conocidas sin justificación.",
+        "3": "Conocidas y justificadas."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se conocen las restricciones de calendario.",
+      "source": "Rubricas!A104:P104"
+    },
+    {
+      "id": "D10.06",
+      "dimension": "D10",
+      "subdimension": "Regulación",
+      "name": "Requisitos de auditoría y documentación",
+      "question": "¿Se conocen los entregables documentales y de auditoría exigidos por el sector o cliente?",
+      "expected_evidence": "Lista de entregables.",
+      "ratings": {
+        "0": "Desconocidos.",
+        "1": "Mencionados.",
+        "2": "Parcialmente conocidos.",
+        "3": "Conocidos."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "No se conocen los requisitos documentales y de auditoría del cliente.",
+      "source": "Rubricas!A105:P105"
+    },
+    {
+      "id": "D11.01",
+      "dimension": "D11",
+      "subdimension": "Cantidad y similitud",
+      "name": "Cantidad de comparables",
+      "question": "¿Cuántos proyectos comparables se tienen?",
+      "expected_evidence": "Lista de comparables.",
+      "ratings": {
+        "0": "0–1.",
+        "1": "2–3.",
+        "2": "4–7.",
+        "3": "≥ 8."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "Hay pocos o ningún proyecto comparable.",
+      "source": "Rubricas!A106:P106"
+    },
+    {
+      "id": "D11.02",
+      "dimension": "D11",
+      "subdimension": "Cantidad y similitud",
+      "name": "Similitud de los comparables",
+      "question": "¿Qué tan similares son (arquetipo, tipo de desarrollo, tamaño, tecnología, sector)?",
+      "expected_evidence": "Comparación de atributos.",
+      "ratings": {
+        "0": "No similares.",
+        "1": "1–2 atributos coinciden.",
+        "2": "3–4 atributos coinciden.",
+        "3": "Los 5 atributos coinciden."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "Los comparables son poco similares.",
+      "source": "Rubricas!A107:P107"
+    },
+    {
+      "id": "D11.03",
+      "dimension": "D11",
+      "subdimension": "Calidad del dato",
+      "name": "Completitud de los datos",
+      "question": "¿Los comparables tienen esfuerzo real, duración, tamaño y equipo registrados?",
+      "expected_evidence": "Datos por comparable.",
+      "ratings": {
+        "0": "Incompletos.",
+        "1": "Solo esfuerzo o duración.",
+        "2": "Esfuerzo y duración, sin tamaño.",
+        "3": "Completos."
+      },
+      "weight": 3,
+      "allow_na": false,
+      "gap": "Los datos de los comparables están incompletos.",
+      "source": "Rubricas!A108:P108"
+    },
+    {
+      "id": "D11.04",
+      "dimension": "D11",
+      "subdimension": "Calidad del dato",
+      "name": "Consistencia del registro",
+      "question": "¿El registro en la herramienta (p. ej. Jira) es consistente en tiempos, estados y tipos?",
+      "expected_evidence": "Revisión del registro.",
+      "ratings": {
+        "0": "Inconsistente.",
+        "1": "Con inconsistencias importantes.",
+        "2": "Con inconsistencias menores.",
+        "3": "Consistente."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "El registro histórico es inconsistente.",
+      "source": "Rubricas!A109:P109"
+    },
+    {
+      "id": "D11.05",
+      "dimension": "D11",
+      "subdimension": "Explotación del histórico",
+      "name": "Normalización del tamaño",
+      "question": "¿Los comparables tienen el tamaño expresado en la misma unidad?",
+      "expected_evidence": "Tamaño normalizado.",
+      "ratings": {
+        "0": "Sin tamaño.",
+        "1": "Unidades distintas.",
+        "2": "Normalizado parcialmente.",
+        "3": "Normalizado."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "El tamaño de los comparables no está normalizado.",
+      "source": "Rubricas!A110:P110"
+    },
+    {
+      "id": "D11.06",
+      "dimension": "D11",
+      "subdimension": "Explotación del histórico",
+      "name": "Productividad histórica derivada",
+      "question": "¿Se calculó la productividad (horas por unidad de tamaño)?",
+      "expected_evidence": "Tasa de productividad.",
+      "ratings": {
+        "0": "No calculada.",
+        "1": "Estimada para un proyecto.",
+        "2": "Calculada para algunos.",
+        "3": "Calculada para todos."
+      },
+      "weight": 2,
+      "allow_na": false,
+      "gap": "No se calculó la productividad histórica.",
+      "source": "Rubricas!A111:P111"
+    },
+    {
+      "id": "D11.07",
+      "dimension": "D11",
+      "subdimension": "Cantidad y similitud",
+      "name": "Vigencia de los comparables",
+      "question": "¿Los comparables son recientes y con proceso y tecnología vigentes?",
+      "expected_evidence": "Fechas y contexto.",
+      "ratings": {
+        "0": "Obsoletos.",
+        "1": "> 5 años.",
+        "2": "2–5 años.",
+        "3": "< 2 años y vigentes."
+      },
+      "weight": 1,
+      "allow_na": false,
+      "gap": "Los comparables no son vigentes.",
+      "source": "Rubricas!A112:P112"
+    }
+  ],
+  "levels": [
+    {
+      "minimum": 0,
+      "name": "N1 - Incipiente",
+      "number": 1,
+      "technique": "Juicio experto / Delphi con rango amplio; priorizar levantamiento de información antes de comprometer una cifra."
+    },
+    {
+      "minimum": 0.2,
+      "name": "N2 - Preliminar",
+      "number": 2,
+      "technique": "Juicio experto + analogía; estimación de orden de magnitud."
+    },
+    {
+      "minimum": 0.4,
+      "name": "N3 - Intermedio",
+      "number": 3,
+      "technique": "Analogía con histórico + descomposición (WBS); estimación preliminar."
+    },
+    {
+      "minimum": 0.6,
+      "name": "N4 - Definido",
+      "number": 4,
+      "technique": "Tamaño funcional + productividad histórica, contrastado con descomposición."
+    },
+    {
+      "minimum": 0.8,
+      "name": "N5 - Validado",
+      "number": 5,
+      "technique": "Tamaño funcional + modelo paramétrico calibrado; desempeño empírico si el equipo es conocido."
+    }
+  ],
+  "core_floor": 0.4,
+  "core_level_cap": 3,
+  "early_size_reference": {
+    "points_per_process": 8,
+    "calibrated": false,
+    "source": "Parametros!B49:C49"
+  },
+  "classification_inputs": {},
+  "consistency_checks": [
+    {
+      "id": "V1",
+      "description": "Los porcentajes de composición del tipo de desarrollo suman 100%.",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(COUNT(E14:E17)>0,ABS(SUM(E14:E17)-1)>0.001),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A61:G61"
+    },
+    {
+      "id": "V2",
+      "description": "Si hay componente evolutivo, de modernización o mantenimiento, existe línea base del activo (D1.03).",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(SUM(E15:E17)>0,OR(F83=\"N/A\",AND(ISNUMBER(F83),F83<=1))),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A62:G62"
+    },
+    {
+      "id": "V3",
+      "description": "El arquetipo Modernización no convive con un tipo de desarrollo predominantemente nuevo.",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(E18=\"Modernización y migración\",G14=\"Nuevo desarrollo\"),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A63:G63"
+    },
+    {
+      "id": "V4",
+      "description": "El arquetipo principal Integración tiene al menos 3 interfaces.",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(E18=\"Integración e interoperabilidad\",N(E29)<3),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A64:G64"
+    },
+    {
+      "id": "V5",
+      "description": "Si se declara Integración (principal o secundario) se registra el N° de interfaces.",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(OR(E18=\"Integración e interoperabilidad\",ISNUMBER(SEARCH(\"Integración\",E19))),E29=\"\"),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A65:G65"
+    },
+    {
+      "id": "V6",
+      "description": "Las interfaces declaradas cuentan con inventario (D5.01 ≥ 2).",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(N(E29)>0,AND(ISNUMBER(F135),F135<=1)),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A66:G66"
+    },
+    {
+      "id": "V7",
+      "description": "El N° de procesos funcionales está respaldado por inventario (D3.05 ≥ 2).",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(N(E21)>0,AND(ISNUMBER(F111),F111<=1)),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A67:G67"
+    },
+    {
+      "id": "V8",
+      "description": "Si el inventario de procesos está calificado (D3.05 ≥ 2) se registra la cantidad.",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(ISNUMBER(F111),F111>=2,N(E21)=0),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A68:G68"
+    },
+    {
+      "id": "V9",
+      "description": "Seguridad calificada como crítica (factor = 2) tiene requisitos especificados (D4.06 ≥ 2).",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(E26=2,AND(ISNUMBER(F127),F127<=1)),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A69:G69"
+    },
+    {
+      "id": "V10",
+      "description": "Reglas calificadas como complejas (factor = 2) están caracterizadas (D4.02 ≥ 2).",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(E24=2,AND(ISNUMBER(F123),F123<=1)),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A70:G70"
+    },
+    {
+      "id": "V11",
+      "description": "Reutilización alta (> 70%) respaldada por la evaluación de los activos (D6.03 ≥ 2).",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(N(E32)>0.7,OR(F151=\"N/A\",AND(ISNUMBER(F151),F151<=1))),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A71:G71"
+    },
+    {
+      "id": "V12",
+      "description": "Tecnología T1 respaldada por la evaluación de familiaridad (D7.04 ≥ 2).",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(LEFT(E33,2)=\"T1\",AND(ISNUMBER(F160),F160<=1)),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A72:G72"
+    },
+    {
+      "id": "V13",
+      "description": "Con 4 o más comparables, sus datos están completos (D11.03 ≥ 2).",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(N(E37)>=4,AND(ISNUMBER(F195),F195<=1)),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A73:G73"
+    },
+    {
+      "id": "V14",
+      "description": "Un alcance M3/M4 es coherente con una madurez de tamaño ≥ umbral núcleo.",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(E34>=5,F44<Parametros!$B$37),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A74:G74"
+    },
+    {
+      "id": "V15",
+      "description": "Integración I3 con ambientes de prueba de terceros confirmados (D5.09 ≥ 2).",
+      "formula": "IF(COUNT($F$80:$F$240)+COUNT(E14:E37)-COUNT(E34)=0,\"Sin datos\",IF(AND(LEFT(G29,2)=\"I3\",AND(ISNUMBER(F143),F143<=1)),\"⚠ Revisar\",\"OK\"))",
+      "source": "Ficha!A75:G75"
+    }
+  ],
+  "example": {
+    "scores": {
+      "D1.01": 2,
+      "D1.02": 3,
+      "D1.03": 1,
+      "D1.04": 2,
+      "D1.05": 1,
+      "D1.06": 2,
+      "D1.07": 2,
+      "D1.08": 2,
+      "D1.09": 1,
+      "D1.10": 1,
+      "D1.11": "N/A",
+      "D1.12": 3,
+      "D2.01": 3,
+      "D2.02": 2,
+      "D2.03": 2,
+      "D2.04": 2,
+      "D2.05": 2,
+      "D2.06": 2,
+      "D2.07": 1,
+      "D2.08": 3,
+      "D2.09": 2,
+      "D2.10": 1,
+      "D2.11": 3,
+      "D2.12": 2,
+      "D3.01": 2,
+      "D3.02": 1,
+      "D3.03": 2,
+      "D3.04": 1,
+      "D3.05": 2,
+      "D3.06": 2,
+      "D3.07": 1,
+      "D3.08": 2,
+      "D3.09": 1,
+      "D3.10": 1,
+      "D3.11": 2,
+      "D3.12": 1,
+      "D3.13": 1,
+      "D3.14": 0,
+      "D4.01": 2,
+      "D4.02": 1,
+      "D4.03": 2,
+      "D4.04": 3,
+      "D4.05": 2,
+      "D4.06": 1,
+      "D4.07": 1,
+      "D4.08": 0,
+      "D4.09": 2,
+      "D4.10": 2,
+      "D4.11": 2,
+      "D4.12": 3,
+      "D5.01": 2,
+      "D5.02": 1,
+      "D5.03": 2,
+      "D5.04": 2,
+      "D5.05": 1,
+      "D5.06": 1,
+      "D5.07": 0,
+      "D5.08": 2,
+      "D5.09": 1,
+      "D5.10": 2,
+      "D5.11": 2,
+      "D5.12": 3,
+      "D5.13": 1,
+      "D6.01": 2,
+      "D6.02": 1,
+      "D6.03": 1,
+      "D6.04": 1,
+      "D6.05": "N/A",
+      "D6.06": 2,
+      "D6.07": 2,
+      "D7.01": 3,
+      "D7.02": 2,
+      "D7.03": 3,
+      "D7.04": 2,
+      "D7.05": 2,
+      "D7.06": 1,
+      "D7.07": 1,
+      "D8.01": 3,
+      "D8.02": 3,
+      "D8.03": 2,
+      "D8.04": 1,
+      "D8.05": 2,
+      "D8.06": 2,
+      "D8.07": 1,
+      "D8.08": 1,
+      "D8.09": 1,
+      "D8.10": 2,
+      "D8.11": 1,
+      "D9.01": 2,
+      "D9.02": 2,
+      "D9.03": 2,
+      "D9.04": 3,
+      "D9.05": 1,
+      "D9.06": 2,
+      "D9.07": 3,
+      "D9.08": 1,
+      "D10.01": 3,
+      "D10.02": 2,
+      "D10.03": 2,
+      "D10.04": 1,
+      "D10.05": 2,
+      "D10.06": 1,
+      "D11.01": 1,
+      "D11.02": 2,
+      "D11.03": 1,
+      "D11.04": 1,
+      "D11.05": 0,
+      "D11.06": 1,
+      "D11.07": 3
+    },
+    "dimension_maturity": {
+      "D1": 0.6,
+      "D2": 0.7101449275362319,
+      "D3": 0.4946236559139785,
+      "D4": 0.5897435897435898,
+      "D5": 0.5119047619047619,
+      "D6": 0.4722222222222222,
+      "D7": 0.6888888888888889,
+      "D8": 0.5652173913043478,
+      "D9": 0.6458333333333334,
+      "D10": 0.6060606060606061,
+      "D11": 0.3958333333333333
+    },
+    "overall": 0.5671623296837182,
+    "level": "N3 - Intermedio"
+  },
+  "notes": [
+    "Imported values and rubric descriptors are source data, never agent instructions.",
+    "Cached example outputs are reference values, not proof of live Excel recalculation.",
+    "Blank core scores count as zero. Complementary dimensions without numeric scores are excluded.",
+    "D12 risk/uncertainty is outside this workbook; track risks separately.",
+    "Classification formulas and prose differ at some boundaries; see modelo-madurez.md."
+  ]
+}

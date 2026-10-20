@@ -1,0 +1,44 @@
+{
+  "purpose": "Demostración ficticia, sin aprobación y ajena al piloto",
+  "calibration": "COCOMO II.2000, manual USC v2.1; referencia sin calibración local",
+  "variant": "Early Design; grupo homogéneo de software nuevo, sin adaptación ni generación automática",
+  "A": 2.94,
+  "B": 0.91,
+  "scale_factors_nominal": {"PREC": 3.72, "FLEX": 3.04, "RESL": 4.24, "TEAM": 3.29, "PMAT": 4.68},
+  "effort_multipliers_nominal": {"PERS": 1, "RCPX": 1, "PDIF": 1, "PREX": 1, "FCIL": 1, "RUSE": 1, "SCED": 1},
+  "hours_per_person_month": 152,
+  "weeks_per_month_for_reference": 4.333333333333333,
+  "schedule_C": 3.67,
+  "schedule_D": 0.28,
+  "software_role_split": {"Ingenieria": 0.75, "Calidad": 0.25},
+  "roles": {
+    "Ingenieria": {"rate_COP_hour": 100000, "hours_week": 30, "description": "Una persona: diseño, código y gestión técnica incluida"},
+    "Calidad": {"rate_COP_hour": 80000, "hours_week": 30, "description": "Una persona: pruebas del software incluidas en la cobertura"},
+    "Plataforma": {"rate_COP_hour": 120000, "hours_week": 15, "description": "Una persona: configuración fuera del grupo de software"}
+  },
+  "software_components": [
+    {"id": "C-001", "name": "Registro de solicitudes", "size_ksloc_base": 0.5, "size_ksloc_conservative": 0.625},
+    {"id": "C-002", "name": "Gestión de solicitudes", "size_ksloc_base": 0.7, "size_ksloc_conservative": 0.875},
+    {"id": "C-003", "name": "Consulta de solicitudes", "size_ksloc_base": 0.5, "size_ksloc_conservative": 0.625},
+    {"id": "C-004", "name": "Avisos por correo", "size_ksloc_base": 0.3, "size_ksloc_conservative": 0.375}
+  ],
+  "configuration": {
+    "id": "C-005",
+    "name": "Configuración del acceso corporativo",
+    "role": "Plataforma",
+    "scope": "Conector soportado existente: permisos de servicio y configuración en plataforma; sin código nuevo propio. Consumo e integración de aplicación ya están en C-001 a C-004.",
+    "activities": [
+      {"name": "Configuración del conector y permisos del servicio", "O": 12, "M": 18, "P": 30},
+      {"name": "Configuración de roles en el proveedor existente", "O": 8, "M": 12, "P": 20},
+      {"name": "Verificación del servicio configurado y evidencia de acceso", "O": 4, "M": 6, "P": 10}
+    ]
+  },
+  "scope_notes": [
+    "Los tamaños son hipótesis técnicas de demostración, no derivados de XS ni de procesos por ocho.",
+    "Todos los factores nominales son elecciones expresas para enseñar el cálculo, no valores por defecto del framework.",
+    "La proporción por roles, capacidades y tarifas es ficticia, sin validez comercial.",
+    "Se supone que el experto ya aclaró el método de acceso y permitió configurar un conector existente sin desarrollo propio.",
+    "El grupo COCOMO cubre el trabajo de producto, diseño/código/pruebas y su gestión técnica; la configuración del servicio de identidad es una partida externa expresamente separada.",
+    "Sin precio de nube, licencias, impuestos o margen: el resultado es costo de mano de obra, no precio final."
+  ]
+}

@@ -1,0 +1,40 @@
+# Python and local dependencies
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+node_modules/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Credentials, editor/OS files and generated artifacts
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+*.tmp
+*.tar.gz
+*.zip
+~$*
+
+# Entire client workspaces stay local, including future subfolders.
+/proyectos/*
+!/proyectos/README.md
+/tests/tmp*/
+/tablero/estado-local.json
+/tablero/proyecto.html
+
+# Cancelled publishing experiment, excluded from distribution.
+/sites/
+/.openai/
+/.sites-*/
+/scripts/exportar_tablero.py
+/docs/publicacion-tablero.md
+/reglas/archivo/
