@@ -4,22 +4,243 @@ Flujo local y trazable, independiente del proveedor de IA. El asistente interpre
 los comandos y realiza el análisis; Python controla etapas, historial y aprobaciones.
 Los informes del requerimiento, componentes y estimación son legibles en Markdown.
 
-## Instalar y abrir
+## Instalación paso a paso · independiente de la IA
 
-Requiere Python 3.10 o superior. El flujo principal no requiere paquetes externos
-ni claves de API. Desde la raíz:
+FADE se instala como una carpeta local. Puedes cambiar de asistente sin cambiar
+los expedientes, reglas ni scripts. La instalación del framework no configura un
+proveedor de IA ni hace llamadas a sus servicios.
+
+### 1. Preparar el equipo y elegir cómo usar la IA
+
+Necesitas:
+
+- **Python 3.10 o superior**, disponible en la terminal.
+- **Git**, si vas a clonar el repositorio. También puedes descargarlo como ZIP y
+  descomprimirlo; Git no es necesario para ejecutar esa copia.
+- Un asistente capaz de **leer y editar archivos locales y ejecutar comandos** en
+  la carpeta del framework, para operar el flujo desde su chat.
+- Un navegador para consultar el tablero local.
+
+Comprueba Python y, si lo utilizarás, Git:
+
+```sh
+python --version
+git --version
+```
+
+Los ejemplos usan `python`. Si tu equipo lo identifica como `python3` o `py`, usa
+ese comando en su lugar en todos los pasos. El flujo principal utiliza la biblioteca
+estándar de Python: no requiere `pip install`, entorno virtual ni claves de API.
+Las herramientas archivadas en `referencias/` no forman parte de esa instalación.
+
+Si tu IA solo dispone de chat y no puede operar archivos o terminal, puedes usarla
+como apoyo: tú ejecutas los comandos y compartes los insumos/resultados necesarios.
+En esa modalidad los comandos del chat no se ejecutan automáticamente. La lectura
+de adjuntos depende de la herramienta; aporta una conversión legible si hace falta.
+
+### 2. Obtener el framework
+
+Desde la terminal, en la carpeta donde guardarás la instalación:
+
+```sh
+git clone https://github.com/MATI-Magister/FrameworkFADE.git
+cd FrameworkFADE
+```
+
+Si descargaste el ZIP, descomprímelo y abre la terminal en la carpeta extraída.
+La **raíz** es la carpeta donde están `README.md`, `AGENTS.md`, `scripts/` y
+`configuracion/`. Ejecuta todos los comandos siguientes desde esa carpeta.
+
+### 3. Ejecutar la instalación local
 
 ```sh
 python scripts/install.py
-python scripts/framework.py --project piloto status
+```
+
+El instalador:
+
+- Valida la configuración y los recursos de roles y skills.
+- Crea el expediente `piloto`, que es el proyecto predeterminado inicial.
+- Crea catálogos vacíos de activos, tecnologías y proyectos en `datos-locales/`.
+- Conserva los expedientes y catálogos que ya existan.
+
+Puedes volver a ejecutarlo. Si necesitas otro proyecto predeterminado, cambia
+`operation.default_project` en `configuracion/framework.json` antes de instalar.
+No se ejecutan agentes, estimaciones ni aprobaciones durante la instalación.
+
+### 4. Comprobar la instalación
+
+```sh
 python scripts/framework.py doctor
+python scripts/framework.py --project piloto status
+```
+
+Sustituye `piloto` si elegiste otro identificador. El diagnóstico distingue
+**instalación técnica correcta** de **valores pendientes para estimar**. Es normal
+que una instalación nueva indique moneda, costo horario, equipo y factores por
+confirmar: puedes preparar requerimientos y trabajar sus aclaraciones antes de
+completar esos valores.
+
+Para ejecutar también la batería de pruebas:
+
+```sh
+python scripts/verificar.py
+```
+
+### 5. Conectar el asistente de IA que prefieras
+
+Abre la carpeta raíz como proyecto o espacio de trabajo en tu herramienta de IA.
+Permite que el asistente lea y edite esa carpeta y ejecute Python. El framework no
+necesita acceso a correo, servicios externos ni credenciales de un proveedor.
+
+Si la herramienta reconoce `AGENTS.md`, úsalo como instrucciones del proyecto.
+Si no lo descubre automáticamente, indícale que lo lea o incorpora su contenido
+en el mecanismo de instrucciones que ofrezca. Puedes comenzar con este mensaje:
+
+```text
+Trabaja desde la raíz de este repositorio. Lee AGENTS.md, README.md y
+framework/protocolo.md antes de operar. Usa el proyecto piloto en este chat.
+Interpreta los comandos definidos en AGENTS.md y ejecuta sus acciones locales.
+Consulta el estado antes de operar y respeta las aprobaciones humanas del flujo.
+```
+
+Cambia `piloto` por tu proyecto si corresponde. Después escribe en el **chat del
+asistente**, no en la terminal:
+
+```text
+!estado
+!roles
+```
+
+Debes obtener el estado real del expediente y el mapa de responsabilidades.
+Los comandos `!…` son una convención que interpreta el asistente. No hay un servicio
+de escucha instalado: el asistente consulta las instrucciones y utiliza el motor
+Python. El mismo asistente puede asumir los diferentes roles; no necesita soporte
+nativo de subagentes ni un SDK específico.
+
+### 6. Instalar skills en la herramienta, si las admite (opcional)
+
+Este paso solo aplica si tu herramienta reconoce paquetes `SKILL.md` y ofrece un
+directorio donde instalarlos. Usa el directorio que indique esa herramienta:
+
+```sh
+python scripts/install.py --skills-target "DIRECTORIO_DE_SKILLS"
+```
+
+Reemplaza `DIRECTORIO_DE_SKILLS` por la ruta real; las comillas permiten rutas con
+espacios. El comando reúne la instalación del framework y sus once skills.
+Si el framework ya está instalado, conserva sus datos e instala los adaptadores.
+
+Las skills apuntan a esta copia del framework y consultan sus reglas centrales.
+El instalador protege skills ajenas o modificadas; no las reemplaza por fuerza.
+Si mueves la instalación, crea los adaptadores en un directorio libre y configura
+su descubrimiento en la herramienta. La detección o recarga depende del asistente
+que utilices. Si no admite skills, opera mediante `AGENTS.md` como en el paso 5.
+
+### 7. Levantar el tablero local
+
+En una terminal situada en la raíz:
+
+```sh
 python scripts/framework.py serve
 ```
 
-Abrir http://127.0.0.1:8765/. El servidor escucha solo en 127.0.0.1. La portada es
-un manual con etapas seleccionables; Mis proyectos consulta cada carpeta de
-proyectos/ cada diez segundos, con progreso, estado y rutas de evidencia. El portal
-es de consulta; copiar un comando no lo ejecuta. Los documentos no se sirven por HTTP.
+Abre **http://127.0.0.1:8765/** en tu navegador y mantén esa terminal abierta.
+Detén el servidor con `Ctrl+C`. Si configuraste otro puerto, usa la dirección que
+imprime el servidor. Para seleccionar uno al iniciar:
+
+```sh
+python scripts/framework.py serve --port 8766
+```
+
+La portada muestra el manual del flujo en cajas seleccionables. **Mis proyectos**
+consulta las carpetas de `proyectos/` cada diez segundos y muestra estado, progreso
+y rutas de evidencia. El portal es de consulta: copiar un comando no lo ejecuta.
+Usa la dirección HTTP del servidor para consultar proyectos; abrir el HTML como
+archivo no permite usar la API local. El servidor escucha solo en `127.0.0.1` y
+no expone los documentos originales por HTTP.
+
+### 8. Preparar el primer requerimiento
+
+Puedes usar `piloto` o crear un expediente independiente desde el chat:
+
+```text
+!nuevo mi-proyecto
+```
+
+Indica al asistente que use `mi-proyecto` en ese chat. La alternativa en terminal es:
+
+```sh
+python scripts/framework.py init mi-proyecto
+```
+
+Guarda los documentos en la carpeta del proyecto elegido:
+
+| Carpeta dentro de `proyectos/<id>/` | Qué colocar |
+| --- | --- |
+| `01-entradas/requerimientos/` | Solicitud y documentos originales del cliente |
+| `01-entradas/contexto/` | Sistemas existentes, restricciones, equipo y antecedentes |
+| `01-entradas/respuestas/` | Respuestas y aclaraciones con sus fuentes |
+
+Después, en el chat del asistente:
+
+```text
+!registrar
+!madurez
+```
+
+Ejecuta un comando cada vez y revisa su resultado. El asistente debe leer las fuentes,
+producir el resumen y generar preguntas. Cuando hayas revisado A1, `!aprove a1`
+autoriza pasar a `!componentes`. El resto del flujo está descrito más abajo y en
+el manual del tablero. Si falta información, el agente identifica el pendiente.
+
+### 9. Completar los parámetros antes de una estimación real
+
+Edita `configuracion/framework.json`, con apoyo del asistente si lo deseas:
+
+| Apartado | Qué definir |
+| --- | --- |
+| `operation` | Proyecto predeterminado, puerto y preguntas por ronda |
+| `estimation.currency` y `cost_per_hour` | Moneda y costo horario único real del equipo |
+| `estimation.team` | Roles, personas, horas disponibles, dedicación y fuente |
+| `estimation.process_method` | Horas por proceso, factores, gestión y bandas con fundamento |
+| Parámetros comerciales, si aplican | Decisiones de costos adicionales y condiciones con sus fuentes |
+
+`null` significa **por confirmar**, nunca cero. Las escalas elegidas y las políticas
+vigentes ya están configuradas. Los datos ilustrativos no se adoptan como valores
+reales. Consulta `configuracion/README.md` y registra las decisiones en
+`reglas/revision.md`. La aprobación del paquete de reglas es una acción explícita
+separada de la instalación; el asistente guía su revisión antes de `!aprove reglas`.
+
+Para consultar y validar la configuración:
+
+```sh
+python scripts/framework.py config
+```
+
+A4 exige parámetros completos y reglas aprobadas para el expediente. Instalar o
+abrir el tablero no concede esa aprobación.
+
+### 10. Probar el cálculo sin datos del cliente (opcional)
+
+```sh
+python scripts/demo_procesos.py
+```
+
+El comando imprime la ruta de un informe Markdown en `insumos-locales/demo-procesos/`.
+Ábrelo para ver Base y Conservador con esfuerzo, costo y calendario por componente.
+Usa datos y moneda ficticios, sin modificar configuración, expedientes ni aprobaciones.
+
+### Problemas frecuentes de instalación
+
+| Situación | Qué hacer |
+| --- | --- |
+| `python` no se reconoce | Comprueba la instalación de Python y prueba `python3` o `py`; utiliza el comando disponible en todos los pasos. |
+| No encuentra `scripts/install.py` | Abre la terminal en la raíz donde están `README.md` y `AGENTS.md`. |
+| El asistente responde a `!estado` sin consultar archivos | Pídele leer `AGENTS.md` y comprobar acceso a archivos y terminal; sin esas capacidades el operador debe ejecutar las acciones locales. |
+| El tablero no responde | Inicia `serve`, mantén la terminal abierta y abre la dirección que imprime. Si el puerto está ocupado, selecciona otro. |
+| Las skills no aparecen | Comprueba el directorio y mecanismo de recarga de tu herramienta; puedes seguir usando `AGENTS.md`. |
+| El diagnóstico muestra parámetros pendientes | Completa los valores reales y revisa las reglas; no es necesario reinstalar ni rellenar cifras ficticias. |
 
 ## Flujo y comandos
 
@@ -65,17 +286,9 @@ mapea once responsabilidades y sus skills en skills/. El mismo asistente puede
 asumirlas; el motor no inicia procesos IA independientes. El mapa conecta números
 A1–A7 del ZIP con las siete etapas existentes sin renumerar expedientes.
 
-Las skills están preparadas en el repositorio y AGENTS.md las enruta. Si tu herramienta
-requiere instalarlas en su directorio de descubrimiento, usa su ruta elegida:
-
-```sh
-python scripts/install.py --skills-target <directorio-de-skills-de-tu-herramienta>
-```
-
-El instalador genera un adaptador que apunta a esta instalación; no copia ni duplica
-reglas o expedientes, y protege skills ajenas/modificadas. Cambiar de equipo requiere
-reinstalar el adaptador. El soporte de descubrimiento depende de la herramienta;
-para agentes sin skills, basta seguir AGENTS.md desde este repositorio.
+Las once skills están en `skills/` y `AGENTS.md` indica cuáles corresponden a cada
+etapa. Su instalación opcional en otra herramienta se explica en el paso 6. Los
+adaptadores consultan esta instalación para mantener una sola fuente de reglas.
 
 Horas por proceso se evalúa como método principal. El motor calcula esfuerzo, costo y calendario por componente con capacidad y dependencias.
 Falta calibrar y aprobar factores, bandas y datos reales; A4 real permanece bloqueado
@@ -133,18 +346,7 @@ escrito o en transcripción con hablante identificado. El costo inicial es horar
 R3 30–50 %, R4 >50 %. Los factores numéricos requieren calibración por separado.
 
 
-## Comprobar y ver una demostración
-
-```sh
-python scripts/verificar.py
-python scripts/demo_procesos.py
-```
-
-verificar.py reúne diagnóstico y pruebas. demo_procesos.py genera un informe
-legible con datos ficticios reproducibles en insumos-locales/demo-procesos/,
-sin modificar configuración, expedientes ni aprobaciones. Usa moneda ficticia DEM;
-los valores del ejemplo nunca se convierten en defaults. El informe muestra Base
-y Conservador con esfuerzo, costo, capacidad y dependencias explícitas.
+## Integridad de resultados y distribución
 
 Las etapas posteriores comprueban las huellas de entregables previos: editar un
 resultado aceptado exige reintentar esa etapa antes de continuar. El material binario
