@@ -1,3 +1,8 @@
+> Referencia anterior al cambio del 2026-11-02. Para el modelo activo de A1, usar
+> modelo-informacion.md; para el método principal en evaluación, horas-por-proceso.md.
+> Ante diferencias operativas prevalecen integracion-agentes.md y las decisiones
+> posteriores de revision.md. El catálogo Excel conserva utilidad para clasificación.
+
 # A4 · Esfuerzo, duración y costo · propuesta para revisión
 
 ## Entradas y salida

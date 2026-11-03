@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "faed/faed_propuesta.schema.json",
+  "$comment": "Contrato v0.1 de A6 · Redactar propuesta.",
+  "title": "FAED · Textos de la propuesta",
+  "description": "Los textos de cada sección de la plantilla de propuesta. Los produce A6 · Redactar propuesta; la función de armado los pone en la plantilla junto con las cifras del escenario validado.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id_solicitud",
+    "version_ficha",
+    "nombre_proyecto",
+    "contexto",
+    "solucion",
+    "supuestos",
+    "informacion_que_mejora",
+    "objetivo_bloque",
+    "primer_entregable",
+    "advertencias"
+  ],
+  "properties": {
+    "id_solicitud": {
+      "type": "string",
+      "description": "Identificador de la solicitud, copiado de la ficha de los componentes."
+    },
+    "version_ficha": {
+      "type": "integer",
+      "description": "Versión de la ficha usada, copiada de la ficha de los componentes."
+    },
+    "nombre_proyecto": {
+      "type": "string",
+      "description": "Nombre del proyecto para la portada: corto, en el lenguaje del cliente y sin el nombre del cliente."
+    },
+    "contexto": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "De dos a tres párrafos: el problema o la oportunidad del cliente, el resultado que espera y el contexto relevante (sistemas actuales, plazos, normativa, integraciones)."
+    },
+    "solucion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "descripcion",
+        "componentes",
+        "incluye_adicional",
+        "no_incluye"
+      ],
+      "properties": {
+        "descripcion": {
+          "type": "string",
+          "description": "Descripción general de la solución en un párrafo: qué se construye, con qué tecnologías principales y cómo responde a la necesidad."
+        },
+        "componentes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "descripcion"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Identificador del componente, copiado de las fichas de los componentes (C01, C02…)."
+              },
+              "descripcion": {
+                "type": "string",
+                "description": "Qué hace el componente para el cliente, en una oración y sin su clasificación interna."
+              }
+            }
+          },
+          "description": "Un elemento por cada componente, en el mismo orden de las fichas de los componentes."
+        },
+        "incluye_adicional": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Lo que incluye la propuesta además del análisis, diseño, construcción, pruebas, despliegue y gestión, que agrega la función. Vacío si no hay nada más."
+        },
+        "no_incluye": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Lo que la propuesta no incluye, según la ficha y las fronteras de los componentes. La función agrega la infraestructura y las licencias cuando no se cotizan."
+        }
+      }
+    },
+    "supuestos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Condiciones que se asumieron para estimar, redactadas para que el cliente las confirme o las corrija. Sin repetidos."
+    },
+    "informacion_que_mejora": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Información que permitiría precisar la estimación: qué se necesita y para qué, redactado como solicitud al cliente."
+    },
+    "objetivo_bloque": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Qué se logra con el primer bloque, en una oración. null si no hay primer bloque."
+    },
+    "primer_entregable": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "El primer entregable del proyecto, en una frase. null si hay primer bloque o si la estimación es preliminar."
+    },
+    "advertencias": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Lo que la Gerencia de Proyectos debe mirar antes de enviar: datos de la ficha en contradicción, supuestos sensibles, información que no encontró."
+    }
+  }
+}

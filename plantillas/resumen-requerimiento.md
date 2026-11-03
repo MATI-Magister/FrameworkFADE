@@ -27,22 +27,22 @@ Explicar términos técnicos cuando sean necesarios.
 ## ¿Tenemos información suficiente para estimar?
 Conclusión breve y sus motivos. Separar la recomendación del agente de la aceptación humana.
 
-| Dimensión de madurez D1–D11 | Madurez (%) | Evidencia y explicación | Qué falta |
+| Dimensión de madurez D1–D8 y D10 | Madurez (%) | Evidencia y explicación | Qué falta |
 | --- | --- | --- | --- |
 | <dimensión> | <puntos> | <referencia y motivo> | <pendiente o ninguno> |
 
-Resultado: <porcentaje ponderado y nivel N1–N5 según modelo del Excel>.
-Indicar dimensiones incluidas/excluidas, cobertura y si aplica tope N3 por núcleo <40 %.
-Anexar detalle por criterio: ID, puntaje 0–3/N/A, evidencia y validación.
+Resultado: <porcentaje ponderado y nivel baja/media/alta según B.1>.
+Indicar dimensiones incluidas/excluidas, cobertura y si aplica tope a media si el resultado era alto y un núcleo está bajo 40 %.
+Anexar detalle por criterio: ID, puntaje 0–3; aplicabilidad por dimensión, evidencia y validación.
 Separar preguntas faltantes de condiciones conocidas que limitan la técnica.
 Aceptación humana: <pendiente / decisión explícita, responsable y fecha>.
 
-## Preguntas para mejorar de N3 a N4 y decisión del experto
+## Preguntas para mejorar la información y decisión del experto
 Referenciar `preguntas-a1.md`: criterio, pregunta, evidencia requerida, responsable
 y respuesta pendiente/recibida. Destacar dimensiones núcleo por debajo del 40 %.
 Decisión: <continuar aclaraciones / autorizar paso a componentes con pendientes>.
 Responsable y fuente de la instrucción: <por confirmar / referencia explícita>.
-El nivel N4 no autoriza el avance automáticamente.
+Ningún nivel no autoriza el avance automáticamente.
 
 ## Fuentes consultadas
 Referencias identificables y su versión. Aclarar documentos que no pudieron leerse.

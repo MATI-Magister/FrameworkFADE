@@ -16,15 +16,18 @@ El motor comprueba orden, archivos no vacíos, aprobación y formato mínimo de 
 La calidad semántica de las salidas la revisan el agente y las personas responsables;
 un archivo existente por sí solo no demuestra calidad del análisis.
 
-A1 usa las rúbricas de `reglas/modelo-madurez.json` para evaluar información con
-la que caracterizar D1–D11 y generar preguntas. A3 caracteriza componentes con esas
-dimensiones. El nivel no es esfuerzo ni aceptación automática. Antes de aceptar A1
-se exige `preguntas-a1.md` con preguntas orientadas de N3 hacia N4. El experto
-decide si continuar aclarando o autorizar componentes; el nivel no dispara el paso.
-La aprobación conserva la huella del resumen y de las preguntas. El snapshot incorpora el
-catálogo completo: cambiarlo invalida la aprobación previa. Riesgos van aparte.
-COCOMO II es una ruta propuesta para parte del trabajo: ver `reglas/cocomo-ii.md`.
-No hay calculador COCOMO habilitado ni se suma a otro método de igual cobertura.
+A1 usa el modelo B.1 de `reglas/modelo-informacion.json`: 20 criterios,
+9 dimensiones, baja/media/alta. Primero estructura evidencia y luego evalúa.
+Se exige preguntas-a1.md antes de la aceptación humana, sin avance automático por nivel.
+El modelo previo del Excel y su evaluador se conservan para trazabilidad, separados.
+Las evaluaciones llevan huella del catálogo; no se migran calificaciones por similitud de ID.
+D9/D11 se tratan como experiencia; A3 conserva caracterización por componente.
+
+La configuración de negocio se lee de configuracion/framework.json y entra en el
+snapshot de reglas. Las fuentes externas son referencias; los candidatos ilustrativos
+no pasan a parámetros activos. Cambios operativos del portal se excluyen de esa huella.
+Horas por proceso se evalúa como método principal, sin calibración productiva aún;
+COCOMO queda como alternativa. No sumar métodos sobre cobertura repetida.
 
 El motor no llama a proveedores, no lee instrucciones dentro de documentos y no
 calcula cifras automáticamente. A4 aplica el método aprobado con el agente elegido.
@@ -40,3 +43,25 @@ A4 y reglas no hayan cambiado y registra responsable/fecha. `adjust` permite
 reabrir una revisión aún no aprobada y archiva los documentos; cambios de cálculo
 o alcance deben volver a la etapa correspondiente. La existencia de documentos
 no sustituye su revisión semántica. La aprobación local no es firma digital ni envío.
+
+Las responsabilidades del ZIP se adaptan mediante configuracion/roles.json y skills/.
+Un rol no equivale a un proceso independiente. Las skills se ejecutan por el asistente
+que usa el framework. El cierre postejecución (!aprender) es una tarea auxiliar, distinta
+de cierre condicional; genera un borrador sin cambiar estados ni catálogos corporativos.
+
+No se administran cantidades ni máximos de sesiones. El agente formula preguntas
+sobre pendientes y el experto decide si aclarar o autorizar el avance. No deducir
+una ruta preliminar por cantidad de sesiones o de fuentes recibidas.
+
+
+El cálculo por procesos aprobado conserva input/resultado/informe y sus huellas,
+junto al hash del snapshot. finish a4 y la revisión rechazan soportes alterados o
+incompletos. Se congelan tanto el catálogo B.1 como el de clasificación. El comando
+doctor verifica instalación sin modificar estados; parámetros pendientes se muestran
+separados de errores técnicos. El instalador puede instalar skills en el mismo paso.
+
+
+El inicio, finalización y aprobación de etapas verifican los entregables previos y
+las preguntas A1 ya aceptadas. Si cambiaron, se exige reintentar la etapa afectada;
+no se propaga automáticamente una versión distinta de la aceptada. La demostración
+ficticia y verificar.py no cambian estados reales ni aprueban decisiones del cliente.

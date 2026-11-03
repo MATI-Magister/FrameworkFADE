@@ -5,3 +5,5 @@ Usa `plantillas/entregable.md`. Produce `03-entregables/registro.md` con inventa
 de documentos, objetivo, alcance inicial, fuentes legibles y faltantes. Conserva
 originales. No inventes contenido de adjuntos no leídos. Si no hay requerimiento
 legible, bloquea la etapa y pide el insumo. Registro no equivale a aceptación de madurez.
+
+Leer también reglas/integracion-agentes.md y las skills asignadas en configuracion/roles.json.

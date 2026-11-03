@@ -1,0 +1,10 @@
+{
+  "_formato": {
+    "nombre": "Tecnología, plataforma o producto. Solo plataformas, lenguajes, bases de datos y productos; los protocolos de intercambio no van en el mapa.",
+    "nivel": "T1 conocida · T2 parcialmente conocida · T3 nueva · T4 experimental, según la familiaridad del equipo.",
+    "notas": "Opcional: versión, proyectos en que se usó o restricciones.",
+    "alias": "Otros nombres con que el cliente puede llamar la misma tecnología (por ejemplo, Microsoft Azure para Azure). Opcional."
+  },
+  "version": "1",
+  "tecnologias": []
+}

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "faed/faed_juicio_escenario.schema.json",
+  "$comment": "Contrato v0.1 de A5 · Generar escenario.",
+  "title": "FAED · Juicios para el escenario",
+  "description": "Los juicios que necesita el escenario: qué proyectos del registro son comparables y qué procesos forman el primer bloque. Los produce A5 · Generar escenario; las funciones de cálculo los convierten en experiencia, confianza, rango, precios y ruta.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id_solicitud",
+    "version_ficha",
+    "comparables",
+    "primer_bloque",
+    "advertencias"
+  ],
+  "properties": {
+    "id_solicitud": {
+      "type": "string",
+      "description": "Identificador de la solicitud, copiado de la ficha de los componentes."
+    },
+    "version_ficha": {
+      "type": "integer",
+      "description": "Versión de la ficha usada, copiada de la ficha de los componentes."
+    },
+    "comparables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "proyecto",
+          "es_comparable",
+          "justificacion"
+        ],
+        "properties": {
+          "proyecto": {
+            "type": "string",
+            "description": "Identificador del proyecto candidato, copiado de la preparación (PRY-xx)."
+          },
+          "es_comparable": {
+            "type": "boolean",
+            "description": "true si la descripción y los componentes del proyecto muestran que su trabajo principal se parece al de este proyecto; false si es de otra naturaleza o si la descripción no alcanza para juzgarlo."
+          },
+          "justificacion": {
+            "type": "string",
+            "description": "Por qué es o no es comparable, en una oración."
+          }
+        }
+      },
+      "description": "Un elemento por cada proyecto candidato de la preparación, en el mismo orden. Vacío si no hay candidatos."
+    },
+    "primer_bloque": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "procesos",
+        "funcionalidad",
+        "justificacion"
+      ],
+      "properties": {
+        "procesos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Identificadores de los procesos que forman el primer bloque (C01-P01…). Vacío si no corresponde proponer bloque."
+        },
+        "funcionalidad": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Lo que el cliente puede usar al terminar el bloque, en una o dos oraciones y en su lenguaje. null si no hay bloque."
+        },
+        "justificacion": {
+          "type": "string",
+          "description": "Por qué esos procesos forman el bloque o, si no hay bloque, por qué no corresponde."
+        }
+      }
+    },
+    "advertencias": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Lo que la persona que valida debe mirar: candidatos dudosos, ausencia de comparables, procesos del bloque que se apoyan en supuestos."
+    }
+  }
+}

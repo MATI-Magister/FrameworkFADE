@@ -1,0 +1,14 @@
+{
+  "_formato": {
+    "id": "Identificador del activo: ACT y un número (ACT-01).",
+    "nombre": "Nombre con el que la empresa reconoce el activo.",
+    "descripcion": "Qué es el activo, en una oración.",
+    "procesos_que_cubre": "Procesos funcionales que el activo ya resuelve, con verbo en infinitivo y objeto.",
+    "tecnologias": "Tecnologías con las que está construido.",
+    "estado": "vigente, requiere_actualizacion o retirado.",
+    "usos": "Cada uso: proyecto, componente, si el cierre confirmó la reutilización y cuántos procesos se estimaron y cubrió.",
+    "origen": "Proyecto y componente en que se construyó el activo, cuando entró al catálogo en un cierre."
+  },
+  "version": "1",
+  "activos": []
+}

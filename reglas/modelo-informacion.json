@@ -1,0 +1,336 @@
+{
+  "version": "zip-b1-1.0",
+  "kind": "information_b1",
+  "source": {
+    "file": "OneDrive_2026-11-02.zip",
+    "reference": "referencias/onedrive-2026-11-02/verificacion/rubrica_b1.json",
+    "sha256": "40e8c8b48a419a1aeee702ad1a72aad4df6e2ac03338ac565b1dbffc5a14ea18"
+  },
+  "dimensions": [
+    {
+      "id": "D1",
+      "name": "Tipo de desarrollo",
+      "core": true,
+      "weight": 12
+    },
+    {
+      "id": "D2",
+      "name": "Arquetipo",
+      "core": true,
+      "weight": 11
+    },
+    {
+      "id": "D3",
+      "name": "Tamaño funcional",
+      "core": true,
+      "weight": 18
+    },
+    {
+      "id": "D4",
+      "name": "Complejidad",
+      "core": true,
+      "weight": 15
+    },
+    {
+      "id": "D5",
+      "name": "Integración",
+      "core": true,
+      "weight": 14
+    },
+    {
+      "id": "D6",
+      "name": "Reutilización",
+      "core": false,
+      "weight": 5
+    },
+    {
+      "id": "D7",
+      "name": "Entorno tecnológico",
+      "core": false,
+      "weight": 5
+    },
+    {
+      "id": "D8",
+      "name": "Definición del alcance",
+      "core": false,
+      "weight": 7
+    },
+    {
+      "id": "D10",
+      "name": "Sector",
+      "core": false,
+      "weight": 3
+    }
+  ],
+  "criteria": [
+    {
+      "id": "D1.1",
+      "dimension": "D1",
+      "name": "¿Se conoce qué parte del alcance es nueva, modificada, reemplazada o correctiva?",
+      "question": "¿Se conoce qué parte del alcance es nueva, modificada, reemplazada o correctiva?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No se conoce.",
+        "1": "Cualitativo (\"es nuevo\").",
+        "2": "Porcentajes estimados por juicio.",
+        "3": "Porcentajes sobre el inventario de procesos."
+      }
+    },
+    {
+      "id": "D1.2",
+      "dimension": "D1",
+      "name": "¿Se conocen los sistemas o funcionalidades existentes que el proyecto modifica, reemplaza o retira, y los datos que hay que migrar?",
+      "question": "¿Se conocen los sistemas o funcionalidades existentes que el proyecto modifica, reemplaza o retira, y los datos que hay que migrar?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No se conocen.",
+        "1": "Mencionados de forma general.",
+        "2": "Identificados, sin detalle de lo que cambia o de los datos a migrar.",
+        "3": "Identificados, con lo que cambia en cada uno y los datos a migrar, si los hay."
+      }
+    },
+    {
+      "id": "D1.3",
+      "dimension": "D1",
+      "name": "¿Está claro qué se construye y qué queda fuera del alcance?",
+      "question": "¿Está claro qué se construye y qué queda fuera del alcance?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No está definido.",
+        "1": "Implícito.",
+        "2": "Descrito, sin validar con el cliente.",
+        "3": "Validado con el cliente, con lo que queda fuera."
+      }
+    },
+    {
+      "id": "D2.1",
+      "dimension": "D2",
+      "name": "¿Se sabe qué concentra el trabajo: funcionalidades, integración, datos, plataforma, seguridad o transformación?",
+      "question": "¿Se sabe qué concentra el trabajo: funcionalidades, integración, datos, plataforma, seguridad o transformación?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No se sabe.",
+        "1": "Inferido del nombre del proyecto.",
+        "2": "Identificado a partir del alcance.",
+        "3": "Identificado con evidencia cuantitativa."
+      }
+    },
+    {
+      "id": "D2.2",
+      "dimension": "D2",
+      "name": "¿Se conoce lo suficiente de cada parte de la solución para saber cuál concentrará la mayor parte del esfuerzo?",
+      "question": "¿Se conoce lo suficiente de cada parte de la solución para saber cuál concentrará la mayor parte del esfuerzo?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No.",
+        "1": "Solo la parte más visible.",
+        "2": "Las partes principales, sin dimensionar.",
+        "3": "Todas las partes, con su tamaño aproximado."
+      }
+    },
+    {
+      "id": "D2.3",
+      "dimension": "D2",
+      "name": "¿Se cuantifican los factores de esfuerzo del arquetipo principal, como funcionalidades, interfaces o fuentes de datos?",
+      "question": "¿Se cuantifican los factores de esfuerzo del arquetipo principal, como funcionalidades, interfaces o fuentes de datos?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No identificados.",
+        "1": "Nombrados.",
+        "2": "La mayoría cuantificados.",
+        "3": "Todos cuantificados, con fuente."
+      }
+    },
+    {
+      "id": "D3.1",
+      "dimension": "D3",
+      "name": "¿Existe un inventario de procesos funcionales?",
+      "question": "¿Existe un inventario de procesos funcionales?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No existe.",
+        "1": "Solo módulos o épicas.",
+        "2": "Inventario parcial (70% o más).",
+        "3": "Completo y validado."
+      }
+    },
+    {
+      "id": "D3.2",
+      "dimension": "D3",
+      "name": "¿Se conocen los datos que entran, salen, se consultan y se guardan en cada proceso?",
+      "question": "¿Se conocen los datos que entran, salen, se consultan y se guardan en cada proceso?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No se conocen.",
+        "1": "Ejemplos aislados.",
+        "2": "Para 30% o más de los procesos.",
+        "3": "Para todos los procesos."
+      }
+    },
+    {
+      "id": "D3.3",
+      "dimension": "D3",
+      "name": "¿El cliente revisó la lista de procesos funcionales?",
+      "question": "¿El cliente revisó la lista de procesos funcionales?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No hay lista.",
+        "1": "Lista preliminar del equipo, sin revisar.",
+        "2": "Revisada con el cliente, con vacíos.",
+        "3": "Validada por el cliente."
+      }
+    },
+    {
+      "id": "D4.1",
+      "dimension": "D4",
+      "name": "¿Se conocen las reglas de negocio y a qué funcionalidades aplican?",
+      "question": "¿Se conocen las reglas de negocio y a qué funcionalidades aplican?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No identificadas.",
+        "1": "Solo en la narrativa.",
+        "2": "Catálogo parcial.",
+        "3": "Catálogo completo, asociado a funcionalidades."
+      }
+    },
+    {
+      "id": "D4.2",
+      "dimension": "D4",
+      "name": "¿Se conoce la arquitectura en la que debe operar la solución?",
+      "question": "¿Se conoce la arquitectura en la que debe operar la solución?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No se conoce.",
+        "1": "Idea general.",
+        "2": "Definida, sin validar.",
+        "3": "Definida y validada."
+      }
+    },
+    {
+      "id": "D4.3",
+      "dimension": "D4",
+      "name": "¿Se conocen los requisitos de seguridad y su nivel: estándar, elevado o crítico?",
+      "question": "¿Se conocen los requisitos de seguridad y su nivel: estándar, elevado o crítico?",
+      "weight": 3,
+      "descriptors": {
+        "0": "Desconocidos.",
+        "1": "Genéricos (\"debe ser seguro\").",
+        "2": "Identificados, con vacíos.",
+        "3": "Especificados y clasificados."
+      }
+    },
+    {
+      "id": "D4.4",
+      "dimension": "D4",
+      "name": "¿Hay información para calificar los cinco factores de complejidad?",
+      "question": "¿Hay información para calificar los cinco factores de complejidad?",
+      "weight": 2,
+      "descriptors": {
+        "0": "Para ninguno.",
+        "1": "Para uno o dos.",
+        "2": "Para tres o cuatro.",
+        "3": "Para los cinco."
+      }
+    },
+    {
+      "id": "D5.1",
+      "dimension": "D5",
+      "name": "¿Hay una lista de interfaces con su contraparte, dirección, propósito y frecuencia?",
+      "question": "¿Hay una lista de interfaces con su contraparte, dirección, propósito y frecuencia?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No existe.",
+        "1": "Solo los sistemas mencionados.",
+        "2": "Interfaces con datos incompletos.",
+        "3": "Inventario completo."
+      }
+    },
+    {
+      "id": "D5.2",
+      "dimension": "D5",
+      "name": "¿Están disponibles los contratos de interfaz, como OpenAPI, WSDL o esquemas?",
+      "question": "¿Están disponibles los contratos de interfaz, como OpenAPI, WSDL o esquemas?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No disponibles.",
+        "1": "Para pocas.",
+        "2": "Para la mayoría.",
+        "3": "Validados para todas."
+      }
+    },
+    {
+      "id": "D5.3",
+      "dimension": "D5",
+      "name": "¿Se conoce la dificultad de cada interfaz: protocolo, volumen y si su falla detiene la operación del cliente?",
+      "question": "¿Se conoce la dificultad de cada interfaz: protocolo, volumen y si su falla detiene la operación del cliente?",
+      "weight": 2,
+      "descriptors": {
+        "0": "No se conoce.",
+        "1": "Solo el número de interfaces.",
+        "2": "Conocida para la mayoría.",
+        "3": "Conocida para todas."
+      }
+    },
+    {
+      "id": "D6.1",
+      "dimension": "D6",
+      "name": "¿Se identificaron activos de la empresa que la solución puede reutilizar?",
+      "question": "¿Se identificaron activos de la empresa que la solución puede reutilizar?",
+      "weight": 2,
+      "descriptors": {
+        "0": "No se revisó.",
+        "1": "Se mencionan, sin identificarlos.",
+        "2": "Identificados por nombre, sin precisar qué cubren.",
+        "3": "Identificados, con los procesos que cubren."
+      }
+    },
+    {
+      "id": "D7.1",
+      "dimension": "D7",
+      "name": "¿Se conocen las tecnologías que exige la solución?",
+      "question": "¿Se conocen las tecnologías que exige la solución?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No se conocen.",
+        "1": "Solo la plataforma general.",
+        "2": "Las principales, con vacíos.",
+        "3": "Todas, con sus versiones o restricciones."
+      }
+    },
+    {
+      "id": "D8.1",
+      "dimension": "D8",
+      "name": "¿Están descritos el problema que resuelve el proyecto y los criterios de aceptación de las funcionalidades?",
+      "question": "¿Están descritos el problema que resuelve el proyecto y los criterios de aceptación de las funcionalidades?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No están descritos.",
+        "1": "Solo el problema, en términos generales.",
+        "2": "El problema y los criterios de aceptación de parte de las funcionalidades.",
+        "3": "El problema y los criterios de aceptación de todas las funcionalidades, validados con el cliente."
+      }
+    },
+    {
+      "id": "D10.1",
+      "dimension": "D10",
+      "name": "¿Se conoce la regulación del sector que afecta la solución?",
+      "question": "¿Se conoce la regulación del sector que afecta la solución?",
+      "weight": 3,
+      "descriptors": {
+        "0": "No analizada.",
+        "1": "Mencionada.",
+        "2": "Identificada, sin su efecto en los requisitos.",
+        "3": "Identificada, con su efecto en los requisitos."
+      }
+    }
+  ],
+  "levels": {
+    "media_minimum": 40,
+    "alta_minimum": 67
+  },
+  "core_floor": 40,
+  "excluded_from_information": [
+    "D9",
+    "D11"
+  ]
+}

@@ -14,7 +14,7 @@ class WorkflowTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(dir=ROOT / 'tests')
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        for name in ['tablero', 'reglas']:
+        for name in ['tablero', 'reglas', 'configuracion']:
             shutil.copytree(ROOT / name, self.root / name)
         self.flow = Workflow(self.root, 'test')
         self.flow.init()
@@ -51,6 +51,21 @@ class WorkflowTests(unittest.TestCase):
         with self.assertRaises(ValueError): self.flow.start('a2')
         self.flow.approve('a1', 'human')
         self.flow.start('a2')
+
+    def test_accepted_a1_change_blocks_start_without_mutating_state(self):
+        self.finish('registro'); self.finish('a1'); self.flow.approve('a1', 'test human')
+        (self.flow.base / '03-entregables/a1.md').write_text('Cambio sin revisión', encoding='utf-8')
+        before = self.flow.path.read_bytes()
+        with self.assertRaises(ValueError): self.flow.start('a2')
+        self.assertEqual(before, self.flow.path.read_bytes())
+
+    def test_upstream_change_while_running_blocks_finish(self):
+        self.finish('registro'); self.finish('a1'); self.flow.approve('a1', 'test human')
+        self.flow.start('a2')
+        (self.flow.base / '03-entregables/a2.md').write_text('Componentes', encoding='utf-8')
+        (self.flow.base / '03-entregables/preguntas-a1.md').write_text('Cambio sin aceptación', encoding='utf-8')
+        with self.assertRaises(ValueError): self.flow.finish('a2')
+        self.assertEqual(self.flow.read()['steps']['a2']['status'], 'en_ejecucion')
 
     def test_no_finish_without_deliverable(self):
         self.flow.start('registro')

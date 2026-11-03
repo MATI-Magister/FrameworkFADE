@@ -38,3 +38,12 @@ Thumbs.db
 /scripts/exportar_tablero.py
 /docs/publicacion-tablero.md
 /reglas/archivo/
+
+# Insumos originales y casos recibidos, nunca datos de operacion versionados.
+/insumos-locales/
+/datos-locales/
+/configuracion/local.json
+
+# Material binario del ZIP conservado localmente, sin uso en el flujo activo.
+/referencias/onedrive-2026-11-02/datos/plantilla_propuesta.docx
+/referencias/onedrive-2026-11-02/diagramas/

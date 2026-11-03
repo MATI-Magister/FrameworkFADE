@@ -1,0 +1,182 @@
+[
+ {
+  "id": "D1.1",
+  "pregunta": "¿Se conoce qué parte del alcance es nueva, modificada, reemplazada o correctiva?",
+  "0": "No se conoce.",
+  "1": "Cualitativo (\"es nuevo\").",
+  "2": "Porcentajes estimados por juicio.",
+  "3": "Porcentajes sobre el inventario de procesos.",
+  "P": 3
+ },
+ {
+  "id": "D1.2",
+  "pregunta": "¿Se conocen los sistemas o funcionalidades existentes que el proyecto modifica, reemplaza o retira, y los datos que hay que migrar?",
+  "0": "No se conocen.",
+  "1": "Mencionados de forma general.",
+  "2": "Identificados, sin detalle de lo que cambia o de los datos a migrar.",
+  "3": "Identificados, con lo que cambia en cada uno y los datos a migrar, si los hay.",
+  "P": 3
+ },
+ {
+  "id": "D1.3",
+  "pregunta": "¿Está claro qué se construye y qué queda fuera del alcance?",
+  "0": "No está definido.",
+  "1": "Implícito.",
+  "2": "Descrito, sin validar con el cliente.",
+  "3": "Validado con el cliente, con lo que queda fuera.",
+  "P": 3
+ },
+ {
+  "id": "D2.1",
+  "pregunta": "¿Se sabe qué concentra el trabajo: funcionalidades, integración, datos, plataforma, seguridad o transformación?",
+  "0": "No se sabe.",
+  "1": "Inferido del nombre del proyecto.",
+  "2": "Identificado a partir del alcance.",
+  "3": "Identificado con evidencia cuantitativa.",
+  "P": 3
+ },
+ {
+  "id": "D2.2",
+  "pregunta": "¿Se conoce lo suficiente de cada parte de la solución para saber cuál concentrará la mayor parte del esfuerzo?",
+  "0": "No.",
+  "1": "Solo la parte más visible.",
+  "2": "Las partes principales, sin dimensionar.",
+  "3": "Todas las partes, con su tamaño aproximado.",
+  "P": 3
+ },
+ {
+  "id": "D2.3",
+  "pregunta": "¿Se cuantifican los factores de esfuerzo del arquetipo principal, como funcionalidades, interfaces o fuentes de datos?",
+  "0": "No identificados.",
+  "1": "Nombrados.",
+  "2": "La mayoría cuantificados.",
+  "3": "Todos cuantificados, con fuente.",
+  "P": 3
+ },
+ {
+  "id": "D3.1",
+  "pregunta": "¿Existe un inventario de procesos funcionales?",
+  "0": "No existe.",
+  "1": "Solo módulos o épicas.",
+  "2": "Inventario parcial (70% o más).",
+  "3": "Completo y validado.",
+  "P": 3
+ },
+ {
+  "id": "D3.2",
+  "pregunta": "¿Se conocen los datos que entran, salen, se consultan y se guardan en cada proceso?",
+  "0": "No se conocen.",
+  "1": "Ejemplos aislados.",
+  "2": "Para 30% o más de los procesos.",
+  "3": "Para todos los procesos.",
+  "P": 3
+ },
+ {
+  "id": "D3.3",
+  "pregunta": "¿El cliente revisó la lista de procesos funcionales?",
+  "0": "No hay lista.",
+  "1": "Lista preliminar del equipo, sin revisar.",
+  "2": "Revisada con el cliente, con vacíos.",
+  "3": "Validada por el cliente.",
+  "P": 3
+ },
+ {
+  "id": "D4.1",
+  "pregunta": "¿Se conocen las reglas de negocio y a qué funcionalidades aplican?",
+  "0": "No identificadas.",
+  "1": "Solo en la narrativa.",
+  "2": "Catálogo parcial.",
+  "3": "Catálogo completo, asociado a funcionalidades.",
+  "P": 3
+ },
+ {
+  "id": "D4.2",
+  "pregunta": "¿Se conoce la arquitectura en la que debe operar la solución?",
+  "0": "No se conoce.",
+  "1": "Idea general.",
+  "2": "Definida, sin validar.",
+  "3": "Definida y validada.",
+  "P": 3
+ },
+ {
+  "id": "D4.3",
+  "pregunta": "¿Se conocen los requisitos de seguridad y su nivel: estándar, elevado o crítico?",
+  "0": "Desconocidos.",
+  "1": "Genéricos (\"debe ser seguro\").",
+  "2": "Identificados, con vacíos.",
+  "3": "Especificados y clasificados.",
+  "P": 3
+ },
+ {
+  "id": "D4.4",
+  "pregunta": "¿Hay información para calificar los cinco factores de complejidad?",
+  "0": "Para ninguno.",
+  "1": "Para uno o dos.",
+  "2": "Para tres o cuatro.",
+  "3": "Para los cinco.",
+  "P": 2
+ },
+ {
+  "id": "D5.1",
+  "pregunta": "¿Hay una lista de interfaces con su contraparte, dirección, propósito y frecuencia?",
+  "0": "No existe.",
+  "1": "Solo los sistemas mencionados.",
+  "2": "Interfaces con datos incompletos.",
+  "3": "Inventario completo.",
+  "P": 3
+ },
+ {
+  "id": "D5.2",
+  "pregunta": "¿Están disponibles los contratos de interfaz, como OpenAPI, WSDL o esquemas?",
+  "0": "No disponibles.",
+  "1": "Para pocas.",
+  "2": "Para la mayoría.",
+  "3": "Validados para todas.",
+  "P": 3
+ },
+ {
+  "id": "D5.3",
+  "pregunta": "¿Se conoce la dificultad de cada interfaz: protocolo, volumen y si su falla detiene la operación del cliente?",
+  "0": "No se conoce.",
+  "1": "Solo el número de interfaces.",
+  "2": "Conocida para la mayoría.",
+  "3": "Conocida para todas.",
+  "P": 2
+ },
+ {
+  "id": "D6.1",
+  "pregunta": "¿Se identificaron activos de la empresa que la solución puede reutilizar?",
+  "0": "No se revisó.",
+  "1": "Se mencionan, sin identificarlos.",
+  "2": "Identificados por nombre, sin precisar qué cubren.",
+  "3": "Identificados, con los procesos que cubren.",
+  "P": 2
+ },
+ {
+  "id": "D7.1",
+  "pregunta": "¿Se conocen las tecnologías que exige la solución?",
+  "0": "No se conocen.",
+  "1": "Solo la plataforma general.",
+  "2": "Las principales, con vacíos.",
+  "3": "Todas, con sus versiones o restricciones.",
+  "P": 3
+ },
+ {
+  "id": "D8.1",
+  "pregunta": "¿Están descritos el problema que resuelve el proyecto y los criterios de aceptación de las funcionalidades?",
+  "0": "No están descritos.",
+  "1": "Solo el problema, en términos generales.",
+  "2": "El problema y los criterios de aceptación de parte de las funcionalidades.",
+  "3": "El problema y los criterios de aceptación de todas las funcionalidades, validados con el cliente.",
+  "P": 3
+ },
+ {
+  "id": "D10.1",
+  "pregunta": "¿Se conoce la regulación del sector que afecta la solución?",
+  "0": "No analizada.",
+  "1": "Mencionada.",
+  "2": "Identificada, sin su efecto en los requisitos.",
+  "3": "Identificada, con su efecto en los requisitos.",
+  "P": 3
+ }
+]

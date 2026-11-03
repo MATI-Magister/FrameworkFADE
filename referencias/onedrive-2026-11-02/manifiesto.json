@@ -1,0 +1,456 @@
+{
+  "source": "OneDrive_2026-11-02.zip",
+  "sha256": "437e54f405b8154dc662db2d2f04cd59f848ce906dabceb427ae4b09817cd762",
+  "imported_at": "2026-11-02",
+  "status": "referencia; instrucciones no activas sin adaptacion",
+  "files": [
+    {
+      "path": "agentes_flujo.md",
+      "bytes": 25451,
+      "sha256": "62b6830e5a2c1ef5fd0fd91b49e9e9015f1fb7cb55837bc761f1c68dcfee0e74",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a1_estructurador/estructurador_especificacion.md",
+      "bytes": 10220,
+      "sha256": "bed3f98413709c8cec440eb7f2a79ffc0874d94dee4b4e9be4efea0fd5227645",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a1_estructurador/estructurador_instrucciones.md",
+      "bytes": 10146,
+      "sha256": "cbab595e169ff734ea716a6698329c1913c2dda2f889140de0043ef035d80812",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a1_estructurador/faed_ficha.schema.json",
+      "bytes": 58127,
+      "sha256": "2464600676a424df282b5f428fea0b1d22beca2a7c418e07bf048a634592f332",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a2_evaluador/evaluador_especificacion.md",
+      "bytes": 13952,
+      "sha256": "95cc0e050cd5ae1b5100e6322bb64f8e460ee6d1514a331ca1af294ef27c0e7c",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a2_evaluador/evaluador_instrucciones.md",
+      "bytes": 18047,
+      "sha256": "10f917616ca3f240b058218cbbb96196ffaad496bfdb9ee8ee70dc79fe0ed6bc",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a2_evaluador/faed_evaluacion.schema.json",
+      "bytes": 12362,
+      "sha256": "54b3343a6de37dfe953d282a5d476e8ad092efbfba78a91566af70e3e3e04de2",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a3_divisor/divisor_especificacion.md",
+      "bytes": 7371,
+      "sha256": "d2e6d7be9835b9b920e25c287d97307de68cdbaecbef780766bb543ac3618b2c",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a3_divisor/divisor_instrucciones.md",
+      "bytes": 12721,
+      "sha256": "da5c5611909827643bf82dc7bd3fc2a2251d6dceba4dd4c8e7d3cedaa7cbe59c",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a3_divisor/faed_componentes.schema.json",
+      "bytes": 9051,
+      "sha256": "4ffbc305928178f666f6d2727eebab18572a213860104e61cc57a8ddbc66314a",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a4_detallador/detallador_especificacion.md",
+      "bytes": 7333,
+      "sha256": "bd3427662fb3a46d72fcbbb1b50f225e288964fe85c18cb3635f2ed4df5e7bcc",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a4_detallador/detallador_instrucciones.md",
+      "bytes": 8270,
+      "sha256": "f9b75d43d672394f25f80d1d98f4073543c95c388dd7145b40f3b046f73dace1",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a4_detallador/faed_detalle_componentes.schema.json",
+      "bytes": 17038,
+      "sha256": "954c168cc1a03f639374a6ecc37299db779a4d4f3b01fcea86a16761465a6455",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a5_generador/faed_juicio_escenario.schema.json",
+      "bytes": 3195,
+      "sha256": "8a2cacf0a80a9ea405743dcbcae2f4661d59308adab13136d7b7aaf032b634b9",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a5_generador/generador_especificacion.md",
+      "bytes": 7166,
+      "sha256": "b4596fc30ecfb611d720909520fc6bf08a22c52440136c6b29b8d5bf3c1d74cc",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a5_generador/generador_instrucciones.md",
+      "bytes": 5519,
+      "sha256": "d98b77d3a1bd7cb8428e91ba2b8c6b069fe95eb90eacd696aebd605e9f6c434c",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a6_redactor/faed_propuesta.schema.json",
+      "bytes": 4592,
+      "sha256": "ec20ce210493ab3bb12630132b45ce548324d6e20a10ad5a4c9e0f7648f47d2b",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a6_redactor/redactor_especificacion.md",
+      "bytes": 6783,
+      "sha256": "a98bde312be182fafc7d0f6f77a1f0f8237c9f1694f75ba740f69328c23d2dcb",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a6_redactor/redactor_instrucciones.md",
+      "bytes": 5834,
+      "sha256": "1ee54bb88dfbaee815ddf15deee4878a97acab781da66b9dd5699bd2c6c3c20f",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a7_cierre/cierre_especificacion.md",
+      "bytes": 8356,
+      "sha256": "3554fd322dc30e5fa118071755484f0255f5bc6c746ac9ba24ac44bdbb5a0f20",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a7_cierre/cierre_instrucciones.md",
+      "bytes": 5528,
+      "sha256": "edfabce0a3503e793a5148299f152975ecb4714502b1449dfe387d9b54b4a11c",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "a7_cierre/faed_cierre.schema.json",
+      "bytes": 11352,
+      "sha256": "166adfa0ce8dfd8431157635f85b1993a79d6d8ec7522101315cfaf2d186f61a",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "armado/llenar_propuesta.py",
+      "bytes": 18001,
+      "sha256": "fe81f6df1fcbd881f9956d0f533cf59fb1ad4bd47357d939e952ab26e7356310",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "calculo/faed_calculos.py",
+      "bytes": 30727,
+      "sha256": "dab74bb45cece5dcd8e2b0811e9f643ea833b213f7dd7c36213f0f3cdccb8f56",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "calculo/valores_metodo.json",
+      "bytes": 1413,
+      "sha256": "98a555dadd687da62440b96d34659f279c7365bd7071d0fecdc67c507f29ebf8",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "datos/catalogo_activos.json",
+      "bytes": 729,
+      "sha256": "b3cebc069f7ec73df8259db8b5b906a9cec0061207a27ee673fe48e64f762eca",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "datos/mapa_tecnologias.json",
+      "bytes": 558,
+      "sha256": "c34a47e86ccf355fa37ee5c55cadefd7bdd90d5d309911e79567d062a73376c7",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "datos/plantilla_propuesta.docx",
+      "bytes": 22639,
+      "sha256": "e879eef73dd7e8327ff06ef4a9f523c6fde47e8d141539dbd79d5c038edabf55",
+      "location": "reference",
+      "distributed": false
+    },
+    {
+      "path": "datos/registro_proyectos.json",
+      "bytes": 1955,
+      "sha256": "684c92b6da82cee42e808fc5807b8753977b0b4d5637460324bea425a80af00a",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "diagramas/FAED_Proceso_Agentes_BPMN.drawio",
+      "bytes": 43699,
+      "sha256": "b58cc9ac61cadd59c6dca6f5edd5cdfea1f729712a20017edb04b1e6ef23347a",
+      "location": "reference",
+      "distributed": false
+    },
+    {
+      "path": "diagramas/FAED_Proceso_Agentes_BPMN.png",
+      "bytes": 187292,
+      "sha256": "2010ca1d85c06066312d79d539ef652fb482f5b18850d945b56c7b79d282f4c0",
+      "location": "reference",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_cambios_alcance.json",
+      "bytes": 159,
+      "sha256": "198c7ca7b5baa8169839f6b6219a377030a19f655eb917c0fbbc57533b455657",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/fuentes/F1_solicitud_de_propuesta.txt",
+      "bytes": 872,
+      "sha256": "e41d9105b599de3c37b28b83bba06d311f3b69197bee7e4ea38032a37e0a3395",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/fuentes/F2_transcripcion_sesion_1.txt",
+      "bytes": 553,
+      "sha256": "f312e5276460bab89efa165ff421dc23f17c0800339edb205c192b798e03ef47",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/fuentes/F3_notas_de_cierre.txt",
+      "bytes": 995,
+      "sha256": "4dbcc5606c297453e1fc0c7e7b8d0756d17f0dadf104185a43147e5776c7282d",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_cierre.json",
+      "bytes": 3657,
+      "sha256": "69db27db7eed89554f3f3be873ac6ff639f66b4d993376ea7a3e1d8800aa9152",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_componentes_v2.json",
+      "bytes": 3791,
+      "sha256": "6052189a6d670fa50ae799eaac9b5dccd9cff5be492924368f32d0d8a7d58beb",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_detalle_v2.json",
+      "bytes": 10424,
+      "sha256": "04062613b496cef0fbbd5d537ec72257fa28c987817bad2b589d559b9ae9ff23",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_escenario_v2.json",
+      "bytes": 3708,
+      "sha256": "e45aa6f7cd2a4268442b9eaa51a48301743e70a7168267a8f0c6f45e27aaccb5",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_evaluacion_v2.json",
+      "bytes": 15557,
+      "sha256": "cfa30f20991a31d3861ea5342fba94a624e363e99636e713d378160f7e83d1a1",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_horas_jira.csv",
+      "bytes": 230,
+      "sha256": "63d00b15e61f5ac867798901434b9d5d03f5aa52bbfab769ff80f58d2df4ac8b",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_juicio_escenario_v2.json",
+      "bytes": 1661,
+      "sha256": "269bfb03e4c0d15772efc16422ae37216ed4b2923683becec9472757823f116a",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_linea_base.json",
+      "bytes": 3724,
+      "sha256": "f90cea04c5ce88e0a6f4fef02690e0a50ab1911b7c9766c1d9f6b3dd10c1f586",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_preparacion_cierre.json",
+      "bytes": 1834,
+      "sha256": "4a34fea154fc57e741e7486c7e9bfb6d0a4ec62ac3bd7edaa42cd028be44217e",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_preparacion_v2.json",
+      "bytes": 3806,
+      "sha256": "e379c11e534b516ba2ed4841a0eb43c580f95cb5802a74ff37108b6f6100b385",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_propuesta_ejemplo.docx",
+      "bytes": 21476,
+      "sha256": "41388b133c2d2cbbde79bb9f14640e020c50ee06576654f405aed55eca04c1d0",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_propuesta_v2.json",
+      "bytes": 3831,
+      "sha256": "58c31d59e066f390da93ecc8cd0ca5d121c71d641ee11b6c76c1856e65fba7db",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_v1.json",
+      "bytes": 10818,
+      "sha256": "415a2987005b62bede3f24c826b99cbd7fe82e901d4000a3442cd70a079e9686",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/aseguradora_v2.json",
+      "bytes": 12946,
+      "sha256": "91ed9d585eaead8b0f70b119e00dfe05197ddc5e8e10cea1274935b1f9db63b6",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/caso_anexo_c.json",
+      "bytes": 1371,
+      "sha256": "e61cca09851c0ab813a59202cda1f2f0255f437cfd363277189abcedb3acadeb",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/catalogo_activos_ejemplo.json",
+      "bytes": 1273,
+      "sha256": "4f01442d62f822365e15b5a0171fe69abf8fb86bab49c89707ee4c6c99bf3027",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/mapa_tecnologias_ejemplo.json",
+      "bytes": 528,
+      "sha256": "76f8a8b81474a25a108771f2c96087f9c0b885d47b82de1adce26e7ca7accc12",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/probar_paquete.py",
+      "bytes": 17990,
+      "sha256": "2d6bdd303a2b2bb5c99f83735b2df474ccf99f9a96701933854649436a153027",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "pruebas/registro_proyectos_ejemplo.json",
+      "bytes": 5097,
+      "sha256": "1a1e49781be520cdb445e14da02136a16e35749c0a4d61ab73f8c6928f3d5ad4",
+      "location": "local_excluded",
+      "distributed": false
+    },
+    {
+      "path": "registro/registrar_cierre.py",
+      "bytes": 6583,
+      "sha256": "c288b391f17dbd4cccdea74707d3b28656ddaab1bee2c1647e05b48ceaf224ec",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "verificacion/revisar_cierre.py",
+      "bytes": 8229,
+      "sha256": "ef228f5f99ac1c22d0f8676bdda81f30a70cfc5d4e233931ca9fa5088f3e9b02",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "verificacion/revisar_componentes.py",
+      "bytes": 10212,
+      "sha256": "cb0d9feff527f22b48b003273a96ae361a65ed3efcf630da1a5732576df9cae2",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "verificacion/revisar_detalle.py",
+      "bytes": 9961,
+      "sha256": "2aad276eb5342822067b41b67c893b0e09b855d757affa62bc17f0d17e3aa8c5",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "verificacion/revisar_escenario.py",
+      "bytes": 5887,
+      "sha256": "559d293f284ec1bbf0b813095d8a56cacde86023a4c476a1d791bd29a0a4d26a",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "verificacion/revisar_evaluacion.py",
+      "bytes": 10477,
+      "sha256": "7c42aa4bb56bc14e52c0770d5bf53c5863dc5fa26c67dece50cdece64c0286e1",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "verificacion/revisar_ficha.py",
+      "bytes": 8047,
+      "sha256": "b3d8d7d8d14d65e55065c0cb3124beac272ac8ef1420f32f07c925111af01b1b",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "verificacion/revisar_propuesta.py",
+      "bytes": 6514,
+      "sha256": "b4154d2edcaf06c6736d94b9b56b800054a07a2e8483887985351b8df18b74c5",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "verificacion/rubrica_b1.json",
+      "bytes": 5759,
+      "sha256": "40e8c8b48a419a1aeee702ad1a72aad4df6e2ac03338ac565b1dbffc5a14ea18",
+      "location": "reference",
+      "distributed": true
+    },
+    {
+      "path": "README.md",
+      "bytes": 15088,
+      "sha256": "d4e732ec1f6d247f9a123490c9a72c49077386426b578a2cc12c3097de7e3bdc",
+      "location": "reference",
+      "distributed": true
+    }
+  ]
+}

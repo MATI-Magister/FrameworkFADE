@@ -1,0 +1,25 @@
+{
+  "_formato": {
+    "id": "Identificador del proyecto: PRY y un número (PRY-01).",
+    "nombre": "Nombre con el que la empresa reconoce el proyecto.",
+    "cliente": "Cliente para el que se ejecutó.",
+    "descripcion": "Qué se construyó, en una o dos oraciones: tipo de solución, tipo de cambio y capacidades principales.",
+    "arquetipo_principal": "aplicaciones, integracion, datos_ia, plataforma, seguridad o modernizacion: el que más horas reales tuvo.",
+    "componentes": "Cada componente: nombre y arquetipo. Los proyectos cerrados con FAED agregan horas esperadas, horas reales, desviación y causa.",
+    "procesos": "Procesos funcionales medidos al cierre. null si no se midieron.",
+    "talla": "Talla aproximada (XS, S, M, L o XL) cuando no se midieron los procesos. Si hay procesos, la talla sale de ellos.",
+    "horas_reales": "Horas reales ejecutadas. Sin horas reales, el proyecto no cuenta como comparable.",
+    "duracion_meses": "Duración real, en meses.",
+    "equipo": "Roles y personas que participaron. null si no se registró.",
+    "origen": "cierre (registrado en el cierre del proyecto) o reconstruido (proyecto anterior reconstruido con la dirección).",
+    "fecha_cierre": "Fecha de cierre, AAAA-MM-DD.",
+    "desviacion": "Desviación del proyecto. Solo en proyectos cerrados con FAED.",
+    "id_solicitud": "Solicitud de la que viene el proyecto. Solo en proyectos cerrados con FAED.",
+    "version_valores": "Versión de los valores del método con que se estimó. Solo en proyectos cerrados con FAED.",
+    "arquetipo_principal_estimado": "El que se estimó como principal. Solo en proyectos cerrados con FAED.",
+    "dentro_del_rango": "Si las horas reales quedaron dentro del rango estimado. Solo en proyectos cerrados con FAED.",
+    "horas_fuera_de_la_estimacion": "Horas de trabajos que no se estimaron, como soporte o garantía. No cuentan en la desviación."
+  },
+  "version": "1",
+  "proyectos": []
+}

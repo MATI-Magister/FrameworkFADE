@@ -1,0 +1,467 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "faed/faed_detalle_componentes.schema.json",
+  "$comment": "Contrato v0.1 de A4 · Detallar.",
+  "title": "FAED · Ficha de cada componente",
+  "description": "Ficha detallada de cada componente que entregó A3: lo que describe el componente, lo que alimenta el cálculo de horas y qué tan confiable es. La produce A4 · Detallar; las funciones de cálculo la convierten en horas.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id_solicitud",
+    "version_ficha",
+    "componentes",
+    "advertencias"
+  ],
+  "properties": {
+    "id_solicitud": {
+      "type": "string",
+      "description": "Identificador de la solicitud, copiado de la ficha."
+    },
+    "version_ficha": {
+      "type": "integer",
+      "description": "Versión de la ficha usada."
+    },
+    "componentes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "nombre",
+          "arquetipo",
+          "frontera",
+          "usuarios",
+          "capacidades",
+          "procesos",
+          "tipo_de_cambio",
+          "objetos_de_datos",
+          "complejidad",
+          "interfaces",
+          "tecnologias",
+          "no_funcionales",
+          "madurez",
+          "motivo_madurez",
+          "supuestos",
+          "vacios"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identificador del componente, copiado de A3 (C01, C02…)."
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del componente, copiado de A3."
+          },
+          "arquetipo": {
+            "type": "string",
+            "enum": [
+              "aplicaciones",
+              "integracion",
+              "datos_ia",
+              "plataforma",
+              "seguridad",
+              "modernizacion"
+            ],
+            "description": "Arquetipo del componente, copiado de A3."
+          },
+          "frontera": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "incluye",
+              "excluye"
+            ],
+            "properties": {
+              "incluye": {
+                "type": "string",
+                "description": "Qué hace el componente, en una o dos oraciones."
+              },
+              "excluye": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Lo que la ficha deja explícitamente fuera y toca a este componente. Vacío si no hay nada."
+              }
+            }
+          },
+          "usuarios": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Usuarios o sistemas que usan el componente, según la ficha."
+          },
+          "capacidades": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Capacidades que ofrece el componente, en una frase cada una."
+          },
+          "procesos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "nombre",
+                "origen",
+                "activo_reutilizado",
+                "justificacion_reuso"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Identificador del proceso, copiado de A3 (C01-P01…)."
+                },
+                "nombre": {
+                  "type": "string",
+                  "description": "Nombre del proceso, copiado de A3."
+                },
+                "origen": {
+                  "type": "string",
+                  "enum": [
+                    "ficha",
+                    "inferido"
+                  ],
+                  "description": "Origen del proceso, copiado de A3."
+                },
+                "activo_reutilizado": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Identificador del activo vigente del catálogo que ya cubre este proceso. null si ninguno lo cubre."
+                },
+                "justificacion_reuso": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Por qué ese activo cubre el proceso, en una oración. null si no hay reúso."
+                }
+              }
+            },
+            "description": "Los procesos que entregó A3 para este componente, con su reúso."
+          },
+          "tipo_de_cambio": {
+            "type": "string",
+            "enum": [
+              "nuevo",
+              "evolutivo",
+              "modernizacion",
+              "mantenimiento",
+              "no_especificado"
+            ],
+            "description": "Qué tipo de trabajo es este componente, según la ficha: nuevo, evolutivo (modifica algo existente), modernizacion (reemplaza o migra) o mantenimiento (correctivo)."
+          },
+          "objetos_de_datos": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Datos principales que el componente crea, consulta o modifica, según la ficha."
+          },
+          "complejidad": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "reglas",
+              "arquitectura",
+              "seguridad",
+              "procesamiento",
+              "dependencias"
+            ],
+            "properties": {
+              "reglas": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "puntaje",
+                  "evidencia",
+                  "justificacion"
+                ],
+                "properties": {
+                  "puntaje": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1,
+                      2
+                    ],
+                    "description": "Puntaje del factor reglas, según la rúbrica de las instrucciones."
+                  },
+                  "evidencia": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Identificadores de los datos vigentes de la ficha que sustentan el puntaje. Vacío si la ficha no dice nada sobre este factor."
+                  },
+                  "justificacion": {
+                    "type": "string",
+                    "description": "Por qué corresponde este puntaje, en una oración. Si no hay evidencia, dilo."
+                  }
+                }
+              },
+              "arquitectura": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "puntaje",
+                  "evidencia",
+                  "justificacion"
+                ],
+                "properties": {
+                  "puntaje": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1,
+                      2
+                    ],
+                    "description": "Puntaje del factor arquitectura, según la rúbrica de las instrucciones."
+                  },
+                  "evidencia": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Identificadores de los datos vigentes de la ficha que sustentan el puntaje. Vacío si la ficha no dice nada sobre este factor."
+                  },
+                  "justificacion": {
+                    "type": "string",
+                    "description": "Por qué corresponde este puntaje, en una oración. Si no hay evidencia, dilo."
+                  }
+                }
+              },
+              "seguridad": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "puntaje",
+                  "evidencia",
+                  "justificacion"
+                ],
+                "properties": {
+                  "puntaje": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1,
+                      2
+                    ],
+                    "description": "Puntaje del factor seguridad, según la rúbrica de las instrucciones."
+                  },
+                  "evidencia": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Identificadores de los datos vigentes de la ficha que sustentan el puntaje. Vacío si la ficha no dice nada sobre este factor."
+                  },
+                  "justificacion": {
+                    "type": "string",
+                    "description": "Por qué corresponde este puntaje, en una oración. Si no hay evidencia, dilo."
+                  }
+                }
+              },
+              "procesamiento": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "puntaje",
+                  "evidencia",
+                  "justificacion"
+                ],
+                "properties": {
+                  "puntaje": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1,
+                      2
+                    ],
+                    "description": "Puntaje del factor procesamiento, según la rúbrica de las instrucciones."
+                  },
+                  "evidencia": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Identificadores de los datos vigentes de la ficha que sustentan el puntaje. Vacío si la ficha no dice nada sobre este factor."
+                  },
+                  "justificacion": {
+                    "type": "string",
+                    "description": "Por qué corresponde este puntaje, en una oración. Si no hay evidencia, dilo."
+                  }
+                }
+              },
+              "dependencias": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "puntaje",
+                  "evidencia",
+                  "justificacion"
+                ],
+                "properties": {
+                  "puntaje": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1,
+                      2
+                    ],
+                    "description": "Puntaje del factor dependencias, según la rúbrica de las instrucciones."
+                  },
+                  "evidencia": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Identificadores de los datos vigentes de la ficha que sustentan el puntaje. Vacío si la ficha no dice nada sobre este factor."
+                  },
+                  "justificacion": {
+                    "type": "string",
+                    "description": "Por qué corresponde este puntaje, en una oración. Si no hay evidencia, dilo."
+                  }
+                }
+              }
+            },
+            "description": "Los cinco factores de complejidad, de 0 a 2."
+          },
+          "interfaces": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "interfaz",
+                "compleja",
+                "critica",
+                "protocolo_conocido"
+              ],
+              "properties": {
+                "interfaz": {
+                  "type": "string",
+                  "description": "Identificador de la interfaz de la ficha (INT-xx) de la que depende el componente."
+                },
+                "compleja": {
+                  "type": "boolean",
+                  "description": "true si el intercambio es complejo: contratos incompletos, transformaciones o reglas de intercambio."
+                },
+                "critica": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ],
+                  "description": "true si la ficha dice que su falla detiene la operación principal del cliente; false si dice que no; null si no lo dice."
+                },
+                "protocolo_conocido": {
+                  "type": "boolean",
+                  "description": "true si la ficha dice el protocolo o la tecnología del intercambio."
+                }
+              }
+            },
+            "description": "Interfaces de las que depende el componente. Un componente de integración registra la interfaz que construye; un componente que usa información de otros sistemas registra todas las interfaces que usa. Vacío si no depende de ninguna."
+          },
+          "tecnologias": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "nombre",
+                "nivel",
+                "en_mapa"
+              ],
+              "properties": {
+                "nombre": {
+                  "type": "string",
+                  "description": "Tecnología, plataforma o producto que exige el componente, según la ficha, con el nombre que tiene en el mapa si está en él. No incluye protocolos de intercambio, que van en las interfaces."
+                },
+                "nivel": {
+                  "type": "string",
+                  "enum": [
+                    "T1",
+                    "T2",
+                    "T3",
+                    "T4"
+                  ],
+                  "description": "Nivel del mapa de tecnologías. Si la tecnología no está en el mapa, T3."
+                },
+                "en_mapa": {
+                  "type": "boolean",
+                  "description": "true si la tecnología está en el mapa de tecnologías de la empresa."
+                }
+              }
+            },
+            "description": "Tecnologías que exige el componente."
+          },
+          "no_funcionales": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Requisitos de calidad que aplican al componente: rendimiento, disponibilidad, seguridad, normativa."
+          },
+          "madurez": {
+            "type": "string",
+            "enum": [
+              "validado",
+              "definido",
+              "supuesto"
+            ],
+            "description": "Qué tan confiable es la información del componente, según la regla de las instrucciones."
+          },
+          "motivo_madurez": {
+            "type": "string",
+            "description": "Qué dato o proceso define la madurez, en una oración."
+          },
+          "supuestos": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Condiciones que asume la estimación de este componente, redactadas para que el cliente las confirme o las corrija."
+          },
+          "vacios": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "vacio",
+                "pregunta"
+              ],
+              "properties": {
+                "vacio": {
+                  "type": "string",
+                  "description": "Información que falta para estimar mejor este componente."
+                },
+                "pregunta": {
+                  "type": "string",
+                  "description": "Pregunta para obtenerla, en el lenguaje del cliente y sin códigos internos."
+                }
+              }
+            },
+            "description": "Lo que falta saber de este componente."
+          }
+        }
+      },
+      "description": "Un elemento por cada componente de A3, en el mismo orden."
+    },
+    "advertencias": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Lo que la persona que valida debe mirar: tecnologías fuera del mapa, activos que requieren actualización, factores sin evidencia."
+    }
+  }
+}

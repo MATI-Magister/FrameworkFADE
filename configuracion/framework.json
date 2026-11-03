@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "version": "1.5-borrador",
+  "operation": {
+    "default_project": "piloto",
+    "portal_port": 8765,
+    "max_client_questions": 10
+  },
+  "estimation": {
+    "method": "horas_por_proceso_en_evaluacion",
+    "effort_unit": "hora-persona",
+    "currency": null,
+    "rates": [],
+    "cost_per_hour": null,
+    "target_margin": null,
+    "minimum_margin": null,
+    "team": [],
+    "sprint_capacity_hours": null,
+    "weeks_per_sprint": null,
+    "infrastructure_surcharge": null,
+    "complex_route_value_threshold": null,
+    "complex_route_effort_threshold": null,
+    "cfo_parameters": null,
+    "scenarios": [
+      {
+        "name": "Base",
+        "description": "Mismo alcance; entradas justificadas y parámetros aprobados.",
+        "source": "Decisión del usuario 2026-11-02, INC-006: Base y Conservador; bandas por calibrar"
+      },
+      {
+        "name": "Conservador",
+        "description": "Mismo alcance; entradas adversas explícitas. Sin sumar métodos sobre igual cobertura.",
+        "source": "Decisión del usuario 2026-11-02, INC-006: Base y Conservador; bandas por calibrar"
+      }
+    ],
+    "process_method": {
+      "status": "draft",
+      "hours_per_process": null,
+      "complexity_factors": null,
+      "environment_factors": null,
+      "reuse_factors": null,
+      "management_fraction": null,
+      "range_bands": null,
+      "secondary_archetype_threshold": null,
+      "near_tie_margin": null,
+      "deviation_threshold": null,
+      "recalibration_project_count": null,
+      "first_block_hours": null
+    },
+    "cocomo": {
+      "status": "alternative_not_selected",
+      "variant": null,
+      "calibration_source": null
+    },
+    "version": "0.4-borrador",
+    "source": "Decisiones del usuario 2026-11-02; reglas/revision.md; valores reales pendientes",
+    "costing_mode": "costo_unico"
+  },
+  "policies": {
+    "missing_complexity": "por_confirmar",
+    "unknown_technology": "por_confirmar",
+    "unspecified_technology": "por_confirmar",
+    "infer_processes": "proponer_para_revision",
+    "fast_track_bypasses_approval": false,
+    "component_scope_scale": "validado_definido_supuesto",
+    "client_confirmation": "directa_escrita_o_transcripcion_identificada"
+  },
+  "roles_file": "configuracion/roles.json",
+  "catalogs": {
+    "assets": "datos-locales/catalogo_activos.json",
+    "technologies": "datos-locales/mapa_tecnologias.json",
+    "projects": "datos-locales/registro_proyectos.json"
+  },
+  "source_candidates": "referencias/onedrive-2026-11-02/calculo/valores_metodo.json",
+  "classification": {
+    "reuse": {
+      "version": "zip-1.0",
+      "source": "Decisión explícita del usuario 2026-11-02, INC-016; escala del ZIP",
+      "bands": [
+        {
+          "label": "R1",
+          "minimum": 0,
+          "maximum": 10,
+          "include_minimum": true,
+          "include_maximum": false
+        },
+        {
+          "label": "R2",
+          "minimum": 10,
+          "maximum": 30,
+          "include_minimum": true,
+          "include_maximum": false
+        },
+        {
+          "label": "R3",
+          "minimum": 30,
+          "maximum": 50,
+          "include_minimum": true,
+          "include_maximum": true
+        },
+        {
+          "label": "R4",
+          "minimum": 50,
+          "maximum": 100,
+          "include_minimum": false,
+          "include_maximum": true
+        }
+      ]
+    }
+  }
+}

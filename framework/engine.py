@@ -6,6 +6,7 @@ import shutil
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from framework.configuration import apply_configuration
 
 STEPS = ['registro', 'a1', 'a2', 'a3', 'cierre', 'a4', 'revision']
 LABELS = ['Registro y carga', 'A1 · Madurez', 'A2 · Componentes', 'A3 · Clasificación',
@@ -64,12 +65,23 @@ class Workflow:
     def rules(self):
         data = (self.root / 'reglas' / 'estimacion.json').read_bytes()
         rules = json.loads(data)
+        if rules.get('configuration_file'):
+            if rules['configuration_file'] != 'configuracion/framework.json':
+                raise ValueError('Archivo de configuración no soportado.')
+            rules = apply_configuration(self.root, rules)
+            data = json.dumps(rules, ensure_ascii=False, sort_keys=True, indent=2).encode('utf-8')
         model_file = (rules.get('maturity') or {}).get('model_file')
         if model_file:
             model_path = (self.root / model_file).resolve()
             if not model_path.is_relative_to(self.root.resolve()):
                 raise ValueError('La fuente del modelo debe permanecer dentro del framework.')
             rules['maturity_model'] = json.loads(model_path.read_text(encoding='utf-8'))
+            data = json.dumps(rules, ensure_ascii=False, sort_keys=True, indent=2).encode('utf-8')
+        classification_file = (rules.get('dimensions') or {}).get('model_file')
+        if classification_file:
+            source = (self.root / classification_file).resolve()
+            if not source.is_relative_to(self.root.resolve()): raise ValueError('Catálogo de clasificación fuera del framework.')
+            rules['classification_model'] = json.loads(source.read_text(encoding='utf-8'))
             data = json.dumps(rules, ensure_ascii=False, sort_keys=True, indent=2).encode('utf-8')
         return rules, hashlib.sha256(data).hexdigest(), data
 
@@ -82,6 +94,16 @@ class Workflow:
                 raise ValueError(f'Regla pendiente: {key}')
         if rules.get('status') != 'approved':
             raise ValueError('Las reglas siguen en borrador; requieren revisión humana.')
+        parameters = rules.get('configuration_parameters')
+        if parameters:
+            process = parameters['estimation']['process_method']
+            if process['status'] != 'approved' or any(process[k] is None for k in
+                    ('hours_per_process', 'complexity_factors', 'environment_factors', 'reuse_factors',
+                     'management_fraction', 'range_bands')):
+                raise ValueError('Horas por proceso: faltan parámetros calibrados y aprobación del método.')
+            estimation = parameters['estimation']
+            if estimation.get('costing_mode') is None or not estimation['team']:
+                raise ValueError('Falta elegir el costeo y definir la capacidad del equipo.')
         for key in ['maturity', 'dimensions', 'method', 'capacity', 'cfo_parameters']:
             value = rules.get(key)
             if not isinstance(value, dict) or not all(nonempty(value.get(k)) for k in ['description', 'source']):
@@ -117,15 +139,27 @@ class Workflow:
         if step not in STEPS:
             raise ValueError(f'Etapa desconocida: {step}')
 
+    def verify_predecessors(self, state, step):
+        for previous in STEPS[:STEPS.index(step)]:
+            item = state['steps'][previous]
+            if item['status'] not in DONE:
+                raise ValueError(f'Primero completa {previous}: {item["status"]}')
+            if item['status'] == 'omitido': continue
+            output = self.base / '03-entregables' / f'{previous}.md'
+            if not output.is_file() or hashlib.sha256(output.read_bytes()).hexdigest() != item.get('output_hash'):
+                raise ValueError(f'El entregable aceptado de {previous} cambió o falta; reintenta esa etapa.')
+            if previous == 'a1':
+                questions = self.base / '03-entregables/preguntas-a1.md'
+                if not questions.is_file() or hashlib.sha256(questions.read_bytes()).hexdigest() != item.get('questions_hash'):
+                    raise ValueError('Las preguntas aceptadas de A1 cambiaron o faltan; reintenta A1.')
+
     def start(self, step=None):
         state = self.read()
         step = step or next((s for s in STEPS if state['steps'][s]['status'] not in DONE), None)
         if step is None:
             raise ValueError('Todas las etapas están completadas.')
         self.check_step(step)
-        for previous in STEPS[:STEPS.index(step)]:
-            if state['steps'][previous]['status'] not in DONE:
-                raise ValueError(f'Primero completa {previous}: {state["steps"][previous]["status"]}')
+        self.verify_predecessors(state, step)
         item = state['steps'][step]
         if item['status'] == 'en_ejecucion':
             return f'Retomar {step}: lee agentes/{step}.md y produce el entregable.'
@@ -151,11 +185,14 @@ class Workflow:
         item = state['steps'][step]
         if item['status'] != 'en_ejecucion':
             raise ValueError('Solo se puede finalizar una etapa en ejecución.')
+        self.verify_predecessors(state, step)
         output = self.base / '03-entregables' / f'{step}.md'
         if not output.exists() or not output.read_text(encoding='utf-8').strip():
             raise ValueError('Falta el entregable no vacío de la etapa.')
         if context_complete and (step != 'a3' or not evidence or not evidence.strip()):
             raise ValueError('Omitir cierre requiere A3 y evidencia concreta.')
+        if step == 'a4' and self.rules()[0].get('configuration_file'):
+            self.check_calculation(state)
         if step == 'a1':
             questions = self.base / '03-entregables' / 'preguntas-a1.md'
             if not questions.exists() or not questions.read_text(encoding='utf-8').strip():
@@ -163,6 +200,8 @@ class Workflow:
             item['questions_hash'] = hashlib.sha256(questions.read_bytes()).hexdigest()
             item['questions_output'] = str(questions.relative_to(self.root))
         if step == 'revision':
+            if state['steps']['a4'].get('calculation'):
+                self.check_calculation(state)
             reviewed = {}
             for filename in ('cliente.md', 'ajustes.md', 'a4.md'):
                 artifact = self.base / '03-entregables' / filename
@@ -183,6 +222,7 @@ class Workflow:
         item = state['steps'][step]
         if step not in ['a1', 'revision'] or item['status'] != 'esperando_aprobacion':
             raise ValueError('Esta etapa no tiene aprobación pendiente.')
+        self.verify_predecessors(state, step)
         output = self.base / '03-entregables' / f'{step}.md'
         if not output.exists() or hashlib.sha256(output.read_bytes()).hexdigest() != item['output_hash']:
             raise ValueError('El entregable cambió; reintenta la etapa antes de aprobar.')
@@ -191,6 +231,8 @@ class Workflow:
             if not questions.exists() or hashlib.sha256(questions.read_bytes()).hexdigest() != item.get('questions_hash'):
                 raise ValueError('Las preguntas de A1 faltan o cambiaron; reintenta A1 antes de aprobar.')
         if step == 'revision':
+            if state['steps']['a4'].get('calculation'):
+                self.check_calculation(state)
             reviewed = item.get('reviewed_files', {})
             if set(reviewed) != {'cliente.md', 'ajustes.md', 'a4.md'}:
                 raise ValueError('Falta el paquete de documentos revisados. Reabre la revisión.')
@@ -202,6 +244,48 @@ class Workflow:
                 raise ValueError('Las reglas cambiaron desde A4; reestima y revisa antes de aprobar.')
         item.update(status='completado', approved_by=by, approved_at=now())
         self.save(state, f'{step} aprobado por {by}')
+
+    def check_calculation(self, state=None):
+        state = state or self.read()
+        item = state['steps']['a4']
+        calculation = item.get('calculation')
+        if not calculation or calculation['rules_hash'] != item.get('rules_hash'):
+            raise ValueError('A4 requiere un cálculo completo con el snapshot aprobado de este intento.')
+        if self.rules()[1] != item['rules_hash']:
+            raise ValueError('Las reglas cambiaron; reintenta A4 y recalcula antes de revisar.')
+        snapshot = (self.root / item['rules_snapshot']).resolve()
+        if not snapshot.is_relative_to(self.base.resolve()) or not snapshot.is_file() or hashlib.sha256(snapshot.read_bytes()).hexdigest() != item['rules_hash']:
+            raise ValueError('El snapshot de A4 falta o fue alterado.')
+        for relative, digest in calculation['files'].items():
+            path = (self.root / relative).resolve()
+            if not path.is_relative_to(self.base.resolve()) or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+                raise ValueError('Cambió un insumo o resultado del cálculo A4; recalcula y revisa.')
+        return calculation
+
+    def record_calculation(self, files, rules_hash):
+        state = self.read()
+        self.verify_predecessors(state, 'a4')
+        item = state['steps']['a4']
+        if item['status'] != 'en_ejecucion' or item.get('rules_hash') != rules_hash or self.rules()[1] != rules_hash:
+            raise ValueError('El cálculo no corresponde al intento A4 activo ni a sus reglas aprobadas.')
+        checked = {}
+        numeric = None
+        for path in files:
+            path = Path(path).resolve()
+            if not path.is_relative_to(self.base.resolve()) or not path.is_file():
+                raise ValueError('Los archivos de cálculo deben permanecer dentro del expediente.')
+            checked[str(path.relative_to(self.root.resolve()))] = hashlib.sha256(path.read_bytes()).hexdigest()
+            if path.name == 'resultado.json': numeric = json.loads(path.read_text(encoding='utf-8'))
+        if len(checked) < 3: raise ValueError('Conservar entrada, resultado e informe de cálculo.')
+        if not numeric or numeric.get('status') != 'calculado_pendiente_revision' or numeric.get('rules_hash') != rules_hash or numeric.get('pending') != []:
+            raise ValueError('No se puede registrar un ensayo o cálculo incompleto como resultado A4 aprobado.')
+        if numeric.get('input_hash') not in checked.values():
+            raise ValueError('La entrada del cálculo no coincide con los archivos conservados.')
+        scenarios = numeric.get('scenarios', [])
+        if [s.get('name') for s in scenarios] != ['Base', 'Conservador'] or any(s.get('cost') is None or s.get('duration_weeks') is None for s in scenarios):
+            raise ValueError('El cálculo debe contener esfuerzo, duración y costo de Base y Conservador.')
+        item['calculation'] = {'rules_hash': rules_hash, 'files': checked, 'recorded_at': now()}
+        self.save(state, 'Cálculo A4 registrado para revisión, sin finalizar ni aprobar etapa')
 
     def block(self, step, reason):
         self.check_step(step)

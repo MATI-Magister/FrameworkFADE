@@ -1,0 +1,135 @@
+{
+  "version": "1.0",
+  "numbering": "Los A1–A7 del ZIP son referencias; los comandos y etapas actuales conservan sus IDs.",
+  "human_roles": {
+    "experto_tecnico": null,
+    "validador": null,
+    "direccion": null,
+    "responsable_propuesta": null,
+    "lider_proyecto": null,
+    "dueno_framework": null
+  },
+  "roles": [
+    {
+      "id": "orquestador",
+      "name": "Orquestador",
+      "stage": "transversal",
+      "source_id": null,
+      "instruction": "AGENTS.md",
+      "skill": "skills/fade-orquestar/SKILL.md",
+      "source_specification": "referencias/onedrive-2026-11-02/agentes_flujo.md",
+      "purpose": "Interpretar comandos, verificar estado y seleccionar roles.",
+      "limit": "No aprobar ni encadenar etapas sin instrucción."
+    },
+    {
+      "id": "registro",
+      "name": "Gestor de fuentes",
+      "stage": "registro",
+      "source_id": null,
+      "instruction": "agentes/registro.md",
+      "skill": "skills/fade-registrar/SKILL.md",
+      "source_specification": null,
+      "purpose": "Conservar originales e inventariar fuentes.",
+      "limit": "No declarar legible un adjunto no leído."
+    },
+    {
+      "id": "estructurador",
+      "name": "Estructurador de requerimientos",
+      "stage": "a1",
+      "source_id": "A1",
+      "instruction": "roles/estructurador.md",
+      "skill": "skills/fade-estructurar/SKILL.md",
+      "source_specification": "referencias/onedrive-2026-11-02/a1_estructurador/estructurador_especificacion.md",
+      "purpose": "Extraer datos con citas, autores y contradicciones.",
+      "limit": "No calificar madurez, resolver conflictos ni ampliar alcance."
+    },
+    {
+      "id": "evaluador",
+      "name": "Evaluador de información",
+      "stage": "a1",
+      "source_id": "A2",
+      "instruction": "agentes/a1.md",
+      "skill": "skills/fade-evaluar-informacion/SKILL.md",
+      "source_specification": "referencias/onedrive-2026-11-02/a2_evaluador/evaluador_especificacion.md",
+      "purpose": "Evaluar 20 criterios y formular preguntas priorizadas.",
+      "limit": "No aprobar el paso a componentes."
+    },
+    {
+      "id": "divisor",
+      "name": "Divisor de componentes",
+      "stage": "a2",
+      "source_id": "A3",
+      "instruction": "agentes/a2.md",
+      "skill": "skills/fade-dividir-componentes/SKILL.md",
+      "source_specification": "referencias/onedrive-2026-11-02/a3_divisor/divisor_especificacion.md",
+      "purpose": "Cubrir el alcance con componentes y procesos sin duplicados.",
+      "limit": "No convertir propuestas inferidas en alcance confirmado."
+    },
+    {
+      "id": "detallador",
+      "name": "Caracterizador de componentes",
+      "stage": "a3",
+      "source_id": "A4",
+      "instruction": "agentes/a3.md",
+      "skill": "skills/fade-detallar-componentes/SKILL.md",
+      "source_specification": "referencias/onedrive-2026-11-02/a4_detallador/detallador_especificacion.md",
+      "purpose": "Clasificar dimensiones y sustentar factores, tecnologías e interfaces.",
+      "limit": "No asignar valores a lo desconocido ni calcular horas aquí."
+    },
+    {
+      "id": "aclarador",
+      "name": "Facilitador de aclaraciones",
+      "stage": "cierre",
+      "source_id": null,
+      "instruction": "agentes/cierre.md",
+      "skill": "skills/fade-aclarar/SKILL.md",
+      "source_specification": null,
+      "purpose": "Conservar PRE/PEN y aclarar alcance, equipo y entorno.",
+      "limit": "No confundir respuesta con aprobación."
+    },
+    {
+      "id": "generador",
+      "name": "Analista de escenarios",
+      "stage": "a4",
+      "source_id": "A5",
+      "instruction": "roles/generador.md",
+      "skill": "skills/fade-generar-escenario/SKILL.md",
+      "source_specification": "referencias/onedrive-2026-11-02/a5_generador/generador_especificacion.md",
+      "purpose": "Juzgar comparables y documentar cobertura y escenarios.",
+      "limit": "No inventar historia, tarifas o capacidad ni superponer métodos."
+    },
+    {
+      "id": "redactor",
+      "name": "Redactor del entregable",
+      "stage": "revision",
+      "source_id": "A6",
+      "instruction": "roles/redactor.md",
+      "skill": "skills/fade-redactar-propuesta/SKILL.md",
+      "source_specification": "referencias/onedrive-2026-11-02/a6_redactor/redactor_especificacion.md",
+      "purpose": "Redactar textos claros con cifras tomadas de cálculo revisado.",
+      "limit": "No agregar beneficios, cifras o compromisos por iniciativa propia."
+    },
+    {
+      "id": "revisor",
+      "name": "Revisor de estimación",
+      "stage": "revision",
+      "source_id": null,
+      "instruction": "agentes/revision.md",
+      "skill": "skills/fade-revisar/SKILL.md",
+      "source_specification": null,
+      "purpose": "Verificar paquete, ajustes, fuentes y cifras antes de aceptación.",
+      "limit": "Solo el experto aprueba la versión."
+    },
+    {
+      "id": "aprendizaje",
+      "name": "Analista de cierre y aprendizaje",
+      "stage": "postejecucion",
+      "source_id": "A7",
+      "instruction": "roles/aprendizaje.md",
+      "skill": "skills/fade-aprender-cierre/SKILL.md",
+      "source_specification": "referencias/onedrive-2026-11-02/a7_cierre/cierre_especificacion.md",
+      "purpose": "Preparar desviaciones, reuso real y lecciones tras ejecutar el proyecto.",
+      "limit": "No registrar ni recalibrar sin confirmación del responsable."
+    }
+  ]
+}

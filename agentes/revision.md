@@ -16,3 +16,6 @@ escenarios. `!ajustar` reabre esta revisión y archiva el paquete anterior. Recu
 sus ajustes del historial. Cambios numéricos vuelven a A4 para recalcular; cambios
 de alcance vuelven a las etapas afectadas. No editar un total directamente.
 El ejemplo de cliente es ficticio; nunca usar sus cifras en un expediente real.
+
+Leer también reglas/integracion-agentes.md y las skills asignadas en configuracion/roles.json.
+El rol redactor sigue roles/redactor.md antes de que el revisor presente el paquete.

@@ -1,0 +1,1230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "faed/faed_ficha.schema.json",
+  "$comment": "Contrato v0.1 del agente estructurador de FAED.",
+  "title": "FAED · Ficha estructurada de la solicitud",
+  "description": "Ficha estructurada de una solicitud de cotización, con evidencia literal para cada dato. La produce el agente estructurador a partir de las fuentes y de la ficha vigente, y la leen el evaluador de la información (anexo B.1), el clasificador de componentes y el buscador de comparables. Cada versión se guarda aparte y no se modifica; enriquecer la ficha crea una versión nueva.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id_solicitud",
+    "cliente",
+    "version",
+    "fuentes",
+    "contexto",
+    "alcance",
+    "funcionalidad",
+    "requisitos_tecnicos",
+    "integraciones",
+    "reutilizacion",
+    "condiciones_comerciales",
+    "contradicciones",
+    "cambios"
+  ],
+  "properties": {
+    "id_solicitud": {
+      "type": "string",
+      "description": "Identificador de la solicitud, copiado de la entrada."
+    },
+    "cliente": {
+      "type": "string",
+      "description": "Cliente de la solicitud, copiado de la entrada. Es el cliente registrado; si una fuente nombra a otro cliente, no se reemplaza: se registra una advertencia en cambios."
+    },
+    "version": {
+      "type": "integer",
+      "description": "Versión de esta ficha: 1 si no había ficha vigente; la versión vigente más uno en otro caso."
+    },
+    "fuentes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Fuente"
+      },
+      "description": "Todas las fuentes procesadas hasta esta versión: las de la ficha vigente más las nuevas."
+    },
+    "contexto": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sector",
+        "problema_y_objetivos",
+        "normativa"
+      ],
+      "properties": {
+        "sector": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "Sector o industria del cliente, cuando la fuente lo dice. Cuenta: 'Somos una aseguradora', 'entidad del sector salud'. No cuenta: Deducir el sector a partir del nombre de la empresa. Alimenta los criterios de la evaluación de la información: D10. Prefijo de identificador: SEC."
+        },
+        "problema_y_objetivos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "El problema que el cliente quiere resolver y los resultados que espera, en sus propios términos. Cuenta: Dolores, metas e indicadores que el cliente quiere mover. No cuenta: Funcionalidades concretas, que van en procesos_funcionales. Alimenta los criterios de la evaluación de la información: D8.1. Prefijo de identificador: PRB."
+        },
+        "normativa": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "Leyes, normas o regulaciones del sector que afectan la solución y, si la fuente lo describe, su efecto en los requisitos. Cuenta: 'Aplica la ley de protección de datos personales'. No cuenta: Buenas prácticas generales sin norma asociada. Alimenta los criterios de la evaluación de la información: D10.1. Prefijo de identificador: NOR."
+        }
+      },
+      "description": "Quién es el cliente, qué problema quiere resolver y qué regulación le aplica."
+    },
+    "alcance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tipo_de_trabajo",
+        "sistemas_existentes",
+        "migracion_de_datos",
+        "fuera_de_alcance",
+        "partes_de_la_solucion"
+      ],
+      "properties": {
+        "tipo_de_trabajo": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TipoDeTrabajo"
+          },
+          "description": "Qué parte del trabajo es nueva, evolutiva, de modernización o de mantenimiento. Cuenta: Afirmaciones explícitas como 'un portal nuevo' o 'ajustar el módulo actual', y porcentajes si la fuente los da. No cuenta: Suponer que algo es nuevo porque no se menciona un sistema actual. Alimenta los criterios de la evaluación de la información: D1.1. Prefijo de identificador: TIP."
+        },
+        "sistemas_existentes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SistemaExistente"
+          },
+          "description": "Sistemas o funcionalidades existentes que el proyecto modifica, reemplaza, retira o con los que se conecta, y qué cambia en cada uno. Cuenta: Sistemas que nombra la fuente. No cuenta: El detalle técnico de la conexión, que va en integraciones. Alimenta los criterios de la evaluación de la información: D1.2. Prefijo de identificador: SIS."
+        },
+        "migracion_de_datos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Migracion"
+          },
+          "description": "Datos que hay que trasladar desde sistemas existentes, con su origen y volumen si se conocen. Cuenta: 'Cargar los 50.000 clientes actuales'. No cuenta: Datos que la solución solo consulta en línea, que van en integraciones. Alimenta los criterios de la evaluación de la información: D1.2. Prefijo de identificador: MIG."
+        },
+        "fuera_de_alcance": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "Lo que el cliente o el equipo dejaron explícitamente fuera del proyecto. Cuenta: 'La aplicación móvil no hace parte de esta fase'. No cuenta: Suponer exclusiones porque algo no se mencionó. Alimenta los criterios de la evaluación de la información: D1.3. Prefijo de identificador: FDA."
+        },
+        "partes_de_la_solucion": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParteDeLaSolucion"
+          },
+          "description": "Las partes grandes de la solución que menciona la fuente (módulos, frentes, épicas), con su tamaño si se da. Sirven para saber dónde se concentra el esfuerzo. Cuenta: 'Un portal, una aplicación móvil y un motor de reglas'. No cuenta: Procesos funcionales individuales, que van en procesos_funcionales. Alimenta los criterios de la evaluación de la información: D2.1, D2.2. Prefijo de identificador: PAR."
+        }
+      },
+      "description": "Qué se construye, qué se toca de lo existente y qué queda fuera."
+    },
+    "funcionalidad": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "procesos_funcionales",
+        "revision_lista_procesos",
+        "reglas_de_negocio"
+      ],
+      "properties": {
+        "procesos_funcionales": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProcesoFuncional"
+          },
+          "description": "Lo que un usuario u otro sistema debe poder hacer con la solución, uno por elemento; equivale a una historia de usuario de alto nivel. Cuenta: Funcionalidades explícitas, historias de usuario y casos de uso. No cuenta: Requisitos de calidad como 'debe ser rápido', que van en usuarios_volumen_y_rendimiento, y procesos que parezcan necesarios pero la fuente no menciona. Alimenta los criterios de la evaluación de la información: D3.1, D3.2, D8.1, D2.3. Prefijo de identificador: PF."
+        },
+        "revision_lista_procesos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "Evidencia de que el cliente revisó o validó la lista de procesos funcionales. Cuenta: 'El cliente aprobó la lista de historias en la segunda sesión'. No cuenta: Suponer que el cliente la revisó porque él mismo la envió. Alimenta los criterios de la evaluación de la información: D3.3. Prefijo de identificador: REV."
+        },
+        "reglas_de_negocio": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReglaDeNegocio"
+          },
+          "description": "Condiciones, cálculos o políticas del negocio que la solución debe aplicar. Cuenta: 'El certificado solo se emite si la póliza está al día'. No cuenta: Requisitos técnicos o de seguridad. Alimenta los criterios de la evaluación de la información: D4.1, D4.4. Prefijo de identificador: RN."
+        }
+      },
+      "description": "Qué debe poder hacer la solución y con qué reglas."
+    },
+    "requisitos_tecnicos": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "arquitectura",
+        "tecnologias",
+        "seguridad_y_datos",
+        "usuarios_volumen_y_rendimiento",
+        "dependencias_externas"
+      ],
+      "properties": {
+        "arquitectura": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "La arquitectura en la que debe operar la solución: despliegue, capas, servicios, alta disponibilidad, procesamiento asíncrono. Cuenta: 'Debe operar en la nube que ya usa el cliente'. No cuenta: Tecnologías puntuales sin relación con la estructura, que van en tecnologias. Alimenta los criterios de la evaluación de la información: D4.2, D4.4. Prefijo de identificador: ARQ."
+        },
+        "tecnologias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Tecnologia"
+          },
+          "description": "Tecnologías que exige o prefiere el cliente o que ya existen en el entorno donde operará la solución. Cuenta: 'Debe desarrollarse en Java 17', 'la base de datos corporativa es Oracle'. No cuenta: Tecnologías que el modelo considere adecuadas. Alimenta los criterios de la evaluación de la información: D7.1. Prefijo de identificador: TEC."
+        },
+        "seguridad_y_datos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "Requisitos de seguridad y tipo de datos que maneja la solución: autenticación, roles, auditoría, datos personales, financieros o de salud, firma digital. Cuenta: 'Manejamos datos personales', 'se requiere firma digital'. No cuenta: Leyes o normas, que van en normativa. Alimenta los criterios de la evaluación de la información: D4.3, D4.4. Prefijo de identificador: SEG."
+        },
+        "usuarios_volumen_y_rendimiento": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "Número de usuarios, volumen de transacciones, cargas por lotes, tiempos de respuesta y disponibilidad esperados. Cuenta: '20.000 usuarios activos al mes', 'respuesta en menos de dos segundos'. No cuenta: Volúmenes del negocio que no pasan por la solución. Alimenta los criterios de la evaluación de la información: D4.4, D2.3. Prefijo de identificador: VOL."
+        },
+        "dependencias_externas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dependencia"
+          },
+          "description": "Terceros de los que depende el proyecto (proveedores, otros equipos, entregas del cliente) y si tienen fechas comprometidas. Cuenta: 'El proveedor del sistema central entrega los servicios en marzo'. No cuenta: Las integraciones técnicas en sí, que van en integraciones. Alimenta los criterios de la evaluación de la información: D4.4. Prefijo de identificador: DEP."
+        }
+      },
+      "description": "En qué arquitectura y tecnologías opera, con qué seguridad, volumen y dependencias."
+    },
+    "integraciones": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "interfaces"
+      ],
+      "properties": {
+        "interfaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Interfaz"
+          },
+          "description": "Cada interfaz con otro sistema, un elemento por interfaz. Cada atributo se registra solo si la fuente lo dice. Cuenta: 'Nos integramos con el sistema central por servicios REST'. No cuenta: Sistemas mencionados solo como contexto, sin intercambio de información. Alimenta los criterios de la evaluación de la información: D5.1, D5.2, D5.3, D2.3. Prefijo de identificador: INT."
+        }
+      },
+      "description": "Con qué sistemas intercambia información y qué tan conocida es cada interfaz."
+    },
+    "reutilizacion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activos_reutilizables"
+      ],
+      "properties": {
+        "activos_reutilizables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "Activos de la empresa que se mencionan como reutilizables para esta solución y qué procesos cubren. Suelen venir de notas internas del equipo, no del cliente. Cuenta: 'Podemos usar el módulo de autenticación del producto X'. No cuenta: Activos o sistemas del cliente. Alimenta los criterios de la evaluación de la información: D6.1. Prefijo de identificador: REU."
+        }
+      },
+      "description": "Qué activos de la empresa podrían reutilizarse."
+    },
+    "condiciones_comerciales": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plazo",
+        "presupuesto",
+        "respuesta_solicitada",
+        "modalidad_solicitada"
+      ],
+      "properties": {
+        "plazo": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "Plazo esperado para tener la solución y fechas o hitos que pide el cliente. Cuenta: 'En producción antes de seis meses'. No cuenta: El plazo para responder la cotización, que va en respuesta_solicitada. Alimenta los criterios de la evaluación de la información: ninguno (viabilidad). Prefijo de identificador: PLZ."
+        },
+        "presupuesto": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "Presupuesto, techo de inversión o expectativa de precio que menciona el cliente. Cuenta: 'Tenemos aprobados 400 millones para este proyecto'. No cuenta: Estimaciones de precio del equipo. Alimenta los criterios de la evaluación de la información: ninguno (viabilidad). Prefijo de identificador: PRE."
+        },
+        "respuesta_solicitada": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "Fecha o plazo en que el cliente pide la propuesta. Sirve para saber si la solicitud es urgente. Cuenta: 'Necesitamos la propuesta en dos semanas'. No cuenta: El plazo del proyecto, que va en plazo. Alimenta los criterios de la evaluación de la información: ninguno (carril rápido). Prefijo de identificador: RES."
+        },
+        "modalidad_solicitada": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dato"
+          },
+          "description": "Forma de cobro que pide el cliente: bolsa de horas, sprints, bloques de trabajo o precio fijo. Cuenta: 'Requerimos una propuesta a precio fijo'. No cuenta: Suponer la modalidad. Alimenta los criterios de la evaluación de la información: ninguno (presentación comercial). Prefijo de identificador: MOD."
+        }
+      },
+      "description": "Plazo, presupuesto, urgencia y modalidad. No alimentan la evaluación de la información; se usan en la viabilidad, el carril rápido y la presentación comercial."
+    },
+    "contradicciones": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Contradiccion"
+      },
+      "description": "Todas las contradicciones de la solicitud, abiertas y resueltas. Las de la ficha vigente se conservan."
+    },
+    "cambios": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Cambio"
+      },
+      "description": "Lo que cambió en esta versión frente a la ficha vigente, un elemento por cambio. Sirve para revisar la versión antes de usarla."
+    }
+  },
+  "$defs": {
+    "Cita": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fuente",
+        "ubicacion",
+        "texto"
+      ],
+      "properties": {
+        "fuente": {
+          "type": "string",
+          "description": "Identificador de la fuente de la que sale el fragmento (F1, F2…)."
+        },
+        "ubicacion": {
+          "type": "string",
+          "description": "Marca de ubicación de la línea donde está el fragmento, sin corchetes (por ejemplo, 'p. 3' o 'min 23:10')."
+        },
+        "texto": {
+          "type": "string",
+          "description": "Fragmento literal mínimo que sustenta el dato, copiado sin cambios, de máximo 300 caracteres. Nunca se recortan palabras ni se usan puntos suspensivos; si el dato depende de dos partes separadas de la fuente, se usan dos citas."
+        }
+      }
+    },
+    "Dato": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "estado",
+        "enunciado",
+        "afirmado_por",
+        "confirmado_por_cliente",
+        "citas"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador estable del dato: el prefijo de su sección y un número (por ejemplo, 'PF-03'). Un dato nuevo recibe el número siguiente al mayor que ya exista en su sección, incluidos los descartados. Un identificador nunca cambia ni se reutiliza."
+        },
+        "estado": {
+          "type": "string",
+          "enum": [
+            "vigente",
+            "descartado"
+          ],
+          "description": "Todo dato nace vigente. Solo pasa a descartado cuando una fuente de tipo notas_internas registra la decisión de una persona de descartarlo. Los datos descartados no se eliminan de la ficha y los demás agentes los ignoran."
+        },
+        "enunciado": {
+          "type": "string",
+          "description": "El dato en una oración breve, fiel a sus citas y en español. Si el dato se complementa, el enunciado se consolida: lo que ya decía más lo que agrega la fuente nueva."
+        },
+        "afirmado_por": {
+          "type": "string",
+          "enum": [
+            "cliente",
+            "equipo",
+            "no_identificado"
+          ],
+          "description": "Quién afirma el dato. 'cliente': lo dice o lo escribe alguien del cliente. 'equipo': lo dice o lo escribe alguien de la empresa, por ejemplo una propuesta en una sesión o una nota interna. 'no_identificado': no se sabe quién lo dijo; nunca se asume que fue el cliente. Una propuesta del equipo que el cliente acepta explícitamente pasa a 'cliente', con la cita de la propuesta y la de la aceptación. Solo los datos del cliente son requisitos; los del equipo pueden ser propuestas o conocimiento interno, como un activo reutilizable o lo que el equipo sabe del entorno del cliente."
+        },
+        "confirmado_por_cliente": {
+          "type": "boolean",
+          "description": "true solo si alguna fuente muestra que el cliente revisó, aprobó o validó explícitamente el dato tal como está en el enunciado. Que el cliente lo haya dicho o escrito no basta. Si es true, una de las citas del dato es la que muestra la validación. Si un complemento cambia el enunciado o algún atributo, la confirmación anterior no se hereda: queda en true solo si la fuente nueva confirma el dato consolidado."
+        },
+        "citas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Cita"
+          },
+          "description": "Fragmentos literales que sustentan el dato, de todas las fuentes que lo aportaron. Al menos uno: un dato sin cita no va en la ficha."
+        }
+      }
+    },
+    "TipoDeTrabajo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "estado",
+        "enunciado",
+        "afirmado_por",
+        "confirmado_por_cliente",
+        "citas",
+        "tipo",
+        "porcentaje"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador estable del dato: el prefijo de su sección y un número (por ejemplo, 'PF-03'). Un dato nuevo recibe el número siguiente al mayor que ya exista en su sección, incluidos los descartados. Un identificador nunca cambia ni se reutiliza."
+        },
+        "estado": {
+          "type": "string",
+          "enum": [
+            "vigente",
+            "descartado"
+          ],
+          "description": "Todo dato nace vigente. Solo pasa a descartado cuando una fuente de tipo notas_internas registra la decisión de una persona de descartarlo. Los datos descartados no se eliminan de la ficha y los demás agentes los ignoran."
+        },
+        "enunciado": {
+          "type": "string",
+          "description": "El dato en una oración breve, fiel a sus citas y en español. Si el dato se complementa, el enunciado se consolida: lo que ya decía más lo que agrega la fuente nueva."
+        },
+        "afirmado_por": {
+          "type": "string",
+          "enum": [
+            "cliente",
+            "equipo",
+            "no_identificado"
+          ],
+          "description": "Quién afirma el dato. 'cliente': lo dice o lo escribe alguien del cliente. 'equipo': lo dice o lo escribe alguien de la empresa, por ejemplo una propuesta en una sesión o una nota interna. 'no_identificado': no se sabe quién lo dijo; nunca se asume que fue el cliente. Una propuesta del equipo que el cliente acepta explícitamente pasa a 'cliente', con la cita de la propuesta y la de la aceptación. Solo los datos del cliente son requisitos; los del equipo pueden ser propuestas o conocimiento interno, como un activo reutilizable o lo que el equipo sabe del entorno del cliente."
+        },
+        "confirmado_por_cliente": {
+          "type": "boolean",
+          "description": "true solo si alguna fuente muestra que el cliente revisó, aprobó o validó explícitamente el dato tal como está en el enunciado. Que el cliente lo haya dicho o escrito no basta. Si es true, una de las citas del dato es la que muestra la validación. Si un complemento cambia el enunciado o algún atributo, la confirmación anterior no se hereda: queda en true solo si la fuente nueva confirma el dato consolidado."
+        },
+        "citas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Cita"
+          },
+          "description": "Fragmentos literales que sustentan el dato, de todas las fuentes que lo aportaron. Al menos uno: un dato sin cita no va en la ficha."
+        },
+        "tipo": {
+          "type": "string",
+          "enum": [
+            "nuevo",
+            "evolutivo",
+            "modernizacion",
+            "mantenimiento",
+            "no_especificado"
+          ],
+          "description": "Tipo de desarrollo que afirma la fuente: nuevo (se construye desde cero), evolutivo (modifica algo existente), modernizacion (reemplaza o migra un sistema) o mantenimiento (correctivo)."
+        },
+        "porcentaje": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Porcentaje del alcance que corresponde a este tipo, solo si la fuente lo da. null en otro caso."
+        }
+      }
+    },
+    "SistemaExistente": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "estado",
+        "enunciado",
+        "afirmado_por",
+        "confirmado_por_cliente",
+        "citas",
+        "nombre",
+        "accion",
+        "que_cambia"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador estable del dato: el prefijo de su sección y un número (por ejemplo, 'PF-03'). Un dato nuevo recibe el número siguiente al mayor que ya exista en su sección, incluidos los descartados. Un identificador nunca cambia ni se reutiliza."
+        },
+        "estado": {
+          "type": "string",
+          "enum": [
+            "vigente",
+            "descartado"
+          ],
+          "description": "Todo dato nace vigente. Solo pasa a descartado cuando una fuente de tipo notas_internas registra la decisión de una persona de descartarlo. Los datos descartados no se eliminan de la ficha y los demás agentes los ignoran."
+        },
+        "enunciado": {
+          "type": "string",
+          "description": "El dato en una oración breve, fiel a sus citas y en español. Si el dato se complementa, el enunciado se consolida: lo que ya decía más lo que agrega la fuente nueva."
+        },
+        "afirmado_por": {
+          "type": "string",
+          "enum": [
+            "cliente",
+            "equipo",
+            "no_identificado"
+          ],
+          "description": "Quién afirma el dato. 'cliente': lo dice o lo escribe alguien del cliente. 'equipo': lo dice o lo escribe alguien de la empresa, por ejemplo una propuesta en una sesión o una nota interna. 'no_identificado': no se sabe quién lo dijo; nunca se asume que fue el cliente. Una propuesta del equipo que el cliente acepta explícitamente pasa a 'cliente', con la cita de la propuesta y la de la aceptación. Solo los datos del cliente son requisitos; los del equipo pueden ser propuestas o conocimiento interno, como un activo reutilizable o lo que el equipo sabe del entorno del cliente."
+        },
+        "confirmado_por_cliente": {
+          "type": "boolean",
+          "description": "true solo si alguna fuente muestra que el cliente revisó, aprobó o validó explícitamente el dato tal como está en el enunciado. Que el cliente lo haya dicho o escrito no basta. Si es true, una de las citas del dato es la que muestra la validación. Si un complemento cambia el enunciado o algún atributo, la confirmación anterior no se hereda: queda en true solo si la fuente nueva confirma el dato consolidado."
+        },
+        "citas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Cita"
+          },
+          "description": "Fragmentos literales que sustentan el dato, de todas las fuentes que lo aportaron. Al menos uno: un dato sin cita no va en la ficha."
+        },
+        "nombre": {
+          "type": "string",
+          "description": "Nombre del sistema o funcionalidad existente, como lo llama la fuente."
+        },
+        "accion": {
+          "type": "string",
+          "enum": [
+            "modifica",
+            "reemplaza",
+            "retira",
+            "se_conecta",
+            "no_especificada"
+          ],
+          "description": "Qué hace el proyecto con este sistema según la fuente."
+        },
+        "que_cambia": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Qué cambia en el sistema, si la fuente lo describe. null en otro caso."
+        }
+      }
+    },
+    "Migracion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "estado",
+        "enunciado",
+        "afirmado_por",
+        "confirmado_por_cliente",
+        "citas",
+        "origen",
+        "volumen"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador estable del dato: el prefijo de su sección y un número (por ejemplo, 'PF-03'). Un dato nuevo recibe el número siguiente al mayor que ya exista en su sección, incluidos los descartados. Un identificador nunca cambia ni se reutiliza."
+        },
+        "estado": {
+          "type": "string",
+          "enum": [
+            "vigente",
+            "descartado"
+          ],
+          "description": "Todo dato nace vigente. Solo pasa a descartado cuando una fuente de tipo notas_internas registra la decisión de una persona de descartarlo. Los datos descartados no se eliminan de la ficha y los demás agentes los ignoran."
+        },
+        "enunciado": {
+          "type": "string",
+          "description": "El dato en una oración breve, fiel a sus citas y en español. Si el dato se complementa, el enunciado se consolida: lo que ya decía más lo que agrega la fuente nueva."
+        },
+        "afirmado_por": {
+          "type": "string",
+          "enum": [
+            "cliente",
+            "equipo",
+            "no_identificado"
+          ],
+          "description": "Quién afirma el dato. 'cliente': lo dice o lo escribe alguien del cliente. 'equipo': lo dice o lo escribe alguien de la empresa, por ejemplo una propuesta en una sesión o una nota interna. 'no_identificado': no se sabe quién lo dijo; nunca se asume que fue el cliente. Una propuesta del equipo que el cliente acepta explícitamente pasa a 'cliente', con la cita de la propuesta y la de la aceptación. Solo los datos del cliente son requisitos; los del equipo pueden ser propuestas o conocimiento interno, como un activo reutilizable o lo que el equipo sabe del entorno del cliente."
+        },
+        "confirmado_por_cliente": {
+          "type": "boolean",
+          "description": "true solo si alguna fuente muestra que el cliente revisó, aprobó o validó explícitamente el dato tal como está en el enunciado. Que el cliente lo haya dicho o escrito no basta. Si es true, una de las citas del dato es la que muestra la validación. Si un complemento cambia el enunciado o algún atributo, la confirmación anterior no se hereda: queda en true solo si la fuente nueva confirma el dato consolidado."
+        },
+        "citas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Cita"
+          },
+          "description": "Fragmentos literales que sustentan el dato, de todas las fuentes que lo aportaron. Al menos uno: un dato sin cita no va en la ficha."
+        },
+        "origen": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Sistema o repositorio de donde salen los datos. null si no se dice."
+        },
+        "volumen": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Volumen aproximado de datos o registros, tal como lo da la fuente. null si no se dice."
+        }
+      }
+    },
+    "ParteDeLaSolucion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "estado",
+        "enunciado",
+        "afirmado_por",
+        "confirmado_por_cliente",
+        "citas",
+        "nombre",
+        "tamano_mencionado"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador estable del dato: el prefijo de su sección y un número (por ejemplo, 'PF-03'). Un dato nuevo recibe el número siguiente al mayor que ya exista en su sección, incluidos los descartados. Un identificador nunca cambia ni se reutiliza."
+        },
+        "estado": {
+          "type": "string",
+          "enum": [
+            "vigente",
+            "descartado"
+          ],
+          "description": "Todo dato nace vigente. Solo pasa a descartado cuando una fuente de tipo notas_internas registra la decisión de una persona de descartarlo. Los datos descartados no se eliminan de la ficha y los demás agentes los ignoran."
+        },
+        "enunciado": {
+          "type": "string",
+          "description": "El dato en una oración breve, fiel a sus citas y en español. Si el dato se complementa, el enunciado se consolida: lo que ya decía más lo que agrega la fuente nueva."
+        },
+        "afirmado_por": {
+          "type": "string",
+          "enum": [
+            "cliente",
+            "equipo",
+            "no_identificado"
+          ],
+          "description": "Quién afirma el dato. 'cliente': lo dice o lo escribe alguien del cliente. 'equipo': lo dice o lo escribe alguien de la empresa, por ejemplo una propuesta en una sesión o una nota interna. 'no_identificado': no se sabe quién lo dijo; nunca se asume que fue el cliente. Una propuesta del equipo que el cliente acepta explícitamente pasa a 'cliente', con la cita de la propuesta y la de la aceptación. Solo los datos del cliente son requisitos; los del equipo pueden ser propuestas o conocimiento interno, como un activo reutilizable o lo que el equipo sabe del entorno del cliente."
+        },
+        "confirmado_por_cliente": {
+          "type": "boolean",
+          "description": "true solo si alguna fuente muestra que el cliente revisó, aprobó o validó explícitamente el dato tal como está en el enunciado. Que el cliente lo haya dicho o escrito no basta. Si es true, una de las citas del dato es la que muestra la validación. Si un complemento cambia el enunciado o algún atributo, la confirmación anterior no se hereda: queda en true solo si la fuente nueva confirma el dato consolidado."
+        },
+        "citas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Cita"
+          },
+          "description": "Fragmentos literales que sustentan el dato, de todas las fuentes que lo aportaron. Al menos uno: un dato sin cita no va en la ficha."
+        },
+        "nombre": {
+          "type": "string",
+          "description": "Nombre de la parte (módulo, frente, épica) como la llama la fuente."
+        },
+        "tamano_mencionado": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Cualquier indicio de tamaño que dé la fuente (número de pantallas, historias, usuarios). null si no hay."
+        }
+      }
+    },
+    "ProcesoFuncional": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "estado",
+        "enunciado",
+        "afirmado_por",
+        "confirmado_por_cliente",
+        "citas",
+        "nombre",
+        "actor",
+        "datos_que_entran",
+        "datos_que_salen",
+        "datos_que_consulta",
+        "datos_que_guarda",
+        "criterios_de_aceptacion"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador estable del dato: el prefijo de su sección y un número (por ejemplo, 'PF-03'). Un dato nuevo recibe el número siguiente al mayor que ya exista en su sección, incluidos los descartados. Un identificador nunca cambia ni se reutiliza."
+        },
+        "estado": {
+          "type": "string",
+          "enum": [
+            "vigente",
+            "descartado"
+          ],
+          "description": "Todo dato nace vigente. Solo pasa a descartado cuando una fuente de tipo notas_internas registra la decisión de una persona de descartarlo. Los datos descartados no se eliminan de la ficha y los demás agentes los ignoran."
+        },
+        "enunciado": {
+          "type": "string",
+          "description": "El dato en una oración breve, fiel a sus citas y en español. Si el dato se complementa, el enunciado se consolida: lo que ya decía más lo que agrega la fuente nueva."
+        },
+        "afirmado_por": {
+          "type": "string",
+          "enum": [
+            "cliente",
+            "equipo",
+            "no_identificado"
+          ],
+          "description": "Quién afirma el dato. 'cliente': lo dice o lo escribe alguien del cliente. 'equipo': lo dice o lo escribe alguien de la empresa, por ejemplo una propuesta en una sesión o una nota interna. 'no_identificado': no se sabe quién lo dijo; nunca se asume que fue el cliente. Una propuesta del equipo que el cliente acepta explícitamente pasa a 'cliente', con la cita de la propuesta y la de la aceptación. Solo los datos del cliente son requisitos; los del equipo pueden ser propuestas o conocimiento interno, como un activo reutilizable o lo que el equipo sabe del entorno del cliente."
+        },
+        "confirmado_por_cliente": {
+          "type": "boolean",
+          "description": "true solo si alguna fuente muestra que el cliente revisó, aprobó o validó explícitamente el dato tal como está en el enunciado. Que el cliente lo haya dicho o escrito no basta. Si es true, una de las citas del dato es la que muestra la validación. Si un complemento cambia el enunciado o algún atributo, la confirmación anterior no se hereda: queda en true solo si la fuente nueva confirma el dato consolidado."
+        },
+        "citas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Cita"
+          },
+          "description": "Fragmentos literales que sustentan el dato, de todas las fuentes que lo aportaron. Al menos uno: un dato sin cita no va en la ficha."
+        },
+        "nombre": {
+          "type": "string",
+          "description": "Verbo en infinitivo y objeto, por ejemplo 'Consultar póliza'."
+        },
+        "actor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Usuario o sistema que ejecuta el proceso, si la fuente lo dice."
+        },
+        "datos_que_entran": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Datos que recibe el proceso, solo si la fuente los menciona."
+        },
+        "datos_que_salen": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Datos que entrega el proceso, solo si la fuente los menciona."
+        },
+        "datos_que_consulta": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Datos que el proceso consulta en otros sistemas o repositorios, solo si la fuente los menciona."
+        },
+        "datos_que_guarda": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Datos que el proceso almacena, solo si la fuente los menciona."
+        },
+        "criterios_de_aceptacion": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Condiciones que debe cumplir el proceso para darse por aceptado, solo si la fuente las menciona. null en otro caso."
+        }
+      }
+    },
+    "ReglaDeNegocio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "estado",
+        "enunciado",
+        "afirmado_por",
+        "confirmado_por_cliente",
+        "citas",
+        "proceso_relacionado"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador estable del dato: el prefijo de su sección y un número (por ejemplo, 'PF-03'). Un dato nuevo recibe el número siguiente al mayor que ya exista en su sección, incluidos los descartados. Un identificador nunca cambia ni se reutiliza."
+        },
+        "estado": {
+          "type": "string",
+          "enum": [
+            "vigente",
+            "descartado"
+          ],
+          "description": "Todo dato nace vigente. Solo pasa a descartado cuando una fuente de tipo notas_internas registra la decisión de una persona de descartarlo. Los datos descartados no se eliminan de la ficha y los demás agentes los ignoran."
+        },
+        "enunciado": {
+          "type": "string",
+          "description": "El dato en una oración breve, fiel a sus citas y en español. Si el dato se complementa, el enunciado se consolida: lo que ya decía más lo que agrega la fuente nueva."
+        },
+        "afirmado_por": {
+          "type": "string",
+          "enum": [
+            "cliente",
+            "equipo",
+            "no_identificado"
+          ],
+          "description": "Quién afirma el dato. 'cliente': lo dice o lo escribe alguien del cliente. 'equipo': lo dice o lo escribe alguien de la empresa, por ejemplo una propuesta en una sesión o una nota interna. 'no_identificado': no se sabe quién lo dijo; nunca se asume que fue el cliente. Una propuesta del equipo que el cliente acepta explícitamente pasa a 'cliente', con la cita de la propuesta y la de la aceptación. Solo los datos del cliente son requisitos; los del equipo pueden ser propuestas o conocimiento interno, como un activo reutilizable o lo que el equipo sabe del entorno del cliente."
+        },
+        "confirmado_por_cliente": {
+          "type": "boolean",
+          "description": "true solo si alguna fuente muestra que el cliente revisó, aprobó o validó explícitamente el dato tal como está en el enunciado. Que el cliente lo haya dicho o escrito no basta. Si es true, una de las citas del dato es la que muestra la validación. Si un complemento cambia el enunciado o algún atributo, la confirmación anterior no se hereda: queda en true solo si la fuente nueva confirma el dato consolidado."
+        },
+        "citas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Cita"
+          },
+          "description": "Fragmentos literales que sustentan el dato, de todas las fuentes que lo aportaron. Al menos uno: un dato sin cita no va en la ficha."
+        },
+        "proceso_relacionado": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Nombre del proceso funcional al que aplica la regla, si la fuente lo indica."
+        }
+      }
+    },
+    "Tecnologia": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "estado",
+        "enunciado",
+        "afirmado_por",
+        "confirmado_por_cliente",
+        "citas",
+        "nombre",
+        "version",
+        "caracter"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador estable del dato: el prefijo de su sección y un número (por ejemplo, 'PF-03'). Un dato nuevo recibe el número siguiente al mayor que ya exista en su sección, incluidos los descartados. Un identificador nunca cambia ni se reutiliza."
+        },
+        "estado": {
+          "type": "string",
+          "enum": [
+            "vigente",
+            "descartado"
+          ],
+          "description": "Todo dato nace vigente. Solo pasa a descartado cuando una fuente de tipo notas_internas registra la decisión de una persona de descartarlo. Los datos descartados no se eliminan de la ficha y los demás agentes los ignoran."
+        },
+        "enunciado": {
+          "type": "string",
+          "description": "El dato en una oración breve, fiel a sus citas y en español. Si el dato se complementa, el enunciado se consolida: lo que ya decía más lo que agrega la fuente nueva."
+        },
+        "afirmado_por": {
+          "type": "string",
+          "enum": [
+            "cliente",
+            "equipo",
+            "no_identificado"
+          ],
+          "description": "Quién afirma el dato. 'cliente': lo dice o lo escribe alguien del cliente. 'equipo': lo dice o lo escribe alguien de la empresa, por ejemplo una propuesta en una sesión o una nota interna. 'no_identificado': no se sabe quién lo dijo; nunca se asume que fue el cliente. Una propuesta del equipo que el cliente acepta explícitamente pasa a 'cliente', con la cita de la propuesta y la de la aceptación. Solo los datos del cliente son requisitos; los del equipo pueden ser propuestas o conocimiento interno, como un activo reutilizable o lo que el equipo sabe del entorno del cliente."
+        },
+        "confirmado_por_cliente": {
+          "type": "boolean",
+          "description": "true solo si alguna fuente muestra que el cliente revisó, aprobó o validó explícitamente el dato tal como está en el enunciado. Que el cliente lo haya dicho o escrito no basta. Si es true, una de las citas del dato es la que muestra la validación. Si un complemento cambia el enunciado o algún atributo, la confirmación anterior no se hereda: queda en true solo si la fuente nueva confirma el dato consolidado."
+        },
+        "citas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Cita"
+          },
+          "description": "Fragmentos literales que sustentan el dato, de todas las fuentes que lo aportaron. Al menos uno: un dato sin cita no va en la ficha."
+        },
+        "nombre": {
+          "type": "string",
+          "description": "Nombre de la tecnología, plataforma o producto."
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Versión, si la fuente la da."
+        },
+        "caracter": {
+          "type": "string",
+          "enum": [
+            "exigida",
+            "preferida",
+            "existente_en_el_entorno",
+            "no_especificado"
+          ],
+          "description": "Si el cliente la exige, la prefiere o simplemente ya existe en el entorno donde operará la solución."
+        }
+      }
+    },
+    "Dependencia": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "estado",
+        "enunciado",
+        "afirmado_por",
+        "confirmado_por_cliente",
+        "citas",
+        "tercero",
+        "fecha_comprometida"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador estable del dato: el prefijo de su sección y un número (por ejemplo, 'PF-03'). Un dato nuevo recibe el número siguiente al mayor que ya exista en su sección, incluidos los descartados. Un identificador nunca cambia ni se reutiliza."
+        },
+        "estado": {
+          "type": "string",
+          "enum": [
+            "vigente",
+            "descartado"
+          ],
+          "description": "Todo dato nace vigente. Solo pasa a descartado cuando una fuente de tipo notas_internas registra la decisión de una persona de descartarlo. Los datos descartados no se eliminan de la ficha y los demás agentes los ignoran."
+        },
+        "enunciado": {
+          "type": "string",
+          "description": "El dato en una oración breve, fiel a sus citas y en español. Si el dato se complementa, el enunciado se consolida: lo que ya decía más lo que agrega la fuente nueva."
+        },
+        "afirmado_por": {
+          "type": "string",
+          "enum": [
+            "cliente",
+            "equipo",
+            "no_identificado"
+          ],
+          "description": "Quién afirma el dato. 'cliente': lo dice o lo escribe alguien del cliente. 'equipo': lo dice o lo escribe alguien de la empresa, por ejemplo una propuesta en una sesión o una nota interna. 'no_identificado': no se sabe quién lo dijo; nunca se asume que fue el cliente. Una propuesta del equipo que el cliente acepta explícitamente pasa a 'cliente', con la cita de la propuesta y la de la aceptación. Solo los datos del cliente son requisitos; los del equipo pueden ser propuestas o conocimiento interno, como un activo reutilizable o lo que el equipo sabe del entorno del cliente."
+        },
+        "confirmado_por_cliente": {
+          "type": "boolean",
+          "description": "true solo si alguna fuente muestra que el cliente revisó, aprobó o validó explícitamente el dato tal como está en el enunciado. Que el cliente lo haya dicho o escrito no basta. Si es true, una de las citas del dato es la que muestra la validación. Si un complemento cambia el enunciado o algún atributo, la confirmación anterior no se hereda: queda en true solo si la fuente nueva confirma el dato consolidado."
+        },
+        "citas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Cita"
+          },
+          "description": "Fragmentos literales que sustentan el dato, de todas las fuentes que lo aportaron. Al menos uno: un dato sin cita no va en la ficha."
+        },
+        "tercero": {
+          "type": "string",
+          "description": "Proveedor, equipo o área de la que depende el proyecto."
+        },
+        "fecha_comprometida": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Fecha o plazo comprometido por el tercero, si la fuente lo da."
+        }
+      }
+    },
+    "Interfaz": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "estado",
+        "enunciado",
+        "afirmado_por",
+        "confirmado_por_cliente",
+        "citas",
+        "contraparte",
+        "direccion",
+        "proposito",
+        "frecuencia",
+        "protocolo",
+        "volumen",
+        "contrato",
+        "tipo_de_contrato",
+        "falla_detiene_operacion"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador estable del dato: el prefijo de su sección y un número (por ejemplo, 'PF-03'). Un dato nuevo recibe el número siguiente al mayor que ya exista en su sección, incluidos los descartados. Un identificador nunca cambia ni se reutiliza."
+        },
+        "estado": {
+          "type": "string",
+          "enum": [
+            "vigente",
+            "descartado"
+          ],
+          "description": "Todo dato nace vigente. Solo pasa a descartado cuando una fuente de tipo notas_internas registra la decisión de una persona de descartarlo. Los datos descartados no se eliminan de la ficha y los demás agentes los ignoran."
+        },
+        "enunciado": {
+          "type": "string",
+          "description": "El dato en una oración breve, fiel a sus citas y en español. Si el dato se complementa, el enunciado se consolida: lo que ya decía más lo que agrega la fuente nueva."
+        },
+        "afirmado_por": {
+          "type": "string",
+          "enum": [
+            "cliente",
+            "equipo",
+            "no_identificado"
+          ],
+          "description": "Quién afirma el dato. 'cliente': lo dice o lo escribe alguien del cliente. 'equipo': lo dice o lo escribe alguien de la empresa, por ejemplo una propuesta en una sesión o una nota interna. 'no_identificado': no se sabe quién lo dijo; nunca se asume que fue el cliente. Una propuesta del equipo que el cliente acepta explícitamente pasa a 'cliente', con la cita de la propuesta y la de la aceptación. Solo los datos del cliente son requisitos; los del equipo pueden ser propuestas o conocimiento interno, como un activo reutilizable o lo que el equipo sabe del entorno del cliente."
+        },
+        "confirmado_por_cliente": {
+          "type": "boolean",
+          "description": "true solo si alguna fuente muestra que el cliente revisó, aprobó o validó explícitamente el dato tal como está en el enunciado. Que el cliente lo haya dicho o escrito no basta. Si es true, una de las citas del dato es la que muestra la validación. Si un complemento cambia el enunciado o algún atributo, la confirmación anterior no se hereda: queda en true solo si la fuente nueva confirma el dato consolidado."
+        },
+        "citas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Cita"
+          },
+          "description": "Fragmentos literales que sustentan el dato, de todas las fuentes que lo aportaron. Al menos uno: un dato sin cita no va en la ficha."
+        },
+        "contraparte": {
+          "type": "string",
+          "description": "Sistema u organización con la que se intercambia información."
+        },
+        "direccion": {
+          "type": "string",
+          "enum": [
+            "entrada",
+            "salida",
+            "bidireccional",
+            "no_especificada"
+          ],
+          "description": "Sentido del intercambio visto desde la solución: entrada (la solución recibe), salida (la solución envía)."
+        },
+        "proposito": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Para qué se intercambia la información, si la fuente lo dice."
+        },
+        "frecuencia": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "En línea, por lotes, diaria, etc., si la fuente lo dice."
+        },
+        "protocolo": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Tecnología del intercambio (REST, SOAP, archivos, cola de mensajes), si la fuente lo dice."
+        },
+        "volumen": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Volumen de transacciones o registros, si la fuente lo dice."
+        },
+        "contrato": {
+          "type": "string",
+          "enum": [
+            "disponible",
+            "parcial",
+            "no_disponible",
+            "no_especificado"
+          ],
+          "description": "Si existe el contrato de interfaz (OpenAPI, WSDL, esquema) según la fuente. 'parcial' si solo existe para parte de los servicios."
+        },
+        "tipo_de_contrato": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Formato del contrato (OpenAPI, WSDL, esquema), si la fuente lo dice."
+        },
+        "falla_detiene_operacion": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "true o false solo si la fuente dice explícitamente si la falla de esta interfaz detiene la operación principal del cliente. null en otro caso."
+        }
+      }
+    },
+    "Resolucion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision",
+        "decidido_por",
+        "fuente"
+      ],
+      "properties": {
+        "decision": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Qué se decidió, en palabras de la nota de la persona que decidió. null mientras la contradicción esté abierta."
+        },
+        "decidido_por": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Rol de quien decidió, según la nota (por ejemplo, 'Responsable de la estimación'). null mientras esté abierta."
+        },
+        "fuente": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Identificador de la fuente de tipo notas_internas que registra la decisión. null mientras esté abierta."
+        }
+      },
+      "description": "Decisión de una persona que cierra una contradicción. Mientras la contradicción está abierta, sus tres campos van en null."
+    },
+    "Contradiccion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "estado",
+        "elementos_relacionados",
+        "descripcion",
+        "citas",
+        "resolucion"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador estable con prefijo 'CON' y el número siguiente al mayor existente (por ejemplo, 'CON-02')."
+        },
+        "estado": {
+          "type": "string",
+          "enum": [
+            "abierta",
+            "resuelta"
+          ],
+          "description": "Las contradicciones nacen abiertas. Solo se resuelven cuando una fuente de tipo notas_internas registra la decisión de una persona."
+        },
+        "elementos_relacionados": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Identificadores de todos los datos en conflicto, aunque compartan la misma cita. Al menos dos."
+        },
+        "descripcion": {
+          "type": "string",
+          "description": "En qué consiste la contradicción, sin opinar cuál versión es la correcta."
+        },
+        "citas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Cita"
+          },
+          "description": "Fragmentos literales que muestran la contradicción."
+        },
+        "resolucion": {
+          "$ref": "#/$defs/Resolucion"
+        }
+      }
+    },
+    "Cambio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "elemento",
+        "accion",
+        "detalle"
+      ],
+      "properties": {
+        "elemento": {
+          "type": "string",
+          "description": "Identificador del dato o de la contradicción que cambió. Para una advertencia general, 'ficha'."
+        },
+        "accion": {
+          "type": "string",
+          "enum": [
+            "agregado",
+            "complementado",
+            "confirmado",
+            "descartado",
+            "contradiccion_abierta",
+            "contradiccion_resuelta",
+            "advertencia"
+          ],
+          "description": "Tipo de cambio. 'advertencia' se usa para lo que una persona debe revisar y el agente no puede decidir, por ejemplo un nombre de cliente distinto al registrado o una decisión ambigua en una nota interna."
+        },
+        "detalle": {
+          "type": "string",
+          "description": "Qué cambió, en una oración. En un complemento, qué atributos se agregaron o modificaron."
+        }
+      }
+    },
+    "Fuente": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "tipo",
+        "nombre",
+        "fecha",
+        "medio"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador de la fuente dentro de la solicitud: F1, F2… Una fuente nueva recibe el número siguiente al mayor que ya exista."
+        },
+        "tipo": {
+          "type": "string",
+          "enum": [
+            "documento_cliente",
+            "historias_usuario",
+            "correo",
+            "transcripcion_sesion",
+            "notas_internas",
+            "otro"
+          ],
+          "description": "Tipo de fuente, como se indica en la entrada."
+        },
+        "nombre": {
+          "type": "string",
+          "description": "Nombre de la fuente, como se indica en la entrada."
+        },
+        "fecha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Fecha de la fuente, como se indica en la entrada. null si no se indica."
+        },
+        "medio": {
+          "type": "string",
+          "enum": [
+            "escrito",
+            "verbal"
+          ],
+          "description": "'verbal' para transcripciones de sesiones; 'escrito' para los demás tipos."
+        }
+      }
+    }
+  }
+}

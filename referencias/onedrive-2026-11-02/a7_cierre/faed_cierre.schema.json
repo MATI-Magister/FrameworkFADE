@@ -1,0 +1,315 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "faed/faed_cierre.schema.json",
+  "$comment": "Contrato v0.1 de A7 · Cerrar y aprender.",
+  "title": "FAED · Propuesta de cierre",
+  "description": "La propuesta de cierre de un proyecto ejecutado: reúso real, causas de las desviaciones, activos nuevos e insumos para la revisión de cierre. La produce A7 · Cerrar y aprender; el líder del proyecto la confirma y una función la registra en el registro de proyectos y en el catálogo de activos.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id_solicitud",
+    "descripcion_proyecto",
+    "reuso_real",
+    "causas",
+    "activos_nuevos",
+    "revision_de_cierre",
+    "preguntas_para_el_lider",
+    "advertencias"
+  ],
+  "properties": {
+    "id_solicitud": {
+      "type": "string",
+      "description": "Identificador de la solicitud, copiado de la preparación del cierre."
+    },
+    "descripcion_proyecto": {
+      "type": "string",
+      "description": "Qué se construyó, en una o dos oraciones, para el registro de proyectos: tipo de solución, tipo de cambio y capacidades principales."
+    },
+    "reuso_real": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "activo",
+          "componente",
+          "procesos_estimados",
+          "reutilizado",
+          "procesos_cubiertos",
+          "citas",
+          "justificacion"
+        ],
+        "properties": {
+          "activo": {
+            "type": "string",
+            "description": "Identificador del activo que se usó como evidencia de reúso al estimar (ACT-xx)."
+          },
+          "componente": {
+            "type": "string",
+            "description": "Identificador del componente en que se usó (C01…)."
+          },
+          "procesos_estimados": {
+            "type": "integer",
+            "description": "Procesos del componente que la estimación marcó como cubiertos por este activo."
+          },
+          "reutilizado": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "true si las notas dicen que el activo se reutilizó; false si dicen que no; null si no lo dicen."
+          },
+          "procesos_cubiertos": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Procesos del componente que el activo cubrió de verdad, según las notas. null si no lo dicen."
+          },
+          "citas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "fuente",
+                "ubicacion",
+                "texto"
+              ],
+              "properties": {
+                "fuente": {
+                  "type": "string",
+                  "description": "Identificador de la fuente, copiado de la etiqueta de las notas (F3…)."
+                },
+                "ubicacion": {
+                  "type": "string",
+                  "description": "Marca de ubicación de la línea citada, tal como aparece en la fuente (l. 4)."
+                },
+                "texto": {
+                  "type": "string",
+                  "description": "Fragmento literal de esa línea, sin cambiar ninguna palabra."
+                }
+              }
+            },
+            "description": "Las líneas de las notas que lo sustentan. Vacío si las notas no dicen nada."
+          },
+          "justificacion": {
+            "type": "string",
+            "description": "Qué dicen las notas sobre el uso del activo, en una oración. Si no dicen nada, dilo."
+          }
+        }
+      },
+      "description": "Un elemento por cada par de activo y componente que se usó como evidencia de reúso al estimar."
+    },
+    "causas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "componente",
+          "causa",
+          "citas",
+          "explicacion"
+        ],
+        "properties": {
+          "componente": {
+            "type": "string",
+            "description": "Identificador del componente que requiere causa, copiado de la preparación."
+          },
+          "causa": {
+            "type": "string",
+            "enum": [
+              "alcance_o_informacion",
+              "complejidad",
+              "reuso",
+              "integracion",
+              "equipo",
+              "por_confirmar"
+            ],
+            "description": "Causa principal de la desviación: alcance_o_informacion, complejidad, reuso, integracion o equipo. por_confirmar si las notas no la sustentan."
+          },
+          "citas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "fuente",
+                "ubicacion",
+                "texto"
+              ],
+              "properties": {
+                "fuente": {
+                  "type": "string",
+                  "description": "Identificador de la fuente, copiado de la etiqueta de las notas (F3…)."
+                },
+                "ubicacion": {
+                  "type": "string",
+                  "description": "Marca de ubicación de la línea citada, tal como aparece en la fuente (l. 4)."
+                },
+                "texto": {
+                  "type": "string",
+                  "description": "Fragmento literal de esa línea, sin cambiar ninguna palabra."
+                }
+              }
+            },
+            "description": "Las líneas de las notas que sustentan la causa. Vacío si es por_confirmar."
+          },
+          "explicacion": {
+            "type": "string",
+            "description": "Cómo explican las notas la desviación, en una o dos oraciones."
+          }
+        }
+      },
+      "description": "Un elemento por cada componente que requiere causa, en el orden de la preparación."
+    },
+    "activos_nuevos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "nombre",
+          "descripcion",
+          "componente_origen",
+          "procesos_que_cubre",
+          "tecnologias",
+          "citas"
+        ],
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "description": "Nombre con el que la empresa reconocería el activo."
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Qué es el activo, en una oración."
+          },
+          "componente_origen": {
+            "type": "string",
+            "description": "Identificador del componente en que se construyó (C01…)."
+          },
+          "procesos_que_cubre": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Procesos funcionales que el activo resuelve, con verbo en infinitivo y objeto."
+          },
+          "tecnologias": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tecnologías con las que está construido, según las fichas de los componentes."
+          },
+          "citas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "fuente",
+                "ubicacion",
+                "texto"
+              ],
+              "properties": {
+                "fuente": {
+                  "type": "string",
+                  "description": "Identificador de la fuente, copiado de la etiqueta de las notas (F3…)."
+                },
+                "ubicacion": {
+                  "type": "string",
+                  "description": "Marca de ubicación de la línea citada, tal como aparece en la fuente (l. 4)."
+                },
+                "texto": {
+                  "type": "string",
+                  "description": "Fragmento literal de esa línea, sin cambiar ninguna palabra."
+                }
+              }
+            },
+            "description": "Las líneas de las notas que dicen que se puede volver a usar."
+          }
+        }
+      },
+      "description": "Activos que el proyecto construyó y que las notas señalan como reutilizables. Vacío si no hay."
+    },
+    "revision_de_cierre": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supuestos_no_cumplidos",
+        "temas"
+      ],
+      "properties": {
+        "supuestos_no_cumplidos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "supuesto",
+              "citas"
+            ],
+            "properties": {
+              "supuesto": {
+                "type": "string",
+                "description": "El supuesto de la propuesta o de las fichas de los componentes, copiado tal como está."
+              },
+              "citas": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "fuente",
+                    "ubicacion",
+                    "texto"
+                  ],
+                  "properties": {
+                    "fuente": {
+                      "type": "string",
+                      "description": "Identificador de la fuente, copiado de la etiqueta de las notas (F3…)."
+                    },
+                    "ubicacion": {
+                      "type": "string",
+                      "description": "Marca de ubicación de la línea citada, tal como aparece en la fuente (l. 4)."
+                    },
+                    "texto": {
+                      "type": "string",
+                      "description": "Fragmento literal de esa línea, sin cambiar ninguna palabra."
+                    }
+                  }
+                },
+                "description": "Las líneas de las notas que muestran que no se cumplió."
+              }
+            }
+          },
+          "description": "Supuestos que las notas muestran que no se cumplieron. Vacío si el proyecto no requiere revisión de cierre."
+        },
+        "temas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Temas para la sesión de revisión: qué preguntar en la sesión de entendimiento o qué revisar en la evaluación de la información. Vacío si no requiere revisión."
+        }
+      }
+    },
+    "preguntas_para_el_lider": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Lo que el líder del proyecto debe responder para confirmar el cierre: reúsos sin información, causas por confirmar, activos dudosos."
+    },
+    "advertencias": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Lo que el dueño del framework debe mirar: épicas sin asignar, componentes sin horas, desviaciones grandes de la gestión."
+    }
+  }
+}

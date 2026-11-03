@@ -1,30 +1,19 @@
 # Reglas de estimación
 
-Lee primero `propuesta-inicial.md`: contiene las reglas propuestas para cada agente,
-el método y los formatos legibles. `revision.md` registra la revisión por partes.
-El usuario eligió el catálogo/modelo del Excel como base. Las decisiones operativas
-restantes y COCOMO II siguen en revisión. Ver `modelo-madurez.md`,
-`modelo-madurez.json` y `cocomo-ii.md`. Se retira la propuesta de seis dimensiones.
+Leer integracion-agentes.md y revision.md para decisiones actuales. A1 usa B.1
+(modelo-informacion.json, 20 criterios/9 dimensiones); el Excel anterior permanece
+como fuente de clasificación e historia. El método principal en evaluación es
+horas por proceso, todavía sin factores calibrados ni aprobación productiva.
 
-`estimacion.json` es el contrato inicial. Sus valores nulos representan decisiones
-pendientes. `status` debe pasar a `approved` solo con autorización humana; además
-el usuario registra la aprobación por proyecto con `!aprove reglas`.
+estimacion.json contiene el contrato y referencias; configuracion/framework.json
+es la fuente de parámetros reales. El motor combina ambos y embebe modelo y
+parámetros en la huella y snapshot. No duplicar tarifas o capacidades en reglas.
 
-Completa `maturity`, `dimensions`, `method`, `effort_unit`, `currency`, `rates`,
-`capacity`, `cfo_parameters` y exactamente dos `scenarios`. Cada sección incluye
-`source` para identificar su documento o decisión de origen. Para reglas sin parámetros
-CFO adicionales, escribe explícitamente esa decisión y su fuente.
+status=approved solo con decisión humana. Además !aprove reglas registra la
+aceptación por expediente. Revisar fuentes, fórmulas, cobertura, unidades, moneda,
+capacidad y escenarios. Elegir el modelo o método no aprueba el paquete completo.
+Los dos escenarios actuales son Base y Conservador; INC-006 resuelto: optimista solo como referencia.
 
-`rates` debe ser una lista con `role`, `amount` numérico positivo, `unit` y `source`.
-Los escenarios contienen `name`, `description` y `source`. Las secciones narrativas
-contienen `description` y `source`. Incrementa `version` cuando cambie el contenido.
-La validación comprueba estructura; el revisor debe comprobar coherencia de fórmulas,
-unidades, capacidad, moneda, impuestos y contingencias antes de aprobar.
-
-Puedes agregar documentos de apoyo en esta carpeta y citarlos desde el JSON.
-No incluyas secretos o credenciales. Una modificación posterior exige nueva aprobación.
-El JSON conserva las decisiones metodológicas y referencia el catálogo completo.
-El motor lo incorpora al snapshot de A4 y a la huella de aprobación;
-mantén coherencia con la propuesta legible al editar. No cambies `status` por revisar
-solo una sección. La validación automática es estructural: el agente debe comprobar
-además el acuerdo de las reglas y la capacidad operativa real antes de aprobar el paquete.
+Cambiar un valor de negocio requiere revisar reglas y volver a aprobar antes de
+A4. Nunca modificar snapshots. Un archivo válido no demuestra calidad de análisis.
+Las referencias originales y ejemplos no suministran parámetros por defecto.

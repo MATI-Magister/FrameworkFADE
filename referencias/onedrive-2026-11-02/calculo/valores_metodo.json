@@ -1,0 +1,40 @@
+{
+  "version": "1",
+  "estado": "iniciales e ilustrativos, pendientes de aprobación por la dirección",
+  "fecha_aprobacion": null,
+  "aprobado_por": null,
+  "fuente": "Documento del framework FAED, secciones 4, 6.2, 7.2 y anexos A y B; costo por hora y margen objetivo tomados del caso del anexo C",
+
+  "horas_por_proceso": {
+    "aplicaciones": 40,
+    "integracion": 60,
+    "datos_ia": 70,
+    "plataforma": 50,
+    "seguridad": 60,
+    "modernizacion": 50
+  },
+  "factor_complejidad": { "baja": 0.85, "media": 1.00, "alta": 1.20, "muy_alta": 1.40 },
+  "factor_entorno": { "T1": 1.00, "T2": 1.10, "T3": 1.25, "T4": 1.50 },
+  "factor_reuso": { "R1": 1.00, "R2": 0.90, "R3": 0.75, "R4": 0.60 },
+  "gestion_y_acompanamiento": 0.15,
+  "amplitud_rango": {
+    "alta":  { "optimista": -0.10, "pesimista": 0.15 },
+    "media": { "optimista": -0.20, "pesimista": 0.35 },
+    "baja":  { "optimista": -0.30, "pesimista": 0.60 }
+  },
+  "umbral_arquetipo_secundario": 0.15,
+  "margen_casi_empate_arquetipo": 0.05,
+  "umbral_desviacion": 0.20,
+  "proyectos_disparador_recalibracion": 3,
+
+  "costo_por_hora": 85000,
+  "margen_objetivo": 0.35,
+  "margen_minimo": null,
+  "recargo_infraestructura_y_licencias": null,
+  "capacidad_sprint_horas": 480,
+  "semanas_por_sprint": null,
+  "bloque_de_trabajo_horas": { "minimo": 320, "maximo": 480 },
+
+  "umbral_valor_ruta_compleja": null,
+  "umbral_esfuerzo_ruta_compleja": null
+}

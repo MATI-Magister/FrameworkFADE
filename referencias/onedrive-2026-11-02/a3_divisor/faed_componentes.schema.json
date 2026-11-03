@@ -1,0 +1,256 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "faed/faed_componentes.schema.json",
+  "$comment": "Contrato v0.2 de A3 · Dividir: agrega criterios_aplicados, talla_probable y dependencias_sin_componente.",
+  "title": "FAED · Componentes del proyecto",
+  "description": "División del proyecto en componentes de un solo arquetipo, cada uno con sus procesos funcionales. La produce A3 · Dividir sobre la última versión revisada de la ficha; la usan A4 · Detallar y las funciones de cálculo.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id_solicitud",
+    "version_ficha",
+    "tipo_estimacion",
+    "componentes",
+    "procesos_sin_asignar",
+    "dependencias_sin_componente",
+    "supuestos",
+    "advertencias"
+  ],
+  "properties": {
+    "id_solicitud": {
+      "type": "string",
+      "description": "Identificador de la solicitud, copiado de la ficha."
+    },
+    "version_ficha": {
+      "type": "integer",
+      "description": "Versión de la ficha que se dividió."
+    },
+    "tipo_estimacion": {
+      "type": "string",
+      "enum": [
+        "formal",
+        "preliminar"
+      ],
+      "description": "Copiado del parámetro recibido. 'preliminar' cuando la información no alcanzó o la solicitud es urgente."
+    },
+    "componentes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "nombre",
+          "arquetipo",
+          "descripcion",
+          "justificacion",
+          "interfaces",
+          "criterios_aplicados",
+          "talla_probable",
+          "procesos"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identificador del componente: 'C' y un número de dos cifras, en orden (C01, C02…)."
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre corto del componente, en el lenguaje del cliente (por ejemplo, 'Portal de autogestión')."
+          },
+          "arquetipo": {
+            "type": "string",
+            "enum": [
+              "aplicaciones",
+              "integracion",
+              "datos_ia",
+              "plataforma",
+              "seguridad",
+              "modernizacion"
+            ],
+            "description": "Arquetipo del componente: el que explica la mayor parte de su esfuerzo."
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Qué hace el componente, en una o dos oraciones."
+          },
+          "justificacion": {
+            "type": "string",
+            "description": "Por qué estos procesos forman un componente y por qué tiene este arquetipo, en una o dos oraciones."
+          },
+          "interfaces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Identificadores de las interfaces de la ficha (INT-xx) que cubre este componente. Vacío si no cubre ninguna."
+          },
+          "criterios_aplicados": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "CE-01",
+                "CE-02",
+                "CE-03",
+                "CE-04",
+                "CC-01",
+                "CC-03",
+                "CC-04",
+                "CC-05",
+                "CR-01",
+                "CR-02",
+                "CR-03",
+                "CH-01",
+                "CH-02",
+                "CH-03",
+                "CH-04",
+                "CT-01",
+                "CT-02",
+                "CT-03",
+                "CT-04"
+              ]
+            },
+            "description": "Criterios de división que originaron o delimitaron el componente (estructurales CE, cohesión CC, riesgo y regulación CR, homogeneidad CH, tamaño y entrega CT)."
+          },
+          "talla_probable": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "XS",
+              "S",
+              "M",
+              "L",
+              "XL",
+              null
+            ],
+            "description": "Solo con información baja o en carril rápido: talla que se espera del componente candidato, aunque la ficha aún no permita listar todos sus procesos. null con información media o alta."
+          },
+          "procesos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "nombre",
+                "origen",
+                "datos_ficha",
+                "justificacion"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Identificador del proceso dentro del componente: el del componente y un número (C01-P01, C01-P02…)."
+                },
+                "nombre": {
+                  "type": "string",
+                  "description": "Verbo en infinitivo y objeto, por ejemplo 'Consultar póliza'."
+                },
+                "origen": {
+                  "type": "string",
+                  "enum": [
+                    "ficha",
+                    "inferido"
+                  ],
+                  "description": "'ficha' si el proceso sale de datos de la ficha; 'inferido' si la solución lo necesita y la ficha no lo menciona."
+                },
+                "datos_ficha": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Identificadores de los datos vigentes de la ficha que sustentan el proceso (PF-01, INT-02…). Si es inferido, los datos de los que se infiere."
+                },
+                "justificacion": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Solo para procesos inferidos: por qué la solución lo necesita, en una oración. null si el origen es 'ficha'."
+                }
+              }
+            },
+            "description": "Procesos funcionales del componente, uno por elemento."
+          }
+        }
+      },
+      "description": "Componentes del proyecto, uno por elemento, en el orden en que se construirían."
+    },
+    "procesos_sin_asignar": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "dato",
+          "motivo"
+        ],
+        "properties": {
+          "dato": {
+            "type": "string",
+            "description": "Identificador del proceso funcional de la ficha (PF-xx) que no quedó en ningún componente."
+          },
+          "motivo": {
+            "type": "string",
+            "description": "Por qué no se asigna, por ejemplo porque la ficha lo deja fuera del alcance (FDA-xx)."
+          }
+        }
+      },
+      "description": "Procesos funcionales vigentes de la ficha que no quedaron en ningún componente. Vacío si todos se asignaron."
+    },
+    "dependencias_sin_componente": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "interfaz",
+          "motivo"
+        ],
+        "properties": {
+          "interfaz": {
+            "type": "string",
+            "description": "Identificador de la interfaz de la ficha (INT-xx) que no genera componente de integración."
+          },
+          "motivo": {
+            "type": "string",
+            "description": "Por qué no genera componente: el conector ya existe o lo construye la contraparte, según la ficha (CE-02)."
+          }
+        }
+      },
+      "description": "Interfaces vigentes de la ficha que no requieren construir ni adaptar un conector. Vacío si todas tienen componente."
+    },
+    "supuestos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "componente",
+          "supuesto"
+        ],
+        "properties": {
+          "componente": {
+            "type": "string",
+            "description": "Identificador del componente."
+          },
+          "supuesto": {
+            "type": "string",
+            "description": "Condición que asume la estimación, redactada para que el cliente la confirme o la corrija."
+          }
+        }
+      },
+      "description": "Un supuesto por cada proceso inferido, por cada separación que no se hizo por falta de evidencia y por cada decisión de división que la ficha no sustenta del todo."
+    },
+    "advertencias": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Lo que la persona que valida debe mirar: interfaces sin componente, componentes muy grandes, candidatos cuya talla probable supera sus procesos listados, información preliminar."
+    }
+  }
+}

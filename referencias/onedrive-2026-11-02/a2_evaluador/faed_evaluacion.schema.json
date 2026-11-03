@@ -1,0 +1,396 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "faed/faed_evaluacion.schema.json",
+  "$comment": "Contrato v0.1 del evaluador del nivel de información de FAED.",
+  "title": "FAED · Evaluación del nivel de información",
+  "description": "Evaluación de la información de una solicitud según el anexo B.1 del documento del framework: puntaje de los 20 criterios, cálculo del nivel, lo que falta para mejorarlo, preguntas priorizadas y supuestos. La produce el evaluador del nivel de información sobre una versión revisada de la ficha y la confirma el responsable de la estimación.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id_solicitud",
+    "version_ficha",
+    "momento",
+    "criterios",
+    "dimensiones",
+    "calculo",
+    "siguiente_paso",
+    "preguntas",
+    "contradicciones_pendientes",
+    "supuestos",
+    "advertencias"
+  ],
+  "properties": {
+    "id_solicitud": {
+      "type": "string",
+      "description": "Identificador de la solicitud, copiado de la ficha."
+    },
+    "version_ficha": {
+      "type": "integer",
+      "description": "Versión de la ficha evaluada."
+    },
+    "momento": {
+      "type": "string",
+      "enum": [
+        "preparacion",
+        "despues_de_sesion"
+      ],
+      "description": "Se deduce del parámetro sesiones_realizadas. 'preparacion': no se ha hecho ninguna sesión; la evaluación prepara la primera y su nivel es informativo. 'despues_de_sesion': ya se hizo al menos una sesión; la evaluación cuenta para decidir el siguiente paso."
+    },
+    "criterios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "puntaje",
+          "evidencia",
+          "justificacion",
+          "para_subir"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "D1.1",
+              "D1.2",
+              "D1.3",
+              "D2.1",
+              "D2.2",
+              "D2.3",
+              "D3.1",
+              "D3.2",
+              "D3.3",
+              "D4.1",
+              "D4.2",
+              "D4.3",
+              "D4.4",
+              "D5.1",
+              "D5.2",
+              "D5.3",
+              "D6.1",
+              "D7.1",
+              "D8.1",
+              "D10.1"
+            ],
+            "description": "Criterio del anexo B.1."
+          },
+          "puntaje": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "description": "Puntaje de 0 a 3 según el descriptor de la rúbrica y el techo por evidencia."
+          },
+          "evidencia": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Identificadores de los datos vigentes de la ficha que sustentan el puntaje (por ejemplo, 'INT-01'). Vacío si no hay datos."
+          },
+          "justificacion": {
+            "type": "string",
+            "description": "Por qué corresponde este puntaje y no el siguiente, en una o dos oraciones. Si la dimensión no aplica, se indica."
+          },
+          "para_subir": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Qué falta, en concreto, para llegar al puntaje siguiente: el dato que falta, que se documente por escrito o que el cliente lo valide. null si el puntaje es 3."
+          }
+        }
+      },
+      "description": "Los 20 criterios del anexo B.1, en su orden, uno por elemento."
+    },
+    "dimensiones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "aplica",
+          "motivo_no_aplica",
+          "puntos_obtenidos",
+          "puntos_posibles",
+          "porcentaje"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8",
+              "D10"
+            ],
+            "description": "Dimensión evaluada. D9 y D11 no se incluyen: alimentan el nivel de experiencia."
+          },
+          "aplica": {
+            "type": "boolean",
+            "description": "true para D1 a D5 siempre. Una complementaria (D6, D7, D8, D10) es false solo si no aplica al proyecto; la falta de información no es motivo."
+          },
+          "motivo_no_aplica": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Por qué la dimensión no aplica al proyecto. null si aplica."
+          },
+          "puntos_obtenidos": {
+            "type": "integer",
+            "description": "Suma de puntaje por peso de sus criterios."
+          },
+          "puntos_posibles": {
+            "type": "integer",
+            "description": "Suma de 3 por el peso de sus criterios."
+          },
+          "porcentaje": {
+            "type": "number",
+            "description": "Puntos obtenidos entre puntos posibles, por 100, con un decimal."
+          }
+        }
+      },
+      "description": "Las 9 dimensiones evaluadas, en el orden D1, D2, D3, D4, D5, D6, D7, D8, D10."
+    },
+    "calculo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "suma_ponderada",
+        "suma_pesos",
+        "porcentaje_general",
+        "nivel_por_porcentaje",
+        "nucleo_bajo_40",
+        "tope_aplicado",
+        "nivel"
+      ],
+      "properties": {
+        "suma_ponderada": {
+          "type": "number",
+          "description": "Suma, sobre las dimensiones que aplican, de su peso por su porcentaje."
+        },
+        "suma_pesos": {
+          "type": "integer",
+          "description": "Suma de los pesos de las dimensiones que aplican."
+        },
+        "porcentaje_general": {
+          "type": "number",
+          "description": "Suma ponderada entre suma de pesos, con un decimal."
+        },
+        "nivel_por_porcentaje": {
+          "type": "string",
+          "enum": [
+            "baja",
+            "media",
+            "alta"
+          ],
+          "description": "Baja: menos de 40. Media: de 40 a menos de 67. Alta: 67 o más."
+        },
+        "nucleo_bajo_40": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5"
+            ]
+          },
+          "description": "Dimensiones núcleo con porcentaje menor que 40."
+        },
+        "tope_aplicado": {
+          "type": "boolean",
+          "description": "true si el nivel por porcentaje era alto y bajó a medio porque alguna dimensión núcleo está por debajo de 40."
+        },
+        "nivel": {
+          "type": "string",
+          "enum": [
+            "baja",
+            "media",
+            "alta"
+          ],
+          "description": "Nivel de información final, después del tope."
+        }
+      },
+      "description": "Cálculo completo y visible, para que el revisor pueda verificarlo."
+    },
+    "siguiente_paso": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "accion",
+        "motivo"
+      ],
+      "properties": {
+        "accion": {
+          "type": "string",
+          "enum": [
+            "realizar_sesion",
+            "sesion_adicional",
+            "rango_preliminar_y_fase_de_definicion",
+            "clasificar_componentes"
+          ],
+          "description": "Paso que sugiere la evaluación. Lo confirma el responsable de la estimación."
+        },
+        "motivo": {
+          "type": "string",
+          "description": "Por qué se sugiere ese paso, en una oración."
+        }
+      }
+    },
+    "preguntas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orden",
+          "destinatario",
+          "criterio",
+          "prioridad",
+          "pregunta",
+          "que_mejora"
+        ],
+        "properties": {
+          "orden": {
+            "type": "integer",
+            "description": "Posición en la lista, empezando en 1, de mayor a menor prioridad."
+          },
+          "destinatario": {
+            "type": "string",
+            "enum": [
+              "cliente",
+              "equipo"
+            ],
+            "description": "A quién se le hace la pregunta. Los activos reutilizables de la empresa (D6.1) se preguntan al equipo."
+          },
+          "criterio": {
+            "type": "string",
+            "enum": [
+              "D1.1",
+              "D1.2",
+              "D1.3",
+              "D2.1",
+              "D2.2",
+              "D2.3",
+              "D3.1",
+              "D3.2",
+              "D3.3",
+              "D4.1",
+              "D4.2",
+              "D4.3",
+              "D4.4",
+              "D5.1",
+              "D5.2",
+              "D5.3",
+              "D6.1",
+              "D7.1",
+              "D8.1",
+              "D10.1"
+            ],
+            "description": "Criterio que la respuesta mejora."
+          },
+          "prioridad": {
+            "type": "number",
+            "description": "Puntos que subiría el porcentaje general si el criterio llegara a 3: (3 menos el puntaje) por el peso del criterio, entre los puntos posibles de su dimensión, por el peso de la dimensión, entre la suma de los pesos de las dimensiones que cuentan, por 100. Con dos decimales."
+          },
+          "pregunta": {
+            "type": "string",
+            "description": "La pregunta, concreta para este proyecto y en lenguaje del cliente, sin códigos de FAED."
+          },
+          "que_mejora": {
+            "type": "string",
+            "description": "Qué información se busca y a qué puntaje permitiría llegar."
+          }
+        }
+      },
+      "description": "Preguntas priorizadas: como máximo diez para el cliente y las que correspondan al equipo."
+    },
+    "contradicciones_pendientes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "contradiccion",
+          "pregunta"
+        ],
+        "properties": {
+          "contradiccion": {
+            "type": "string",
+            "description": "Identificador de la contradicción abierta en la ficha (por ejemplo, 'CON-01')."
+          },
+          "pregunta": {
+            "type": "string",
+            "description": "Pregunta para resolverla con el cliente o con el equipo."
+          }
+        }
+      },
+      "description": "Una por cada contradicción abierta de la ficha."
+    },
+    "supuestos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "criterio",
+          "supuesto"
+        ],
+        "properties": {
+          "criterio": {
+            "type": "string",
+            "enum": [
+              "D1.1",
+              "D1.2",
+              "D1.3",
+              "D2.1",
+              "D2.2",
+              "D2.3",
+              "D3.1",
+              "D3.2",
+              "D3.3",
+              "D4.1",
+              "D4.2",
+              "D4.3",
+              "D4.4",
+              "D5.1",
+              "D5.2",
+              "D5.3",
+              "D6.1",
+              "D7.1",
+              "D8.1",
+              "D10.1"
+            ],
+            "description": "Criterio con puntaje 0 o 1 del que sale el supuesto."
+          },
+          "supuesto": {
+            "type": "string",
+            "description": "Condición que asumirá la estimación ante la falta de esa información, redactada para que el cliente pueda confirmarla o corregirla."
+          }
+        }
+      },
+      "description": "Un supuesto por cada criterio con puntaje 0 o 1 en una dimensión que aplica."
+    },
+    "advertencias": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Situaciones que el revisor debe mirar, por ejemplo puntajes limitados por datos no identificados o por contradicciones abiertas."
+    }
+  }
+}

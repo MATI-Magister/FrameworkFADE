@@ -27,9 +27,9 @@
 | D3 · Tamaño funcional | Identificar frontera, procesos y criterio de conteo: XS 1–5, S 6–15, M 16–30, L 31–60, XL >60. Mostrar cantidad, unidad y medido/aproximado. Una pantalla/campo/archivo no es automáticamente un proceso. Cero o desconocido no es XS; clase XS no equivale a puntos funcionales. |
 | D4 · Complejidad | Evaluar reglas, arquitectura, seguridad, procesamiento y dependencias, cada uno 0–2. Sumar solo con los cinco determinados: 0–2 baja, 3–5 media, 6–8 alta, 9–10 muy alta. Nube/directorio no fijan automáticamente sus factores. |
 | D5 · Integración | Inventario y dificultad: I0 ninguna; I1 1–2 simples; I2 3–5 o alguna compleja; I3 >5 o condiciones de criticidad/protocolos no conocidos/múltiples terceros. Si falta el conteo, dejar pendiente salvo que otra condición ya determine I3. Referenciar integraciones compartidas sin duplicar su construcción. |
-| D6 · Reutilización | Inventario de activos, porcentaje, base de cálculo y adaptación: R1 >70 %, R2 40–70 %, R3 10–<40 %, R4 <10 %, usando provisionalmente la fórmula del libro. Consumir un servicio no prueba reuso del 100 % del componente. |
+| D6 · Reutilización | Inventariar activos, porcentaje, procesos cubiertos y adaptación. INC-016 resuelto: escala ZIP R1 <10 %, R2 10–<30 %, R3 30–50 %, R4 >50 %. Conservar porcentaje, base de conteo y evidencia; no trasladar etiquetas del Excel. Consumir un servicio no prueba reuso del 100 %. |
 | D7 · Entorno tecnológico | Stack, plataforma, restricciones y experiencia del equipo: T1 conocido, T2 parcialmente conocido, T3 nuevo, T4 experimental. Tecnología definida no prueba familiaridad; nube por sí sola no fija T1/T3. |
-| D8 · Madurez del alcance | Propuesta local: evaluar D8.01–D8.08 con sus rúbricas y contar elementos ≥2. 0–2 elementos M1, 3–4 M2, 5–6 M3, 7–8 M4. Sin evaluación: pendiente. Documentar esta aplicación por componente; no sustituye N1–N5 global ni exige historias. |
+| D8 · Definición del componente | Escala elegida en INC-008: Validado si todos sus procesos/datos están confirmados directamente por el cliente; Definido si proceden de información escrita del cliente con validación pendiente; Supuesto ante inferidos, evidencia verbal no confirmada, interna no confirmada, faltantes o conflictos abiertos. Manda el proceso más débil; registrar su ID y fuentes. No cambia baja/media/alta global ni exige historias. |
 | D9 · Contexto de ejecución | Revisar equipo, experiencia, dedicación, forma de trabajo, cliente y dependencias. Estable/parcialmente conocido/incierto con explicación; no inventar umbrales numéricos que el libro no define. Referenciar condiciones globales. |
 | D10 · Sector | Gobierno, financiero, salud, comercio, telecomunicaciones u otros y sus restricciones. Normalmente heredado del proyecto, con excepciones justificadas. |
 | D11 · Evidencia histórica | Comparables relevantes: E1 0–1, E2 2–3, E3 4–7, E4 ≥8. Revisar además similitud, calidad y vigencia. Cantidad desconocida no es cero; cero confirmado es E1 con fuente, no pregunta sin responder. |
@@ -44,6 +44,6 @@ sin añadir D12 al cálculo. Conservar historial cuando cambien respuestas.
 
 Si hay dudas materiales de alcance/equipo/entorno, el cierre es obligatorio. Solo
 omitirlo con evidencia de completitud; llenar todas las filas no prueba confirmación.
-El diseño detallado de A3 sigue propuesto para revisión, incluida la aplicación
-local de D8. Ejemplo ilustrativo: `docs/ejemplo-a3-clasificacion.md`; no es fuente
+El diseño detallado de A3 conserva puntos en revisión; la escala local de D8
+ya fue elegida en INC-008 y sustituye M1–M4. Ejemplo ilustrativo: `docs/ejemplo-a3-clasificacion.md`; no es fuente
 del requerimiento del piloto y no tiene respuestas reales del usuario.

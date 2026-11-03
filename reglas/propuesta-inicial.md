@@ -1,3 +1,8 @@
+> Referencia anterior al cambio del 2026-11-02. Para el modelo activo de A1, usar
+> modelo-informacion.md; para el método principal en evaluación, horas-por-proceso.md.
+> Ante diferencias operativas prevalecen integracion-agentes.md y las decisiones
+> posteriores de revision.md. El catálogo Excel conserva utilidad para clasificación.
+
 # Reglas en revisión · versión 0.3
 
 La base elegida por el usuario es `fuentes/Modelo_Madurez_Estimacion.xlsx`:

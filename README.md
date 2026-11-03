@@ -1,139 +1,153 @@
-# Framework de estimación por agentes
+# FADE · Framework de estimación por agentes
 
-Flujo local, trazable y sin dependencia de un proveedor de IA. Los agentes pueden
-ejecutarse en Codex o en otra herramienta capaz de leer archivos y ejecutar Python.
-El framework administra el flujo; el asistente de IA realiza el análisis.
+Flujo local y trazable, independiente del proveedor de IA. El asistente interpreta
+los comandos y realiza el análisis; Python controla etapas, historial y aprobaciones.
+Los informes del requerimiento, componentes y estimación son legibles en Markdown.
 
-## Instalación
+## Instalar y abrir
 
-Requiere Python 3.10 o superior. No requiere paquetes, cuenta ni clave de API.
-Desde la carpeta del repositorio:
+Requiere Python 3.10 o superior. El flujo principal no requiere paquetes externos
+ni claves de API. Desde la raíz:
 
 ```sh
 python scripts/install.py
 python scripts/framework.py --project piloto status
-python scripts/framework.py --project piloto serve
+python scripts/framework.py doctor
+python scripts/framework.py serve
 ```
 
-Abre http://127.0.0.1:8765. El servidor se limita a 127.0.0.1 y se detiene con Ctrl+C.
-La portada es un manual con cajas seleccionables: cada etapa explica comandos,
-acciones, condiciones de paso, salidas y carpetas de evidencia. Puedes copiar un
-comando y ejecutarlo en el chat del agente; el portal no ejecuta agentes.
+Abrir http://127.0.0.1:8765/. El servidor escucha solo en 127.0.0.1. La portada es
+un manual con etapas seleccionables; Mis proyectos consulta cada carpeta de
+proyectos/ cada diez segundos, con progreso, estado y rutas de evidencia. El portal
+es de consulta; copiar un comando no lo ejecuta. Los documentos no se sirven por HTTP.
 
-En **Mis proyectos**, cada carpeta directamente bajo `proyectos/` tiene su propia
-tarjeta y flujo. Selecciona una etapa para consultar su estado y sus evidencias.
-La consulta se actualiza cada 10 segundos desde los archivos locales, sin reiniciar
-el servidor ni recargar toda la página. Las carpetas sin estado o con estado dañado
-se distinguen de un proyecto pendiente; el portal no las modifica al consultarlas.
+## Flujo y comandos
 
-Usa el servidor para abrir el portal; abrir el HTML como archivo no permite consultar
-la API local. Para usar otro puerto: `python scripts/framework.py serve --port 8766`.
+Registro → A1 información → A2 componentes → A3 clasificación → aclaraciones
+condicionales → A4 estimación → revisión final.
 
-En este chat escribe `!registrar`, `!madurez`, `!componentes`, `!clasificar`,
-`!aclarar`, `!estimar`, `!revisar`, `!aprove`, `!estado` o `!tablero`.
-`!dtimstr` es alias de `!estimar`. En otras herramientas proporciona
-`AGENTS.md` como instrucciones del proyecto si no lo descubren automáticamente.
-No hay un detector de comandos instalado dentro de otros productos: la compatibilidad
-depende de que su agente siga el protocolo. Para herramientas sin terminal se necesita
-un adaptador; no se incluye integración API en esta versión.
+!nuevo <id>, !registrar, !madurez, !complementar <fuentes>, !componentes,
+!responder <código> <respuesta>, !clasificar, !aclarar, !estimar (alias !dtimstr),
+!revisar, !ajustar <instrucción y motivo>, !estado, !tablero.
 
-## Organización
+!aprove a1 autoriza componentes tras revisar resumen y preguntas; !aprove revision
+acepta una versión del paquete. !aprove reglas es otra decisión explícita. Ningún
+nivel permite saltar aprobaciones. !run ejecuta una sola etapa. Leer AGENTS.md.
 
-```text
-agentes/                      Fichas de registro, A1–A4, cierre y revisión
-framework/                    Protocolo y motor del flujo
-reglas/                       Reglas maestras versionadas y guía de definición
-plantillas/                   Formato de entregables
-proyectos/<id>/
-  01-entradas/requerimientos/  Solicitudes y documentos originales del cliente
-  01-entradas/contexto/       Arquitectura, equipo, restricciones y antecedentes
-  01-entradas/respuestas/     Respuestas y aclaraciones del cliente
-  02-trabajo/                 Notas y material intermedio
-  03-entregables/             Resultado de cada etapa
-  04-estado/                  Estado, historial y snapshots de reglas
-tablero/                      Portal versionado: HTML, CSS, JavaScript y manual del flujo
-scripts/                      Instalación y comandos portables
-tests/                        Pruebas del flujo
-```
-
-Consulta `docs/que-compartir.md` para preparar tus insumos y `reglas/README.md`
-para completar los criterios. No hay tarifas, umbrales ni factores ficticios.
-A4 permanecerá bloqueado hasta que las reglas estén completas y aprobadas.
-
-La versión vigente de reglas en revisión está en `reglas/propuesta-inicial.md`.
-La base de madurez y dimensiones elegida por el usuario está en
-`reglas/fuentes/Modelo_Madurez_Estimacion.xlsx`, con copia portable íntegra del
-catálogo en `reglas/modelo-madurez.json`. Sustituye el borrador de seis dimensiones.
-Consulta `reglas/modelo-madurez.md` para las decisiones aún pendientes.
-El calculador local `scripts/madurez.py` genera preguntas y un informe legible;
-no cambia etapas ni aprueba resultados. La ruta híbrida COCOMO II está documentada
-en `reglas/cocomo-ii.md`; su calculador sigue pendiente de configuración/aprobación.
-A2 divide en componentes estimables. El resumen del
-requerimiento, los componentes y la estimación usan plantillas legibles para una
-persona en `plantillas/`, separadas del estado técnico del motor.
-
-Para preparar la evaluación de evidencia y calcularla con las rúbricas:
+Desde el 2026-11-02, por elección del usuario, A1 usa B.1 del ZIP: 20 criterios,
+9 dimensiones, información baja/media/alta. Hasta diez preguntas al cliente por
+ronda; preguntas internas y contradicciones aparte. D9 y D11 alimentan experiencia.
+El Excel anterior se conserva para clasificación y trazabilidad, sin migrar puntajes.
 
 ```sh
 python scripts/madurez.py --project piloto template
 python scripts/madurez.py --project piloto evaluate
 ```
 
-El agente completa la plantilla técnica, cita evidencia y entrega el resumen para
-personas. No usar la ficha Ejemplo del Excel como requerimiento real del piloto.
+El agente completa evidencia, revisa fuentes, produce el resumen y presenta preguntas.
+Estos comandos no finalizan A1 ni aprueban nada. La unidad es componente estimable,
+no historia; PRE/PEN tienen códigos estables para responder individualmente.
 
-En A1 primero se preparan las preguntas para elevar N3 a N4. El experto revisa
-el resumen y las preguntas y decide si continuar aclarando o autorizar componentes
-con `!aprove a1`. No hay avance automático al alcanzar N4. El motor exige
-`03-entregables/preguntas-a1.md` antes de registrar la aceptación.
+## Roles, skills y parámetros
 
-Antes de aprobar puedes aportar documentos o respuestas y escribir `!complementar`.
-El agente incorpora la información, conserva la versión previa y vuelve a evaluar
-A1; el paso a componentes sigue esperando autorización del experto. El diseño de
-A2 está propuesto en `reglas/a2-componentes.md`, con un ejemplo ficticio legible
-en `docs/ejemplo-a2-componentes.md`.
+configuracion/framework.json centraliza operación, moneda, tarifas/costo, capacidad,
+margen y parámetros del método. null significa por confirmar. Los valores ilustrativos
+del ZIP no se usan por defecto. Los parámetros de negocio se congelan con las reglas
+A4; cambiarlos requiere revisar y aprobar otra vez.
 
-Cada pregunta/pendiente por componente tiene código propio (`C-001-PRE-001` o
-`C-001-PEN-001`). El experto puede contestar `!responder <código> <respuesta>` o
-escribir código y respuesta en texto; el agente actualiza el registro local e
-historial. Ver `reglas/preguntas-componentes.md`. Contestar no aprueba etapas.
+```sh
+python scripts/framework.py config
+python scripts/framework.py roles
+```
 
-La propuesta A3 está en `reglas/a3-clasificacion.md`. El ejemplo
-`docs/ejemplo-a3-clasificacion.md` muestra D1–D11 de un componente con fuentes
-ficticias identificadas, datos globales heredados y preguntas conservadas de A2.
+También puedes consultar !configuracion y !roles en el chat. configuracion/roles.json
+mapea once responsabilidades y sus skills en skills/. El mismo asistente puede
+asumirlas; el motor no inicia procesos IA independientes. El mapa conecta números
+A1–A7 del ZIP con las siete etapas existentes sin renumerar expedientes.
 
-La propuesta A4 está en `reglas/a4-estimacion.md`. El informe ficticio
-`docs/ejemplo-a4-estimacion.md` se reproduce con `python scripts/ejemplo_a4.py`.
-Este script demuestra un caso limitado y no habilita COCOMO productivo ni utiliza
-datos del piloto. Incluye reconciliación de esfuerzo/costo y calendario de recursos.
+Las skills están preparadas en el repositorio y AGENTS.md las enruta. Si tu herramienta
+requiere instalarlas en su directorio de descubrimiento, usa su ruta elegida:
 
-La revisión final se propone en `reglas/revision-final.md`. `!ajustar <instrucción
-y motivo/fuente>` reabre una revisión pendiente con historial; cambios numéricos
-requieren recalcular A4 antes de otra aprobación. `!aprove revision` acepta la
-versión presentada con su informe cliente y registro de ajustes; no envía documentos.
-El motor rechaza la aprobación si cambió cualquiera de esos archivos, A4 o las reglas.
-Ejemplos ficticios reproducibles con `python scripts/ejemplo_revision.py`:
-`docs/ejemplo-revision-final.md` y `docs/ejemplo-entregable-cliente.md`.
+```sh
+python scripts/install.py --skills-target <directorio-de-skills-de-tu-herramienta>
+```
 
-`!nuevo nombre` crea otro expediente independiente. El portal muestra todos los
-expedientes; cada uno conserva su estado e historial. Esta primera versión está
-diseñada para un operador a la vez; no ejecutes escritores simultáneos.
-Los documentos originales se conservan por separado de las reglas maestras.
-Si no puedes leer un PDF, imagen o archivo Office en tu herramienta, solicita una
-transcripción o conversión; nunca supongas su contenido.
+El instalador genera un adaptador que apunta a esta instalación; no copia ni duplica
+reglas o expedientes, y protege skills ajenas/modificadas. Cambiar de equipo requiere
+reinstalar el adaptador. El soporte de descubrimiento depende de la herramienta;
+para agentes sin skills, basta seguir AGENTS.md desde este repositorio.
 
-## Verificación
+Horas por proceso se evalúa como método principal. El motor calcula esfuerzo, costo y calendario por componente con capacidad y dependencias.
+Falta calibrar y aprobar factores, bandas y datos reales; A4 real permanece bloqueado
+hasta completar esos valores. scripts/estimar_procesos.py distingue --experimental
+de --approved; este último exige un intento A4 iniciado y lee su snapshot aprobado.
+Conserva entrada, resultado e informe con huellas; no finaliza ni aprueba la etapa. COCOMO II queda como alternativa.
+Consultar reglas/horas-por-proceso.md y reglas/integracion-agentes.md, donde figuran
+las contradicciones INC-001…INC-016 y decisiones pendientes para revisar por partes.
 
-El portal se utiliza **solo en local**. Su código sí se versiona; los expedientes,
-credenciales, cachés, dependencias y restos de publicación externa están excluidos
-por `.gitignore`. La fuente del modelo de madurez, plantillas, reglas vigentes y
-ejemplos ficticios sí se incluyen porque permiten instalar, verificar y usar el framework.
-Consulta `proyectos/README.md` para la organización y respaldo de expedientes.
+!aprender prepara un informe posterior a la ejecución real del proyecto. Usa horas,
+cambios aprobados y notas de cierre; no es !aclarar. scripts/aprendizaje.py prepara el cálculo y el informe con una línea base aprobada,
+horas reales y cambios autorizados. El líder debe confirmar antes de actualizar
+catálogos o recalibrar; el registro corporativo automático no está activado.
+
+## Carpetas
+
+| Carpeta | Contenido |
+| --- | --- |
+| agentes/, roles/, skills/ | Etapas, responsabilidades y capacidades reutilizables |
+| configuracion/ | Parámetros compartidos y mapa de roles |
+| reglas/ | Modelo activo, método y decisiones con fuentes |
+| plantillas/ | Entregables legibles |
+| proyectos/<id>/01-entradas/ | Requerimientos, contexto y respuestas del cliente |
+| proyectos/<id>/02-trabajo/ | Fichas, evaluaciones, cálculos y aprendizaje |
+| proyectos/<id>/03-entregables/ | Informes de etapas y paquete para revisión |
+| proyectos/<id>/04-estado/ | Estado, historial y snapshots |
+| datos-locales/ | Activos, tecnologías e historia reales, excluidos de Git |
+| referencias/onedrive-2026-11-02/ | Especificaciones, esquemas y herramientas originales como referencia |
+| insumos-locales/ | ZIP y casos recibidos, excluidos de Git |
+| tablero/, framework/, scripts/, tests/ | Portal, motor, comandos y verificación |
+
+Las herramientas originales del ZIP no son el motor activo: tienen IDs, fórmulas,
+dependencias y condiciones comerciales que deben adaptarse. No se ejecutan por
+cargar una referencia. Los ejemplos anteriores de docs/ y ejemplos/ son ficticios
+e históricos; no representan una estimación ni parámetros de un cliente.
+
+Versionar fuentes del portal y del framework, nunca expedientes, catálogos reales,
+credenciales o publicación cancelada. Consultar .gitignore. Respaldar datos locales
+por separado. Un operador a la vez; no ejecutar escritores simultáneos.
+
+## Verificar
 
 ```sh
 python -m unittest discover -s tests -v
 ```
 
-La batería cubre flujo/aprobaciones, madurez, cálculos ilustrativos y el portal:
-proyectos independientes, carpetas sin estado, errores visibles y rutas de consulta
-que no exponen documentos ni permiten modificar estados por HTTP.
+La validación automática comprueba operaciones y estructura; el experto verifica
+la fidelidad de fuentes, la metodología y las decisiones. Aprobar no envía documentos.
+
+
+Decisiones vigentes: los componentes usan Validado/Definido/Supuesto, con su proceso
+más débil como fundamento; la confirmación procede directamente del cliente, por
+escrito o en transcripción con hablante identificado. El costo inicial es horario
+único del equipo, con valor y moneda aún por confirmar. La escala de reutilización elegida es la del ZIP (INC-016): R1 <10 %, R2 10–<30 %,
+R3 30–50 %, R4 >50 %. Los factores numéricos requieren calibración por separado.
+
+
+## Comprobar y ver una demostración
+
+```sh
+python scripts/verificar.py
+python scripts/demo_procesos.py
+```
+
+verificar.py reúne diagnóstico y pruebas. demo_procesos.py genera un informe
+legible con datos ficticios reproducibles en insumos-locales/demo-procesos/,
+sin modificar configuración, expedientes ni aprobaciones. Usa moneda ficticia DEM;
+los valores del ejemplo nunca se convierten en defaults. El informe muestra Base
+y Conservador con esfuerzo, costo, capacidad y dependencias explícitas.
+
+Las etapas posteriores comprueban las huellas de entregables previos: editar un
+resultado aceptado exige reintentar esa etapa antes de continuar. El material binario
+no usado del ZIP se conserva localmente, excluido de Git; el manifiesto distingue
+archivos distribuidos y material archivado. Las especificaciones y el catálogo
+necesarios para instalar y operar sí forman parte de la distribución.
