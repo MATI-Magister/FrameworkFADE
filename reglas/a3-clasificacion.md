@@ -47,3 +47,35 @@ omitirlo con evidencia de completitud; llenar todas las filas no prueba confirma
 El diseño detallado de A3 conserva puntos en revisión; la escala local de D8
 ya fue elegida en INC-008 y sustituye M1–M4. Ejemplo ilustrativo: `docs/ejemplo-a3-clasificacion.md`; no es fuente
 del requerimiento del piloto y no tiene respuestas reales del usuario.
+
+## Integración y reúso en cotización
+
+Clasificar el trabajo propio con base en el requerimiento y sus aclaraciones vigentes. «El sistema usa el servicio de DataCrédito» identifica un servicio existente: cotizar la conexión, configuración y pruebas que correspondan, dejando fuera la construcción del servicio. Cotizar como nuevo el conector propio cuando las fuentes no indiquen que existe uno aprovechable. Si una referencia explícita o implícita identifica un conector existente, citarla y delimitar su adaptación. Aplicar esta misma regla a otros componentes.
+
+En la base de cotización, trabajo propio supuesto nuevo lleva cero cobertura de reúso, sin afirmar que en la organización no existan activos. Si hay evidencia de un activo aprovechable pero su cobertura es incierta, dejar el porcentaje por confirmar. El servicio externo por sí solo no acredita ahorro de reúso. La búsqueda interna de activos puede aportar evidencia adicional cuando exista una referencia concreta. Su ausencia no bloquea cotizar.
+
+## Catálogo de Arquetipos y Modelo Propuesta V2
+
+La sección `classification_catalog` de `configuracion/modelo-propuesta-v2.json`
+conserva los criterios del Catálogo de Arquetipos y las etiquetas exactas del Excel.
+Clasificar cada componente por el trabajo que concentra el esfuerzo. Los seis
+arquetipos son Aplicaciones, Integración, Datos / IA, Plataforma, Seguridad y
+Modernización. Para un componente mixto, justificar el principal y anotar los
+secundarios. Si se estiman por separado, delimitar la cobertura de cada paquete.
+
+La combinación de cotización incluye tipo de desarrollo, arquetipo, talla,
+complejidad e integración. Usar las bandas D3 a D5 de este documento y contrastar
+sus criterios con el catálogo. Ante falta de detalle, proponer la categoría
+más defendible según el alcance observable y marcarla `provisional`. Explicar
+qué se asumió y qué cambiaría la clase. Si está sustentada, usar `sustentada`.
+No sustituir una brecha de evidencia de la rúbrica por una confirmación ficticia.
+
+Para finalizar A3, preparar `03-entregables/clasificacion-modelo-v2.json` con
+`components`, una lista con una fila por código de la tabla de A2. Cada fila
+incluye `id`, `status`, `dimensions` y `evidence`. Ambos objetos `dimensions` y
+`evidence` usan las claves `development`, `archetype`, `size`, `complexity` e
+`integration`. En `dimensions`, usar las etiquetas exactas de `choices`. En
+`evidence`, sustentar cada eje con la fuente o el supuesto. El motor comprueba
+la cobertura de todos los componentes y que cada combinación exista en `IA`.
+Esto permite clasificar toda la solución. La elección de `DatosExt` requiere
+además una unidad y talla comparables, según la ruta de estimación vigente.

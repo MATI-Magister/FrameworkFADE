@@ -98,7 +98,8 @@
       "fallback": "activities_omp",
       "repeat_known_questions": false,
       "source": "Decisión del usuario 2026-11-08: implementar ruta unificada para todos los proyectos usando tabla cargada y actividades para faltantes."
-    }
+    },
+    "proposal_model_file": "configuracion/modelo-propuesta-v2.json"
   },
   "policies": {
     "missing_complexity": "por_confirmar",

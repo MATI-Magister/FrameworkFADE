@@ -5,7 +5,8 @@
 ## Qué incluye
 
 <Lista breve de capacidades. Indicar límites y restricciones materiales.
-Separar lo confirmado de lo supuesto. No inventar exclusiones.>
+Separar lo confirmado de lo supuesto. Incluir el alcance completo por defecto.
+Citar cualquier entrega parcial o exclusión material.>
 
 ## Qué tan definido está
 
@@ -16,8 +17,8 @@ Si aplica el límite por una dimensión núcleo, explicar el motivo sin la fórm
 ## Qué necesitamos aclarar
 
 <Vacíos que afectan la decisión. Enlazar preguntas-a1.md con las preguntas
-codificadas, responsable y evidencia requerida. Incluir las preguntas necesarias sin tope por ronda.
-equipo y contradicciones aparte. No duplicar la lista.>
+codificadas. Destacar los supuestos con límite y condición de recotización.
+Dejar diseño y consultas internas en sus listas separadas.>
 
 ## Tu siguiente paso
 

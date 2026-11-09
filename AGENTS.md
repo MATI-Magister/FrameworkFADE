@@ -65,7 +65,8 @@ del motor Python. Contestar no aprueba etapas ni cambia la madurez automáticame
 
 Paso A1→componentes: primero generar preguntas para mejorar la información,
 con criterio/dimensión, evidencia requerida y responsable. Guardar en
-`03-entregables/preguntas-a1.md` y presentar al experto junto con el resumen.
+`03-entregables/filtro-cotizacion-a1.json`. `finish a1` valida el registro y genera
+`preguntas-a1.md` para presentar al experto junto con el resumen.
 Genera las preguntas necesarias sin tope por ronda. Registra aparte las del equipo
 y las contradicciones. El experto decide si responder/iterar
 o autorizar el paso con `!aprove a1`. Ningún nivel autoriza A2 automáticamente;
@@ -221,6 +222,29 @@ una propuesta; conserva aprobaciones y salidas aceptadas.
 
 En A1, A2, A3 y cierre, aplica el filtro de cotización de
 `reglas/preguntas-componentes.md` antes de presentar preguntas. Difiere los detalles
-de diseño. Si falta un dato material, usa un supuesto acotado cuando sea viable.
+de diseño. Si las fuentes no delimitan entregas parciales, cotiza todo lo solicitado.
+Si falta un dato material, usa un supuesto acotado cuando sea viable.
 Para nuevas estimaciones A4 usa paquetes con cantidad, límite y condición de
 recotización según `reglas/ruta-unificada-estimacion.md`.
+
+Antes de preguntar al cliente, intentar una cotización con supuestos acotados o
+partidas opcionales. Publicar solo decisiones comerciales imprescindibles que no
+puedan resolverse de ese modo. Las preguntas generadas por la rúbrica son insumos
+internos. Mostrar al cliente únicamente las decisiones del registro filtrado.
+
+En A2, cierre, A4 y revisión, conservar el alcance completo de A1. Citar toda exclusión o entrega parcial. Para integraciones y reúso aplicar `reglas/a3-clasificacion.md`: consumir un servicio existente implica cotizar la conexión. Si las fuentes no sustentan un conector o implementación aprovechable, cotizar el trabajo propio como nuevo.
+
+Para nuevas cotizaciones, usar **Modelo Propuesta V2** según `reglas/ruta-unificada-estimacion.md`. Buscar analogía en `DatosExt`, después en `IA` y estimar por actividades lo que siga fuera de cobertura. Verificar la escala de la unidad antes de aplicar horas de un proyecto externo a un paquete.
+
+## Retomar la prueba después de un cambio
+
+Cuando se modifique el framework, devolver el expediente de prueba activo a la
+primera etapa cuyo trabajo o resultado deba regenerarse. Consultar la tabla de
+`framework/protocolo.md`, verificar el estado y usar `retry` si esa etapa ya se
+inició. Si ya está pendiente, informar el comando que la inicia. Archivar también
+las preestimaciones invalidadas que estén fuera de los entregables estándar.
+Conservar insumos y etapas previas que sigan vigentes. Aplicar esta instrucción
+al expediente de prueba identificado en el chat y dejarlo listo para que el usuario
+ejecute el siguiente comando. Indicar el proyecto, la etapa y el comando exacto.
+
+Para A3, aplicar el Catálogo de Arquetipos incorporado en `configuracion/modelo-propuesta-v2.json`. Clasificar todos los componentes de A2 y entregar `clasificacion-modelo-v2.json`. Seguir `reglas/a3-clasificacion.md` para los supuestos provisionales y para justificar la comparabilidad externa.

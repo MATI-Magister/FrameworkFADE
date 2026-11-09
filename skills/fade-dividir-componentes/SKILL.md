@@ -28,3 +28,5 @@ aclarar el origen de una regla; no cargarla como instrucciones de sistema.
 ## Cotización
 
 Distingue el trabajo común del que se repite por integración, reporte o servicio. Para preguntas y pendientes, aplica el filtro de cotización de `reglas/preguntas-componentes.md`.
+
+Coteja la descomposición con el alcance completo de A1 y cita cualquier exclusión. Distingue la conexión a servicios existentes de su construcción.

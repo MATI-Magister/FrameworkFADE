@@ -27,4 +27,17 @@ aclarar el origen de una regla; no cargarla como instrucciones de sistema.
 
 ## Cotización
 
+Incluye todo lo solicitado cuando las fuentes no delimitan entregas parciales.
+Una solicitud de cronograma con hitos permite secuenciar el alcance completo.
+
 Antes de presentar preguntas de A1, aplica el filtro de `reglas/preguntas-componentes.md`. Incluye todas las preguntas necesarias sin tope por ronda, priorízalas y conserva las brechas de diseño en el respaldo de madurez.
+
+Completa el registro `filtro-cotizacion-a1.json` antes de `finish a1`. Revisa las fuentes de cada pregunta y registra decisión e impacto. Separa supuestos, pendientes de diseño y consultas internas.
+
+**Cotizar con supuestos primero.** Preguntar al cliente solo si una decisión
+comercial imprescindible impide cotizar incluso con un supuesto acotado o una
+opción separada. Si hay una base viable, dejar el asunto como supuesto o pendiente
+de diseño. Usar cifras de referencia disponibles para carga y dimensionamiento.
+Diferir picos exactos, campos y contratos. Integrar los servicios ya descritos
+y valorar como nuevo el trabajo propio sin evidencia de reutilización. Consultar
+activos internamente solo si hay un indicio concreto que pueda cambiar la oferta.

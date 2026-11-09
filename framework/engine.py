@@ -7,6 +7,8 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 from framework.configuration import apply_configuration
+from framework.classification import PROPOSAL_REGISTER, validate_proposal_register
+from framework.quotation import REGISTER, render_questions
 
 STEPS = ['registro', 'a1', 'a2', 'a3', 'cierre', 'a4', 'revision']
 LABELS = ['Registro y carga', 'A1 · Madurez', 'A2 · Componentes', 'A3 · Clasificación',
@@ -152,6 +154,18 @@ class Workflow:
                 questions = self.base / '03-entregables/preguntas-a1.md'
                 if not questions.is_file() or hashlib.sha256(questions.read_bytes()).hexdigest() != item.get('questions_hash'):
                     raise ValueError('Las preguntas aceptadas de A1 cambiaron o faltan; reintenta A1.')
+                self.verify_quotation_register(item)
+            if previous == 'a3' and item.get('proposal_classification_hash'):
+                path = self.base / '03-entregables' / PROPOSAL_REGISTER
+                if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != item['proposal_classification_hash']:
+                    raise ValueError('La clasificación del Modelo Propuesta V2 cambió o falta; reintenta A3.')
+
+    def verify_quotation_register(self, item):
+        digest = item.get('quotation_hash')
+        if digest:
+            path = self.base / '03-entregables' / REGISTER
+            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+                raise ValueError('El filtro de cotización de A1 cambió o falta; reintenta A1.')
 
     def start(self, step=None):
         state = self.read()
@@ -176,6 +190,8 @@ class Workflow:
             item['rules_snapshot'] = str(snapshot.relative_to(self.root))
             item['rules_hash'] = digest
         item.update(status='en_ejecucion', attempt=item['attempt'] + 1, started_at=now())
+        if step == 'a1':
+            item['quotation_review_required'] = True
         self.save(state, f'Inicio {step}, intento {item["attempt"]}')
         return f'Ejecutar agentes/{step}.md. Guardar 03-entregables/{step}.md y finalizar con finish {step}.'
 
@@ -193,8 +209,25 @@ class Workflow:
             raise ValueError('Omitir cierre requiere A3 y evidencia concreta.')
         if step == 'a4' and self.rules()[0].get('configuration_file'):
             self.check_calculation(state)
+        if step == 'a3':
+            model = self.rules()[0].get('configuration_parameters', {}).get('estimation', {}).get('proposal_model')
+            if model and model.get('classification_catalog'):
+                path = output.with_name(PROPOSAL_REGISTER)
+                if not path.is_file():
+                    raise ValueError(f'A3 requiere {PROPOSAL_REGISTER} con todos los componentes de A2.')
+                raw = path.read_bytes()
+                validate_proposal_register(json.loads(raw.decode('utf-8')), output.with_name('a2.md').read_text(encoding='utf-8'), model)
+                item['proposal_classification_hash'] = hashlib.sha256(raw).hexdigest()
         if step == 'a1':
             questions = self.base / '03-entregables' / 'preguntas-a1.md'
+            if item.get('quotation_review_required'):
+                register = questions.with_name(REGISTER)
+                if not register.is_file():
+                    raise ValueError(f'A1 requiere {REGISTER} para filtrar las preguntas antes de publicarlas.')
+                raw = register.read_bytes()
+                report = render_questions(json.loads(raw.decode('utf-8')))
+                questions.write_text(report, encoding='utf-8')
+                item['quotation_hash'] = hashlib.sha256(raw).hexdigest()
             if not questions.exists() or not questions.read_text(encoding='utf-8').strip():
                 raise ValueError('A1 requiere preguntas-a1.md para revisión del experto antes de autorizar componentes.')
             item['questions_hash'] = hashlib.sha256(questions.read_bytes()).hexdigest()
@@ -230,6 +263,7 @@ class Workflow:
             questions = self.base / '03-entregables' / 'preguntas-a1.md'
             if not questions.exists() or hashlib.sha256(questions.read_bytes()).hexdigest() != item.get('questions_hash'):
                 raise ValueError('Las preguntas de A1 faltan o cambiaron; reintenta A1 antes de aprobar.')
+            self.verify_quotation_register(item)
         if step == 'revision':
             if state['steps']['a4'].get('calculation'):
                 self.check_calculation(state)
@@ -309,9 +343,14 @@ class Workflow:
                 shutil.move(str(output), str(folder / output.name))
             state['steps'][name] = {'status': 'pendiente', 'attempt': state['steps'][name]['attempt']}
         if STEPS.index(step) <= STEPS.index('a1'):
-            questions = self.base / '03-entregables' / 'preguntas-a1.md'
-            if questions.exists():
-                shutil.move(str(questions), str(folder / questions.name))
+            for name in ('preguntas-a1.md', REGISTER):
+                questions = self.base / '03-entregables' / name
+                if questions.exists():
+                    shutil.move(str(questions), str(folder / questions.name))
+        if STEPS.index(step) <= STEPS.index('a3'):
+            classification = self.base / '03-entregables' / PROPOSAL_REGISTER
+            if classification.exists():
+                shutil.move(str(classification), str(folder / classification.name))
         for filename in ('cliente.md', 'ajustes.md'):
             artifact = self.base / '03-entregables' / filename
             if artifact.exists():

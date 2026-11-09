@@ -14,14 +14,17 @@ def describe(root, project):
     base = root / 'proyectos' / project
     if not (base / '04-estado/estado.json').exists():
         raise ValueError('Proyecto sin inicializar.')
-    lines = [f'# Ruta de estimación · {project}', '',
-             'Usar la tabla disponible. Para trabajo fuera de cobertura o sin clasificación suficiente, '
-             'proponer actividades O/M/P con fundamento. No pedir de nuevo una fuente de productividad.', '',
-             '| Tipo de trabajo | Horas por proceso |', '| --- | --- |']
-    lines += [f'| {name} | {value} |' for name, value in e['process_method']['hours_per_process'].items()]
-    lines += ['', 'Fuente: ' + e['process_method'].get('source', 'configuracion/framework.json'),
-              'Referencia inicial autorizada para uso; no equivale a calibración ni aprobación final del expediente.', '',
-              '## Parámetros consolidados', '', f'Moneda: {e["currency"] or "por consolidar desde las fuentes del proyecto"}.',
+    lines = [f'# Ruta de estimación · {project}', '']
+    if model := e.get('proposal_model'):
+        lines += [f'Fuente: {model["source"]}. DatosExt ({len(model["sheets"]["DatosExt"])} filas utilizables) primero, '
+                  f'IA ({len(model["sheets"]["IA"])} filas) después, y actividades O/M/P para lo que no tenga analogía.',
+                  'Comparar la unidad y justificar la talla. Ver reglas/ruta-unificada-estimacion.md.', '']
+    else:
+        lines += ['Usar la tabla disponible y actividades O/M/P para trabajo sin cobertura.', '',
+                  '| Tipo de trabajo | Horas por proceso |', '| --- | --- |']
+        lines += [f'| {name} | {value} |' for name, value in e['process_method']['hours_per_process'].items()]
+        lines.append('')
+    lines += ['## Parámetros consolidados', '', f'Moneda: {e["currency"] or "por consolidar desde las fuentes del proyecto"}.',
               f'Costo horario: {e["cost_per_hour"] if e["cost_per_hour"] is not None else "por consolidar desde las fuentes del proyecto"}.',
               f'Roles con capacidad estructurada: {len(e["team"])}.', '',
               '## Fuentes que debe revisar el agente antes de preguntar', '']

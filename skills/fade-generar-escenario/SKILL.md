@@ -36,3 +36,13 @@ una propuesta; conserva aprobaciones y salidas aceptadas.
 ## Cotización
 
 Prepara paquetes comunes y por unidad según `reglas/ruta-unificada-estimacion.md`. Registra cantidad, supuesto, límite y condición de recotización. Aplica la tabla a procesos comparables y rangos O/M/P por actividad a los faltantes.
+
+En integraciones, separa el servicio existente de la conexión que se cotiza. Descuenta reúso solo por la parte de un activo aprovechable que tenga evidencia y cobertura.
+
+Revisa la mezcla de métodos, contrasta horas probables con la tabla y explica qué
+partidas abren la brecha Base–Conservador. Sustenta un escenario adverso coherente
+y separa los cambios de alcance. Aplica la revisión descrita en `reglas/ruta-unificada-estimacion.md`.
+
+Usa Modelo Propuesta V2 para estimaciones nuevas. Busca primero `DatosExt` si la unidad es comparable, luego `IA` y finalmente O/M/P. Cita la talla, la hoja, la fila y la muestra cuando exista. Consulta `reglas/ruta-unificada-estimacion.md`.
+
+Recupera las cinco dimensiones de `clasificacion-modelo-v2.json`. Justifica cualquier cambio de talla o arquetipo si cambia la unidad que se estima.

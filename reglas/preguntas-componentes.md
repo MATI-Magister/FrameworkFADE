@@ -9,6 +9,10 @@ A3 y cierre; no altera los IDs de criterios del modelo de madurez A1.
 Aplicar también a las preguntas de A1. Antes de preguntar, consultar los insumos
 y respuestas vigentes. Presentar al cliente solo decisiones cuyo resultado pueda
 cambiar materialmente el alcance, el esfuerzo o el precio. Indicar qué cambiaría.
+Si las fuentes vigentes no delimitan una primera entrega, incluir en la cotización
+todo lo solicitado. Preguntar por el alcance de una entrega parcial solo cuando
+las fuentes o el usuario indiquen esa división. Un cronograma o una solicitud de
+hitos permite proponer una secuencia de trabajo dentro del alcance completo.
 Para una integración, partir de su propósito, si se adapta o se construye el
 conector, quién controla el otro sistema y restricciones que cambien el trabajo.
 Los campos de entrada, formatos exactos, ejemplos de mensajes y contratos API se
@@ -21,6 +25,30 @@ tal. El cierre solo se bloquea cuando la brecha impide definir un escenario viab
 y razonablemente acotado. Conservar los códigos de los pendientes diferidos. Si A1
 necesita evidencia para un criterio, registrar la brecha aunque la pregunta se
 difiera. Tras el filtro, incluir todas las preguntas necesarias sin tope por ronda.
+
+En reportes, aprovechar las cantidades documentadas. Si cambia las horas, pedir una
+aproximación por familia y confirmar si un grupo está incluido en otro. Diferir el
+inventario individual. Preguntar por carga, continuidad o certificaciones especiales
+solo si cambian la oferta. Proponer límites para ambientes y soporte si es viable.
+
+Antes de publicar, comprobar que cada pregunta sigue abierta tras leer las fuentes
+vigentes. Explicar qué decisión falta y qué cambiaría en alcance, esfuerzo o precio.
+Separar decisiones del cliente, supuestos, pendientes de diseño y consultas internas.
+Conservar las preguntas de la rúbrica que no corresponda presentar en el respaldo.
+
+Para un A1 nuevo, completar `03-entregables/filtro-cotizacion-a1.json` a partir de
+`plantillas/filtro-cotizacion-a1.json`, sustituyendo los datos ficticios. Usar
+`scope: full` por defecto. `scope_source` identifica la fuente y ubicación. Para
+`scope: partial`, añadir `partial_scope` y `partial_evidence`, con la cita o
+instrucción que define la entrega parcial. Identificar las preguntas sobre esa
+entrega con `partial_scope: true`. Las cuatro listas pueden quedar vacías.
+Las preguntas llevan `id`, `question`, `decision`, `impact`, `why_now` y `source`. En `why_now`, explicar por qué
+ningún supuesto acotado ni opción comercial permite cotizar ahora. Los
+supuestos llevan `id`, `assumption`, `limit`, `requote_when` y `source`. Los
+pendientes de diseño llevan `id`, `detail` y `source`. Las consultas internas
+llevan `id`, `question` y `source`. Usar `owner` y `criterion` cuando correspondan.
+`finish a1` genera `preguntas-a1.md` y congela ambos archivos. El agente y el
+revisor humano verifican la interpretación de las fuentes y la materialidad.
 
 ## Identificación estable
 
@@ -80,3 +108,11 @@ reevaluar A1 antes de aprobar, usar `!complementar`. Si cambia el alcance o afec
 una entrega finalizada, registrar impacto y adenda o solicitar el reintento aplicable;
 no modificar silenciosamente un documento congelado. Para cerrar, verificar los
 IDs materiales abiertos; no omitir el cierre porque algunos asuntos fueron respondidos.
+
+**Cotizar con supuestos primero.** Preguntar al cliente solo si una decisión
+comercial imprescindible impide cotizar incluso con un supuesto acotado o una
+opción separada. Si hay una base viable, dejar el asunto como supuesto o pendiente
+de diseño. Usar cifras de referencia disponibles para carga y dimensionamiento.
+Diferir picos exactos, campos y contratos. Integrar los servicios ya descritos
+y valorar como nuevo el trabajo propio sin evidencia de reutilización. Consultar
+activos internamente solo si hay un indicio concreto que pueda cambiar la oferta.

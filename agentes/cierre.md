@@ -26,3 +26,5 @@ productividad. Tabla cargada primero; actividades O/M/P para trabajo sin cobertu
 suficiente. Recuperar respuestas y parámetros locales antes de preguntar. Esta
 ruta prevalece sobre instrucciones anteriores que exigían otra fuente para preparar
 una propuesta; conserva aprobaciones y salidas aceptadas.
+
+Antes de cerrar, cotejar el alcance con A1 y A2. Citar toda exclusión o entrega parcial. Separar decisiones del cliente, supuestos con límite y condición de recotización, pendientes de diseño y consultas internas. La ausencia de evidencia de un conector reutilizable permite cotizar el conector propio como nuevo.

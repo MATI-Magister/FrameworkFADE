@@ -30,3 +30,9 @@ productividad. Tabla cargada primero; actividades O/M/P para trabajo sin cobertu
 suficiente. Recuperar respuestas y parámetros locales antes de preguntar. Esta
 ruta prevalece sobre instrucciones anteriores que exigían otra fuente para preparar
 una propuesta; conserva aprobaciones y salidas aceptadas.
+
+Valorar el trabajo propio según `reglas/a3-clasificacion.md`. Si el requerimiento indica consumo de un servicio existente, cotizar la conexión y sus pruebas. Aplicar un factor de ahorro solo cuando un activo aprovechable y su cobertura estén sustentados.
+
+En nuevas cotizaciones, buscar en `DatosExt`, luego `IA` y recurrir a O/M/P solo sin analogía. Distinguir una referencia de proyecto externo de una referencia modelada para un módulo. Conservar hoja, fila y muestra según `reglas/ruta-unificada-estimacion.md`.
+
+Tomar la clasificación de `03-entregables/clasificacion-modelo-v2.json`. Contrastar talla y unidad del paquete con la referencia antes de aplicar DatosExt o IA.

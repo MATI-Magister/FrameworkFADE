@@ -1,0 +1,18 @@
+{
+  "scope": "full",
+  "scope_source": "RFI ficticio, p. 2. Alcance solicitado y cronograma con hitos.",
+  "questions": [
+    {
+      "id": "A1-PRE-001",
+      "question": "¿La oferta debe incluir migrar datos históricos?",
+      "decision": "Incluir o excluir la migración histórica.",
+      "impact": "Cambia el esfuerzo de conversión y conciliación.",
+      "why_now": "La convocatoria exige un precio cerrado que cubra la puesta en marcha y no permite una partida opcional de migración.",
+      "source": "RFI ficticio, p. 2. Deja abierto el traslado histórico.",
+      "owner": "Responsable de datos"
+    }
+  ],
+  "assumptions": [],
+  "design": [],
+  "internal": []
+}

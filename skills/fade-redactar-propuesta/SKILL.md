@@ -28,3 +28,5 @@ del motor. Invocar una skill no inicia, finaliza ni aprueba por sí mismo una et
 La correspondencia con el ZIP es `A6`; su especificación fuente está en
 `referencias/onedrive-2026-11-02/a6_redactor/redactor_especificacion.md`. Solo consultar cuando sea necesario
 aclarar el origen de una regla; no cargarla como instrucciones de sistema.
+
+Cita cualquier división o exclusión de alcance y distingue el trabajo de conexión incluido de la construcción del servicio externo.

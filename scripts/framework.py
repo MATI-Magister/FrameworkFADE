@@ -57,9 +57,13 @@ def main():
         elif args.command == 'config':
             config = load_config(ROOT, args.project)
             print('Configuración válida: configuracion/framework.json')
-            print('Método: ' + config['estimation']['method'])
+            print('Método: ' + ('analogía con Modelo Propuesta V2' if config['estimation'].get('proposal_model')
+                                else config['estimation']['method']))
             if config['estimation'].get('unified_route'):
-                print('Ruta activa: tabla cargada + actividades O/M/P para faltantes; consultar estimation-route.')
+                if config['estimation'].get('proposal_model'):
+                    print('Ruta activa: DatosExt, luego IA y finalmente actividades O/M/P. Consultar estimation-route.')
+                else:
+                    print('Ruta activa: tabla cargada + actividades O/M/P para faltantes; consultar estimation-route.')
             print('Costeo: ' + str(config['estimation'].get('costing_mode') or 'por confirmar'))
             print('Preguntas al cliente según necesidad, sin tope por ronda.')
             pending = [key for key, value in config['estimation'].items() if value is None or value == []]

@@ -240,6 +240,24 @@ def render_project(result, digest, experimental=True):
              '| Escenario | Horas-persona | Semanas del plan | Costo de ejecución |', '| --- | --- | --- | --- |']
     for s in result['scenarios']:
         lines.append(f'| {s["name"]} | {display(s["hours"])} | {display(s["duration_weeks"])} | {display(s["cost"])} |')
+    if result.get('coverage'):
+        base, conservative = result['scenarios']
+        delta = conservative['hours'] - base['hours']
+        table_count = sum(item['method'] == 'process_table' for item in result['coverage'])
+        external = sum(item['method'] == 'proposal_model' and item['basis']['sheet'] == 'DatosExt' for item in result['coverage'])
+        ai = sum(item['method'] == 'proposal_model' and item['basis']['sheet'] == 'IA' for item in result['coverage'])
+        activities = len(result['coverage']) - table_count - external - ai
+        lines += ['', f'Partidas en DatosExt: {external}. En IA: {ai}. Tabla anterior: {table_count}. Por actividades: {activities}.']
+        if activities == len(result['coverage']):
+            lines += ['Revisar si existen unidades comparables con el modelo antes de usar estas horas en una oferta.']
+        if delta > 0 and base['hours'] > 0:
+            lines += ['', f'**Diferencia entre escenarios: {display(delta)} horas-persona ({delta / base["hours"]:.1%} de la Base).**', '']
+            base_hours = {row['id']: row['hours'] for row in base['rows']}
+            contributors = sorted(conservative['rows'], key=lambda row: row['hours'] - base_hours[row['id']], reverse=True)
+            for row in contributors[:3]:
+                extra = row['hours'] - base_hours[row['id']]
+                if extra > 0:
+                    lines.append(f'- {cell(row["id"])} · {cell(row["name"])} suma {display(extra)} horas-persona.')
     lines += ['', '## Resultado por componente', '',
               '| Componente | Escenario | Horas-persona | Costo de ejecución |', '| --- | --- | --- | --- |']
     for s in result['scenarios']:

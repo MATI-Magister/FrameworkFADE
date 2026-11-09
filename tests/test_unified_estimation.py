@@ -47,6 +47,28 @@ class UnifiedEstimationTests(unittest.TestCase):
         self.data['components'][0]['work_items'][0]['omp'] = {'optimistic': 1, 'likely': 2, 'pessimistic': 3}
         with self.assertRaises(ValueError): project_estimate(self.data, self.config)
 
+    def test_proposal_model_prefers_external_and_falls_back_to_ia(self):
+        item = self.data['components'][0]['work_items'][0]
+        item.update(kind='analogy', dimensions={'development': 'Nuevo', 'archetype': 'Aplicaciones',
+                    'size': 'XS', 'complexity': 'Baja', 'integration': 'I0'},
+                    size_basis='Comparación sintética a la misma escala', external_fit=True)
+        result = project_estimate(self.data, self.config)
+        self.assertEqual(result['coverage'][0]['basis']['sheet'], 'DatosExt')
+        self.assertEqual(result['coverage'][0]['basis']['records'], 9)
+        self.assertEqual(result['coverage'][0]['base_hours'], 817.9)
+        item['dimensions']['integration'] = 'I3'
+        result = project_estimate(self.data, self.config)
+        self.assertEqual(result['coverage'][0]['basis']['sheet'], 'IA')
+        self.assertEqual(result['coverage'][0]['base_hours'], 38.4)
+        item['dimensions']['integration'] = 'I0'
+        item.update(external_fit=False, external_exclusion='Se trata de un módulo, no de un proyecto completo')
+        result = project_estimate(self.data, self.config)
+        self.assertEqual(result['coverage'][0]['basis']['sheet'], 'IA')
+        self.assertEqual(result['coverage'][0]['base_hours'], 21.8)
+        item['omp'] = {'optimistic': 1, 'likely': 2, 'pessimistic': 3}
+        with self.assertRaisesRegex(ValueError, 'misma unidad'):
+            project_estimate(self.data, self.config)
+
     def test_overlap_missing_and_extra_coverage_rejected(self):
         for covers in (['W-001'], ['W-003'], []):
             with self.subTest(covers=covers):

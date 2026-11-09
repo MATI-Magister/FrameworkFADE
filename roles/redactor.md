@@ -19,3 +19,5 @@ de negocio. Revisar que cada total coincida con A4. No enviar ni publicar.
 Aplicar `reglas/presentacion-resultados.md`: informe breve centrado en este paso,
 pendientes materiales y siguiente acción. Conservar el detalle verificable en
 `02-trabajo/` y enlazarlo; no pegarlo completo en el informe ni en el chat.
+
+Presentar el alcance completo y los límites de la oferta. Si se cotiza una entrega parcial o se excluye trabajo solicitado, enlazar la decisión que lo sustenta. Distinguir las conexiones cotizadas de la construcción de los servicios externos.

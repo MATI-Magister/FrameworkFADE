@@ -12,6 +12,20 @@ intento en `04-estado/reglas-a4-<intento>.json`. La aprobación es por proyecto.
 Las salidas existentes se archivan en `04-estado/historial/` al repetir etapas;
 los pasos posteriores pierden vigencia y deben ejecutarse de nuevo.
 
+Al actualizar el framework con una prueba activa, identificar la primera etapa
+afectada por el cambio y devolver la prueba a ese punto. Para cambios puramente
+visuales o administrativos, devolverla solo si hay que regenerar un entregable.
+
+| Cambio que se debe probar | Primera etapa | Comando para retomar |
+| --- | --- | --- |
+| Registro o lectura inicial de insumos | registro | `!registrar` |
+| Madurez, alcance de A1 o preguntas | A1 | `!madurez` |
+| División del alcance en componentes | A2 | `!componentes` |
+| Dimensiones o evidencia para clasificar y comparar | A3 | `!clasificar` |
+| Resolución de aclaraciones o supuestos de cierre | cierre | `!aclarar` |
+| Cálculo, parámetros o presentación de la estimación | A4 | `!estimar` |
+| Validaciones de revisión o propuesta final | revisión | `!revisar` |
+
 El motor comprueba orden, archivos no vacíos, aprobación y formato mínimo de reglas.
 La calidad semántica de las salidas la revisan el agente y las personas responsables;
 un archivo existente por sí solo no demuestra calidad del análisis.
@@ -77,3 +91,7 @@ productividad. Tabla cargada primero; actividades O/M/P para trabajo sin cobertu
 suficiente. Recuperar respuestas y parámetros locales antes de preguntar. Esta
 ruta prevalece sobre instrucciones anteriores que exigían otra fuente para preparar
 una propuesta; conserva aprobaciones y salidas aceptadas.
+
+Los nuevos intentos de A1 requieren `filtro-cotizacion-a1.json`. `finish a1` valida su estructura y genera `preguntas-a1.md`. Ambos quedan vinculados por huella. La revisión de evidencia, exclusiones y materialidad sigue a cargo del agente y del experto.
+
+Al finalizar A3 con el Modelo Propuesta V2, el motor comprueba la cobertura de todos los códigos de la tabla A2, valida las combinaciones del Excel y guarda la huella de `clasificacion-modelo-v2.json`.

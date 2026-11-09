@@ -57,6 +57,20 @@ del catálogo. Si no, agregarlo una sola vez y asignarlo a capacidad de un rol.
 No aplicar la banda de incertidumbre de procesos sobre P de las actividades.
 Ambos escenarios mantienen exactamente alcance, costo horario y equipo.
 
+Antes de publicar, revisar cuántas partidas usaron la tabla y cuántas usaron
+actividades. Si todas usan O/M/P, contrastar los procesos funcionales con la tabla
+y justificar por qué sigue sin aplicar en cada familia. Comparar las horas
+probables por unidad con la referencia disponible, incluso si se necesita O/M/P.
+Comprobar que la preparación, integración y pruebas compartidas se cuenten una vez.
+
+Explicar la brecha Base–Conservador y las partidas que más aportan. Sustentar P con
+condiciones adversas concretas y compatibles con el escenario del proyecto. Revisar
+si se acumularon contingencias independientes como si ocurrieran todas a la vez.
+Una variante que exceda cantidades o límites se presenta como opción separada.
+Si solo se tiene una suma de extremos, identificarla como tal en la revisión y
+justificar el escenario antes de usarlo en una oferta. Evitar recortes o topes
+porcentuales sin evidencia de calibración.
+
 Usar costo y capacidad del propio expediente. El calendario común trabaja con
 capacidad efectiva semanal por rol y dependencias explícitas entre componentes;
 las tareas de distintos roles dentro de un componente pueden solaparse. Si esa
@@ -118,3 +132,57 @@ El formato anterior de procesos se conserva para reproducir entradas existentes;
 no generar nuevas estimaciones con scripts particulares de cada expediente.
 
 Ejemplo estructurado: `ejemplos/ruta-unificada/entrada.json`.
+
+## Modelo Propuesta V2 para cotizaciones nuevas
+
+La fuente es `Modelos Propuesta V2.xlsx`, incorporada como catálogo de horas en
+`configuracion/modelo-propuesta-v2.json`. Esta sección prevalece sobre las referencias
+anteriores a la tabla de 40–70 horas por proceso. Para nuevas cotizaciones, buscar
+primero una analogía en `DatosExt`, luego en `IA` y usar O/M/P cuando ninguna tenga
+cobertura. Las entradas antiguas con `kind: process` siguen siendo reproducibles.
+
+Buscar una coincidencia exacta en tipo de desarrollo, arquetipo, talla, complejidad
+e integración. Justificar cada clasificación con la evidencia de A2 y A3. Un
+componente compuesto puede dividirse en paquetes comparables, sin duplicar alcance.
+La ausencia de factores de entorno o reúso del método anterior no impide la analogía.
+
+`DatosExt` contiene 85 filas con esfuerzo numérico y muestra utilizable. Usarla
+solo cuando la unidad sea comparable con los proyectos de la muestra. La talla de
+cada conjunto externo se originó en quintiles de su propia métrica de tamaño. Por
+eso, una etiqueta XS–XL de FADE por sí sola no establece equivalencia. Citar una
+base comparable de talla y cobertura. Evitar multiplicar esfuerzo de proyecto por
+reporte, conector o proceso. Si la fila no tiene horas o su unidad no es comparable,
+consultar `IA`, que contiene 1.920 referencias de esfuerzo generado por el modelo.
+Identificarlas como referencias modeladas y conservar hoja, fila y muestra cuando
+exista. Los ejemplos de historias sirven para entender la escala de cada referencia.
+
+La hora-persona de la fila es la Base por unidad. Sus dimensiones ya están reflejadas
+en el valor. Las bandas vigentes definen el Conservador para analogías y la gestión
+se suma según su cobertura. La duración se calcula con capacidad y dependencias del
+expediente. La columna de tiempo de la muestra tiene otro significado y queda fuera
+del calendario del proyecto. Aplicar O/M/P solo a trabajo sin analogía comparable.
+
+En `work_items`, usar `kind: analogy` y declarar estos campos junto con el paquete:
+
+```json
+{
+  "kind": "analogy",
+  "dimensions": {
+    "development": "Nuevo",
+    "archetype": "Aplicaciones",
+    "size": "XS",
+    "complexity": "Baja",
+    "integration": "I0"
+  },
+  "size_basis": "Ejemplo ficticio de módulo acotado. Citar la frontera y las operaciones comparadas.",
+  "external_fit": false,
+  "external_exclusion": "La unidad es un módulo, mientras la fila externa corresponde a proyectos completos."
+}
+```
+
+Con `external_fit: true`, sustentar la comparabilidad en `routing_reason` y usar
+cantidad uno. Si `DatosExt` carece de horas para la combinación, el motor usa `IA`.
+Cuando una partida no tenga una analogía defendible, usar `kind: activity` y
+justificar por qué ninguna hoja aplica. Si la misma unidad tiene analogía y un rango
+O/M/P, el motor pide elegir una valoración. El catálogo entra en la huella y el
+snapshot de reglas, con la fuente y las filas seleccionadas en el respaldo.

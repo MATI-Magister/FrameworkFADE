@@ -201,12 +201,10 @@ el manual del tablero. Si falta información, el agente identifica el pendiente.
 
 ### 9. Completar los parámetros antes de una estimación real
 
-La ruta común ya tiene la **tabla técnica cargada**: aplicaciones 40, integración
-60, datos/IA 70, plataforma 50, seguridad 60 y modernización 50 horas por proceso.
-Para partidas sin cobertura suficiente se usa estimación por actividades O/M/P.
-Son referencias iniciales para revisión, sin afirmar calibración histórica. El
-agente consulta primero las respuestas y decisiones del expediente; no pide otra
-tabla de productividad para preparar la propuesta.
+La ruta común usa **Modelo Propuesta V2**. Busca primero una analogía en
+`DatosExt` y luego en `IA`. Las partidas sin analogía se estiman por actividades
+O/M/P. El agente comprueba que la unidad y talla sean comparables y consulta las
+respuestas y decisiones del expediente antes de formular preguntas.
 
 ```sh
 python scripts/framework.py --project mi-proyecto estimation-route
@@ -313,7 +311,7 @@ Las once skills están en `skills/` y `AGENTS.md` indica cuáles corresponden a 
 etapa. Su instalación opcional en otra herramienta se explica en el paso 6. Los
 adaptadores consultan esta instalación para mantener una sola fuente de reglas.
 
-Horas por proceso se evalúa como método principal. El motor calcula esfuerzo, costo y calendario por componente con capacidad y dependencias.
+El Modelo Propuesta V2 aporta referencias de esfuerzo por analogía. El motor calcula costo y calendario por componente con capacidad y dependencias.
 Falta calibrar y aprobar factores, bandas y datos reales; A4 real permanece bloqueado
 hasta completar esos valores. scripts/estimar_procesos.py distingue --experimental
 de --approved; este último exige un intento A4 iniciado y lee su snapshot aprobado.

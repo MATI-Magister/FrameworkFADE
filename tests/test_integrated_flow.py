@@ -68,7 +68,19 @@ class IntegratedTests(unittest.TestCase):
         self.flow.start(step)
         out = self.flow.base / '03-entregables'
         (out / f'{step}.md').write_text('Contenido sintético de prueba', encoding='utf-8')
-        if step == 'a1': (out / 'preguntas-a1.md').write_text('Preguntas revisadas en test', encoding='utf-8')
+        if step == 'a2':
+            (out / 'a2.md').write_text('| C-001 | Uno |\n| C-002 | Dos |\n', encoding='utf-8')
+        if step == 'a3':
+            dimensions = {'development': 'Nuevo', 'archetype': 'Aplicaciones', 'size': 'XS',
+                          'complexity': 'Baja', 'integration': 'I0'}
+            rows = [{'id': component, 'dimensions': dimensions, 'status': 'sustentada',
+                     'evidence': dict.fromkeys(dimensions, 'Fuente ficticia')}
+                    for component in ('C-001', 'C-002')]
+            (out / 'clasificacion-modelo-v2.json').write_text(json.dumps({'components': rows}), encoding='utf-8')
+        if step == 'a1':
+            (self.flow.base / '03-entregables/filtro-cotizacion-a1.json').write_text(
+                json.dumps({'scope': 'full', 'scope_source': 'Fuente de prueba', 'questions': [],
+                            'assumptions': [], 'design': [], 'internal': []}), encoding='utf-8')
         self.flow.finish(step)
 
     def begin_a4(self):

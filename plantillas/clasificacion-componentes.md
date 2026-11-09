@@ -26,3 +26,5 @@ fuentes y estado. D4 cinco factores sin completar faltantes con cero. D6 porcent
 activos, cobertura y bandas vigentes. D8 Validado/Definido/Supuesto con proceso
 limitante y citas. D9/D11 experiencia fuera de B.1. Procesos, método candidato,
 cobertura e insumos faltantes. Conservar PRE/PEN. Sustentado no es aprobado. -->
+
+Enlazar la clasificación del Modelo Propuesta V2. Resumir para cada componente el arquetipo principal y las demás categorías de cotización. Señalar las clasificaciones provisionales y las condiciones que pueden cambiarlas.

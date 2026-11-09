@@ -91,13 +91,15 @@ def render_report(project, result, model, digest):
              'El nivel no aprueba etapas ni determina esfuerzo.']
     if result['core_cap_applied']:
         lines += ['', 'El nivel se limita a media porque falta información esencial, aunque el porcentaje general sea alto.']
-    lines += ['', '## Preguntas para completar la información']
+    lines += ['', '## Brechas de la rúbrica para revisión interna', '',
+              'Las preguntas de esta sección son insumos de diagnóstico. Las preguntas al cliente '
+              'se publican en preguntas-a1.md después de aplicar el filtro de cotización.']
     questions = result['gaps']
     for q in questions:
         lines += ['', f'### {q["id"]}', '', q['question']]
     if not questions:
         lines += ['', 'Sin preguntas de mejora identificadas en los criterios evaluados.']
-    lines += ['', 'Estas preguntas son un apoyo al agente: debe revisar responsables, contradicciones y pendientes internos.', '',
+    lines += ['', 'El agente revisa fuentes, supuestos acotados, opciones comerciales y pendientes de diseño.', '',
               '## Siguiente paso', '',
               'Revisar el resumen del requerimiento y las preguntas de A1. Puedes aportar información con '
               '`!complementar` o autorizar componentes con `!aprove a1` cuando A1 esté esperando tu aprobación.', '',

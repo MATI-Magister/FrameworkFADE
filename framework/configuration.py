@@ -52,6 +52,8 @@ def load_config(root, project=None):
                     'client_confirmation': 'directa_escrita_o_transcripcion_identificada'}:
         raise ValueError('Cambio de políticas pendiente de revisión; registrar primero la decisión.')
     e = data['estimation']
+    if e.get('proposal_model_file'):
+        e['proposal_model'] = json.loads(inside(root, e['proposal_model_file']).read_text(encoding='utf-8'))
     if e.get('costing_mode') not in (None, 'por_rol', 'costo_unico'):
         raise ValueError('Costeo: por_rol, costo_unico o null.')
     if e['method'] != 'horas_por_proceso_en_evaluacion':

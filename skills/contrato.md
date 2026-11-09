@@ -43,3 +43,7 @@ productividad. Tabla cargada primero; actividades O/M/P para trabajo sin cobertu
 suficiente. Recuperar respuestas y parámetros locales antes de preguntar. Esta
 ruta prevalece sobre instrucciones anteriores que exigían otra fuente para preparar
 una propuesta; conserva aprobaciones y salidas aceptadas.
+
+En cotización, aplicar `reglas/preguntas-componentes.md` y `reglas/a3-clasificacion.md`. Conservar el alcance completo salvo división sustentada y distinguir consumo de un servicio de reúso de una implementación propia.
+
+Para nuevas cotizaciones prevalece el Modelo Propuesta V2 según `reglas/ruta-unificada-estimacion.md`. Usar `DatosExt`, después `IA` y finalmente actividades sin analogía.

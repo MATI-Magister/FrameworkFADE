@@ -33,3 +33,5 @@ referencia. La aprobación interna no equivale a aceptación del cliente ni env�
 
 <Enlazar A4 para desglose por componente; no repetir todas sus tablas ni incluir
 códigos técnicos internos, huellas, rúbricas o controles en este documento.>
+
+En alcance y condiciones, declarar la cobertura completa o citar el origen de cualquier recorte. Distinguir integraciones incluidas, servicios externos y adaptaciones de activos existentes. Mostrar las condiciones materiales de recotización.

@@ -32,3 +32,13 @@ una propuesta; conserva aprobaciones y salidas aceptadas.
 ## Cotización
 
 Presenta solo preguntas que puedan cambiar alcance, esfuerzo o precio. Cuando haya un escenario viable, documenta el supuesto, la cantidad incluida, su límite y la condición de recotización. Aplica `reglas/preguntas-componentes.md`.
+
+Coteja el alcance con A1 y A2. Cita las exclusiones y entregas parciales. Separa las consultas de diseño y del equipo de las decisiones que necesita el cliente.
+
+**Cotizar con supuestos primero.** Preguntar al cliente solo si una decisión
+comercial imprescindible impide cotizar incluso con un supuesto acotado o una
+opción separada. Si hay una base viable, dejar el asunto como supuesto o pendiente
+de diseño. Usar cifras de referencia disponibles para carga y dimensionamiento.
+Diferir picos exactos, campos y contratos. Integrar los servicios ya descritos
+y valorar como nuevo el trabajo propio sin evidencia de reutilización. Consultar
+activos internamente solo si hay un indicio concreto que pueda cambiar la oferta.

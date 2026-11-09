@@ -146,7 +146,7 @@
       "summary": "Calcula esfuerzo, duración y costo con cobertura explícita.",
       "actions": [
         "Revisa reglas, tarifas, capacidad y entradas aprobadas.",
-        "Evalúa horas por proceso con parámetros explícitos; los valores ilustrativos del ZIP no están aprobados.",
+        "Busca una unidad comparable en DatosExt, luego en IA. Usa actividades si no hay una analogía defendible.",
         "Calcula Base y Conservador por componente y rol, con tarifas, capacidad y dependencias. El modo aprobado usa el snapshot del intento.",
         "Conserva cálculos reproducibles, fuentes, supuestos y snapshot de reglas."
       ],

@@ -25,3 +25,5 @@ El rol redactor sigue roles/redactor.md antes de que el revisor presente el paqu
 Aplicar `reglas/presentacion-resultados.md`: informe breve centrado en este paso,
 pendientes materiales y siguiente acción. Conservar el detalle verificable en
 `02-trabajo/` y enlazarlo; no pegarlo completo en el informe ni en el chat.
+
+Cotejar la cobertura de la propuesta con A1, A2 y las adendas vigentes. Revisar que cualquier exclusión o entrega parcial tenga una fuente explícita. Verificar que las integraciones incluyan el trabajo propio y que todo ahorro por reúso tenga evidencia y cobertura sustentada.

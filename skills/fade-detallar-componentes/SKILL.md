@@ -36,3 +36,9 @@ una propuesta; conserva aprobaciones y salidas aceptadas.
 ## Cotización
 
 Caracteriza con la evidencia disponible al nivel de cotización. Aplica `reglas/preguntas-componentes.md` y deja campos, formatos exactos y contratos API como pendientes de diseño.
+
+Sustenta con el requerimiento la existencia del activo aprovechable. Cotiza como nuevo el trabajo propio sin esa evidencia. Consumir un servicio externo implica cotizar la conexión según `reglas/a3-clasificacion.md`.
+
+Sustenta las cinco dimensiones del Modelo Propuesta V2 y explica qué unidad se compara. Las etiquetas de talla de FADE requieren evidencia adicional para homologarlas con proyectos de `DatosExt`.
+
+Clasifica cada código de A2 por el esfuerzo predominante según el Catálogo de Arquetipos. Completa y valida `clasificacion-modelo-v2.json` antes de finalizar A3. Distingue la clase sustentada de la provisional y explica qué dato podría cambiarla.

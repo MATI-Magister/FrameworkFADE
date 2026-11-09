@@ -3,6 +3,37 @@ import copy
 import math
 
 from framework.configuration import number
+from framework.classification import proposal_key
+
+
+def proposal_reference(item, estimation, quantity):
+    model = estimation.get('proposal_model')
+    if not model:
+        raise ValueError('Falta el catálogo del Modelo Propuesta V2.')
+    dimensions = item.get('dimensions')
+    key = proposal_key(dimensions, model)
+    size_basis = item.get('size_basis')
+    if not isinstance(size_basis, str) or not size_basis.strip():
+        raise ValueError(f'{item["id"]}: sustenta la talla y la unidad de comparación.')
+    external_fit = item.get('external_fit')
+    if type(external_fit) is not bool:
+        raise ValueError(f'{item["id"]}: indica si la unidad es comparable con un proyecto completo de DatosExt.')
+    if not external_fit:
+        reason = item.get('external_exclusion')
+        if not isinstance(reason, str) or not reason.strip():
+            raise ValueError(f'{item["id"]}: explica por qué DatosExt no es comparable.')
+    if external_fit and quantity != 1:
+        raise ValueError(f'{item["id"]}: una analogía con un proyecto completo de DatosExt requiere cantidad uno.')
+    for sheet in ('DatosExt', 'IA') if external_fit else ('IA',):
+        row = model['sheets'][sheet].get(key)
+        if row is not None:
+            hours, excel_row, records = row
+            number(hours, 'horas de la referencia', minimum=0, strict=True, required=True)
+            return hours, {'workbook': model['source'], 'sha256': model['sha256'], 'sheet': sheet,
+                           'row': excel_row, 'records': records, 'dimensions': dimensions,
+                           'size_basis': size_basis,
+                           'external_exclusion': item.get('external_exclusion')}
+    return None
 
 
 def validate_package(package, item_id):
@@ -67,8 +98,8 @@ def calculate_unified(data, config):
                     len(set(coverage)) != len(coverage) or seen.intersection(coverage)):
                 raise ValueError(f'{iid}: cobertura vacía o duplicada; no sumar métodos sobre el mismo trabajo.')
             seen.update(coverage)
-            if item.get('kind') not in ('process', 'activity'):
-                raise ValueError(f'{iid}: kind debe ser process o activity.')
+            if item.get('kind') not in ('process', 'activity', 'analogy'):
+                raise ValueError(f'{iid}: kind debe ser process, analogy o activity.')
             if type(item.get('includes_management')) is not bool:
                 raise ValueError(f'{iid}: declarar si las horas ya incluyen gestión.')
             if not isinstance(item.get('routing_reason'), str) or not item['routing_reason'].strip():
@@ -79,7 +110,22 @@ def calculate_unified(data, config):
                  ('environment', 'environment_factors'), ('reuse', 'reuse_factors')])
             # Unknown classes stay unknown; they do not become neutral multipliers.
             use_table = item['kind'] == 'process' and factors_ready and process.get('reuse_percentage') is not None
-            if use_table:
+            reference = proposal_reference(item, estimation, package['quantity'] if package else 1) if item['kind'] == 'analogy' else None
+            if reference:
+                if item.get('omp') is not None:
+                    raise ValueError(f'{iid}: analogía con cobertura. Retira la valoración O/M/P de la misma unidad.')
+                base, basis = reference
+                levels = ('baja', 'media', 'alta')
+                info, experience = data.get('information_level'), data.get('experience_level')
+                if info not in levels or (experience is not None and experience not in levels):
+                    raise ValueError('Nivel de información o experiencia inválido para las bandas de cotización.')
+                confidence = min(info, experience, key=levels.index) if experience is not None else info
+                band = parameters['range_bands'][confidence]
+                conservative = base * (1 + band['conservative'])
+                low = base * (1 + band['optimistic'])
+                method = 'proposal_model'
+                basis['band'] = confidence
+            elif use_table:
                 if item.get('omp') is not None:
                     raise ValueError(f'{iid}: proceso cubierto por tabla; no añadir otra valoración O/M/P.')
                 p = copy.deepcopy(parameters)
@@ -143,8 +189,9 @@ def calculate_unified(data, config):
             'table_source_sha256': parameters.get('source_sha256'),
             'coverage_source': data['coverage_source'], 'base_hours': totals['Base'],
             'conservative_hours': totals['Conservador'], 'optimistic_reference_hours': optimistic,
-            'band_basis': 'Tabla cargada para procesos con clasificación sustentada; O/M/P para el resto. '
-                          'Base de actividades = (O + 4M + P)/6; Conservador = P. Sin recargo de banda sobre P.',
+            'band_basis': ('Modelo Propuesta V2 por analogía: DatosExt primero, luego IA. '
+                           'Las referencias usan las bandas configuradas. ' if any(row['method'] == 'proposal_model' for row in ledger) else '')
+                          + 'Base de actividades = (O + 4M + P)/6; Conservador = P.',
             'notes': ['Parámetros iniciales autorizados para uso; no demuestran calibración.',
                       'Cada unidad de trabajo se cubre una sola vez. Gestión solo donde no esté incluida.']}
 
@@ -156,10 +203,12 @@ def render_coverage(result):
              'Cada unidad del inventario se estima una sola vez. Las horas siguientes son previas '
              'a la gestión adicional indicada por partida.', '',
              'Inventario de referencia: ' + cell(result['coverage_source']), '']
-    lines += ['Tabla de referencia: ' + cell(result['table_source']), '',
-              'Huella de la fuente: ' + cell(result['table_source_sha256'] or 'ver snapshot de reglas'), '']
+    if any(item['method'] == 'process_table' for item in result['coverage']):
+        lines += ['Tabla anterior: ' + cell(result['table_source']), '',
+                  'Huella de la fuente: ' + cell(result['table_source_sha256'] or 'ver snapshot de reglas'), '']
     for item in result['coverage']:
-        label = 'Tabla por proceso' if item['method'] == 'process_table' else 'Actividades O/M/P'
+        label = {'process_table': 'Tabla por proceso', 'proposal_model': 'Modelo Propuesta V2',
+                 'activities_omp': 'Actividades O/M/P'}[item['method']]
         lines += [f'## {cell(item["id"])} · {cell(item["description"])}', '',
                   f'Componente: {cell(item["component"])}. Método: {label}.', '',
                   'Cubre: ' + ', '.join(cell(i) for i in item['covers']) + '.', '',

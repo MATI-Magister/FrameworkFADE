@@ -150,3 +150,12 @@ El filtro se aplica antes de presentar preguntas. Las partidas de cotización re
 ### Preguntas de cotización sin tope
 
 El usuario pidió «eliminemola y que genere las preguntas que considere necesarias». Esta decisión sustituye el límite anterior de diez. Aplicar el filtro de cotización y conservar la priorización.
+
+
+### Alcance y reúso en cotización
+
+El usuario indicó que sin una primera entrega definida se cotiza todo lo solicitado. También indicó que el reúso debe desprenderse del requerimiento. El trabajo propio se cotiza como nuevo cuando no hay evidencia de una implementación aprovechable. Si se consume un servicio existente, se estima la integración con ese servicio.
+
+### Referencia para nuevas estimaciones
+
+El usuario pidió usar «Modelo_Propuesta V2», primero la pestaña «ext» y luego «IA». La hoja externa se llama `DatosExt`. Se adopta el orden DatosExt, IA y actividades sin analogía, con comprobación de unidad comparable. El catálogo conserva fuente, huella, fila y tamaño de muestra.

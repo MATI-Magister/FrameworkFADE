@@ -22,12 +22,74 @@ class WorkflowTests(unittest.TestCase):
     def finish(self, step, **options):
         self.flow.start(step)
         (self.flow.base / '03-entregables' / f'{step}.md').write_text('Contenido revisado', encoding='utf-8')
+        out = self.flow.base / '03-entregables'
+        if step == 'a2':
+            (out / 'a2.md').write_text('| C-001 | Uno |\n| C-002 | Dos |\n', encoding='utf-8')
+        if step == 'a3':
+            dimensions = {'development': 'Nuevo', 'archetype': 'Aplicaciones', 'size': 'XS',
+                          'complexity': 'Baja', 'integration': 'I0'}
+            rows = [{'id': component, 'dimensions': dimensions, 'status': 'sustentada',
+                     'evidence': dict.fromkeys(dimensions, 'Fuente ficticia')}
+                    for component in ('C-001', 'C-002')]
+            (out / 'clasificacion-modelo-v2.json').write_text(json.dumps({'components': rows}), encoding='utf-8')
         if step == 'a1':
-            (self.flow.base / '03-entregables/preguntas-a1.md').write_text('Preguntas para alcanzar N4 y brechas núcleo.', encoding='utf-8')
+            (self.flow.base / '03-entregables/filtro-cotizacion-a1.json').write_text(
+                json.dumps({'scope': 'full', 'scope_source': 'Fuente de prueba', 'questions': [],
+                            'assumptions': [], 'design': [], 'internal': []}), encoding='utf-8')
         if step == 'revision':
             for filename in ('cliente.md', 'ajustes.md'):
                 (self.flow.base / '03-entregables' / filename).write_text('Paquete revisado', encoding='utf-8')
         self.flow.finish(step, **options)
+
+    def test_a1_rejects_an_unsupported_first_delivery_before_publication(self):
+        self.finish('registro')
+        self.flow.start('a1')
+        out = self.flow.base / '03-entregables'
+        (out / 'a1.md').write_text('Cotización del alcance completo.', encoding='utf-8')
+        register = out / 'filtro-cotizacion-a1.json'
+        data = {'scope': 'full', 'scope_source': 'RFI ficticio, p. 2: presentar cronograma con hitos.',
+                'questions': [{'id': 'A1-PRE-001', 'question': '¿Qué operaciones van en la primera entrega?',
+                               'decision': 'División de la oferta', 'impact': 'Cambia el alcance',
+                               'why_now': 'Se requiere confirmar el alcance del precio fijo.',
+                               'source': 'RFI ficticio, p. 2'}],
+                'assumptions': [], 'design': [], 'internal': []}
+        register.write_text(json.dumps(data), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'entrega parcial'):
+            self.flow.finish('a1')
+        self.assertFalse((out / 'preguntas-a1.md').exists())
+        self.assertEqual(self.flow.read()['steps']['a1']['status'], 'en_ejecucion')
+        data['questions'][0]['question'] = '¿Cuáles son los campos de entrada de la integración?'
+        register.write_text(json.dumps(data), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'detalle técnico'):
+            self.flow.finish('a1')
+        self.assertFalse((out / 'preguntas-a1.md').exists())
+        data['questions'] = []
+        register.write_text(json.dumps(data), encoding='utf-8')
+        self.flow.finish('a1')
+        self.assertIn('Todo lo solicitado', (out / 'preguntas-a1.md').read_text(encoding='utf-8'))
+        register.write_text('{}', encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'filtro de cotización'):
+            self.flow.approve('a1', 'experto')
+
+    def test_a3_requires_excel_classification_for_every_a2_component(self):
+        self.finish('registro')
+        self.finish('a1')
+        self.flow.approve('a1', 'experto')
+        self.finish('a2')
+        self.flow.start('a3')
+        out = self.flow.base / '03-entregables'
+        (out / 'a3.md').write_text('Clasificación de prueba.', encoding='utf-8')
+        dimensions = {'development': 'Nuevo', 'archetype': 'Integración', 'size': 'XS',
+                      'complexity': 'Media', 'integration': 'I1'}
+        row = {'id': 'C-001', 'dimensions': dimensions, 'status': 'provisional',
+               'evidence': dict.fromkeys(dimensions, 'Supuesto de prueba')}
+        register = out / 'clasificacion-modelo-v2.json'
+        register.write_text(json.dumps({'components': [row]}), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'faltan clasificaciones de C-002'):
+            self.flow.finish('a3')
+        register.write_text(json.dumps({'components': [row, {**row, 'id': 'C-002'}]}), encoding='utf-8')
+        self.flow.finish('a3')
+        self.assertIn('proposal_classification_hash', self.flow.read()['steps']['a3'])
 
     def through_a3(self, skip=False):
         self.finish('registro')

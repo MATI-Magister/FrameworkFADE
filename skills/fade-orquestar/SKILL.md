@@ -35,4 +35,8 @@ una propuesta; conserva aprobaciones y salidas aceptadas.
 
 ## Cotización
 
+Antes de presentar preguntas de A1, usa el registro publicado por `finish a1`.
+Trata las preguntas de la rúbrica como diagnóstico interno y aplica primero
+supuestos acotados u opciones separadas.
+
 Al dirigir A1, A2, A3 o cierre, exige el filtro de preguntas de `reglas/preguntas-componentes.md`. Para nuevas cotizaciones A4, usa los paquetes definidos en `reglas/ruta-unificada-estimacion.md`.
