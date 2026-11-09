@@ -84,3 +84,11 @@ El motor A4 completo sigue exigiendo reglas y datos operativos aprobados. El scr
 `scripts/ejemplo_a4.py` es una demostración limitada con datos ficticios, no un
 calculador productivo completo de COCOMO ni un modelo calibrado para la organización.
 Ejemplo legible: `docs/ejemplo-a4-estimacion.md`.
+
+## Ruta unificada vigente · 8 de noviembre de 2026
+
+Leer `reglas/ruta-unificada-estimacion.md` antes de proponer método o pedir
+productividad. Tabla cargada primero; actividades O/M/P para trabajo sin cobertura
+suficiente. Recuperar respuestas y parámetros locales antes de preguntar. Esta
+ruta prevalece sobre instrucciones anteriores que exigían otra fuente para preparar
+una propuesta; conserva aprobaciones y salidas aceptadas.

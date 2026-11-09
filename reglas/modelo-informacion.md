@@ -33,7 +33,7 @@ originales. La cita de confirmación debe corresponder exactamente al dato evalu
 
 Prioridad = (3−puntaje) × peso interno / máximo dimensión × peso dimensión /
 pesos incluidos × 100. Si el tope impide alta, atender primero núcleos que lo causan;
-después mayor prioridad y núcleo en empate. Hasta diez preguntas al cliente, con
+después mayor prioridad y núcleo en empate. Incluir todas las preguntas necesarias, con
 códigos separados del texto natural. Las demás brechas, preguntas internas y
 contradicciones siguen en el soporte de la ronda. Generar supuestos ante 0/1 para
 revisión humana; no convertir una falta de información en una decisión tomada.

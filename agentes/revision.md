@@ -19,3 +19,9 @@ El ejemplo de cliente es ficticio; nunca usar sus cifras en un expediente real.
 
 Leer también reglas/integracion-agentes.md y las skills asignadas en configuracion/roles.json.
 El rol redactor sigue roles/redactor.md antes de que el revisor presente el paquete.
+
+## Presentación del resultado
+
+Aplicar `reglas/presentacion-resultados.md`: informe breve centrado en este paso,
+pendientes materiales y siguiente acción. Conservar el detalle verificable en
+`02-trabajo/` y enlazarlo; no pegarlo completo en el informe ni en el chat.

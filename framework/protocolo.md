@@ -65,3 +65,15 @@ El inicio, finalización y aprobación de etapas verifican los entregables previ
 las preguntas A1 ya aceptadas. Si cambiaron, se exige reintentar la etapa afectada;
 no se propaga automáticamente una versión distinta de la aceptada. La demostración
 ficticia y verificar.py no cambian estados reales ni aprueban decisiones del cliente.
+
+La presentación de todos los resultados sigue `reglas/presentacion-resultados.md`.
+Las plantillas actuales separan informe breve y respaldo verificable; esta pauta
+prevalece sobre ejemplos anteriores extensos. No altera aprobaciones ni evidencia.
+
+## Ruta unificada vigente · 8 de noviembre de 2026
+
+Leer `reglas/ruta-unificada-estimacion.md` antes de proponer método o pedir
+productividad. Tabla cargada primero; actividades O/M/P para trabajo sin cobertura
+suficiente. Recuperar respuestas y parámetros locales antes de preguntar. Esta
+ruta prevalece sobre instrucciones anteriores que exigían otra fuente para preparar
+una propuesta; conserva aprobaciones y salidas aceptadas.

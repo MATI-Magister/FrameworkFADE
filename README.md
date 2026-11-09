@@ -4,6 +4,11 @@ Flujo local y trazable, independiente del proveedor de IA. El asistente interpre
 los comandos y realiza el análisis; Python controla etapas, historial y aprobaciones.
 Los informes del requerimiento, componentes y estimación son legibles en Markdown.
 
+Cada paso presenta primero su resultado, lo que requiere tu atención y la siguiente
+acción. Los criterios, fuentes y cálculos quedan en un respaldo enlazado, sin repetir
+todo el expediente. Consulta el [ejemplo de resultados breves](docs/ejemplo-resultados-breves.md)
+y la [pauta de presentación](reglas/presentacion-resultados.md).
+
 ## Instalación paso a paso · independiente de la IA
 
 FADE se instala como una carpeta local. Puedes cambiar de asistente sin cambiar
@@ -196,6 +201,24 @@ el manual del tablero. Si falta información, el agente identifica el pendiente.
 
 ### 9. Completar los parámetros antes de una estimación real
 
+La ruta común ya tiene la **tabla técnica cargada**: aplicaciones 40, integración
+60, datos/IA 70, plataforma 50, seguridad 60 y modernización 50 horas por proceso.
+Para partidas sin cobertura suficiente se usa estimación por actividades O/M/P.
+Son referencias iniciales para revisión, sin afirmar calibración histórica. El
+agente consulta primero las respuestas y decisiones del expediente; no pide otra
+tabla de productividad para preparar la propuesta.
+
+```sh
+python scripts/framework.py --project mi-proyecto estimation-route
+```
+
+Este comando muestra la ruta, los parámetros consolidados y dónde buscar los
+datos existentes. Los valores particulares se consolidan con fuente en
+`proyectos/<id>/01-entradas/respuestas/parametros-estimacion.json`; se aplican solo
+a ese expediente y quedan en su snapshot. Consulta la
+[ruta unificada](reglas/ruta-unificada-estimacion.md) para cobertura, rangos,
+gestión y separación entre propuesta y cálculo formal aprobado.
+
 Edita `configuracion/framework.json`, con apoyo del asistente si lo deseas:
 
 | Apartado | Qué definir |
@@ -203,7 +226,7 @@ Edita `configuracion/framework.json`, con apoyo del asistente si lo deseas:
 | `operation` | Proyecto predeterminado, puerto y preguntas por ronda |
 | `estimation.currency` y `cost_per_hour` | Moneda y costo horario único real del equipo |
 | `estimation.team` | Roles, personas, horas disponibles, dedicación y fuente |
-| `estimation.process_method` | Horas por proceso, factores, gestión y bandas con fundamento |
+| `estimation.process_method` | Revisar tabla, factores, gestión y bandas ya cargados; calibrar con evidencia cuando exista |
 | Parámetros comerciales, si aplican | Decisiones de costos adicionales y condiciones con sus fuentes |
 
 `null` significa **por confirmar**, nunca cero. Las escalas elegidas y las políticas
@@ -256,8 +279,8 @@ acepta una versión del paquete. !aprove reglas es otra decisión explícita. Ni
 nivel permite saltar aprobaciones. !run ejecuta una sola etapa. Leer AGENTS.md.
 
 Desde el 2026-11-02, por elección del usuario, A1 usa B.1 del ZIP: 20 criterios,
-9 dimensiones, información baja/media/alta. Hasta diez preguntas al cliente por
-ronda; preguntas internas y contradicciones aparte. D9 y D11 alimentan experiencia.
+9 dimensiones, información baja/media/alta. Preguntas necesarias sin tope por ronda.
+Preguntas internas y contradicciones se registran aparte. D9 y D11 alimentan experiencia.
 El Excel anterior se conserva para clasificación y trazabilidad, sin migrar puntajes.
 
 ```sh

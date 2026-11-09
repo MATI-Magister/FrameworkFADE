@@ -66,8 +66,8 @@ del motor Python. Contestar no aprueba etapas ni cambia la madurez automáticame
 Paso A1→componentes: primero generar preguntas para mejorar la información,
 con criterio/dimensión, evidencia requerida y responsable. Guardar en
 `03-entregables/preguntas-a1.md` y presentar al experto junto con el resumen.
-Máximo diez preguntas al cliente por ronda, según configuración; las del equipo
-y las contradicciones se registran aparte. El experto decide si responder/iterar
+Genera las preguntas necesarias sin tope por ronda. Registra aparte las del equipo
+y las contradicciones. El experto decide si responder/iterar
 o autorizar el paso con `!aprove a1`. Ningún nivel autoriza A2 automáticamente;
 el experto puede avanzar con brechas explícitas. `!componentes` solo no sustituye
 la aceptación de A1. La elección del modelo no acepta el requerimiento del piloto.
@@ -156,7 +156,8 @@ la publicación cancelada. La fuente original del modelo de reglas sí es parte 
 Leer `configuracion/framework.json` antes de operar. Es la fuente de parámetros de
 operación, tarifas, capacidad y método; null significa por confirmar, nunca cero.
 `python scripts/framework.py config` valida y muestra pendientes. `!configuracion`
-consulta; no aprueba valores. Los valores ilustrativos del ZIP no son defaults.
+consulta; no aprueba valores. La ruta unificada habilita expresamente la tabla técnica del ZIP como referencia
+inicial; sus cifras económicas y de capacidad no son defaults.
 Cambios que afectan estimación entran en la huella y snapshot de reglas; cambios
 solo del portal no invalidan reglas. No editar snapshots ni migrar evaluaciones viejas
 sin una solicitud de reevaluación del usuario.
@@ -203,4 +204,23 @@ INC-016 resuelto: D6 usa las bandas ZIP de classification.reuse (R1 <10 %,
 R2 10–<30 %, R3 30–50 %, R4 >50 %). No reutilizar etiquetas del Excel sin
 reclasificar su porcentaje. Conservar evidencia del activo y cobertura. El cálculo
 completo exige reuse_percentage explícito y clase consistente, usando el snapshot;
-los factores de ahorro siguen sin aprobarse hasta decisión y calibración.
+los factores se usan como referencia inicial por la decisión de ruta unificada;
+no se presentan como ahorro calibrado ni aprueban el paquete completo de A4.
+
+La presentación de todos los resultados sigue `reglas/presentacion-resultados.md`.
+Las plantillas actuales separan informe breve y respaldo verificable; esta pauta
+prevalece sobre ejemplos anteriores extensos. No altera aprobaciones ni evidencia.
+
+## Ruta unificada vigente · 8 de noviembre de 2026
+
+Leer `reglas/ruta-unificada-estimacion.md` antes de proponer método o pedir
+productividad. Tabla cargada primero; actividades O/M/P para trabajo sin cobertura
+suficiente. Recuperar respuestas y parámetros locales antes de preguntar. Esta
+ruta prevalece sobre instrucciones anteriores que exigían otra fuente para preparar
+una propuesta; conserva aprobaciones y salidas aceptadas.
+
+En A1, A2, A3 y cierre, aplica el filtro de cotización de
+`reglas/preguntas-componentes.md` antes de presentar preguntas. Difiere los detalles
+de diseño. Si falta un dato material, usa un supuesto acotado cuando sea viable.
+Para nuevas estimaciones A4 usa paquetes con cantidad, límite y condición de
+recotización según `reglas/ruta-unificada-estimacion.md`.

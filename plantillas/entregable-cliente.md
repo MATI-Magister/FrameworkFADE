@@ -1,40 +1,35 @@
-# Estimación de la solución · <proyecto>
+# Estimación de <solución> · <cliente>
 
-Cliente: <nombre> · Versión: <identificador> · Fecha de emisión: <fecha>
-Expediente de referencia: <proyecto y revisión>. Condición: <preliminar/definida según datos>.
+Versión: <identificador> · Fecha: <fecha> · Condición: <preliminar / revisada>.
 
-## Qué proponemos realizar
-Explicar objetivo, necesidad y resultado esperado en lenguaje de negocio.
+<Qué necesita el cliente y qué recibirá, en un párrafo breve.>
 
-## Alcance y componentes
-| Código | Componente | Qué recibirá el cliente |
-| --- | --- | --- |
-| C-001 | <nombre> | <resultado> |
+## Qué incluye
 
-## Estimación y alternativas
-| Escenario | Esfuerzo (horas-persona) | Duración aproximada (semanas) | Costo de mano de obra (<moneda>) |
+| Componente | Qué recibirá |
+| --- | --- |
+| <nombre comprensible> | <resultado> |
+
+## Esfuerzo, plazo y costo
+
+| Escenario | Esfuerzo (horas-persona) | Plazo aproximado (semanas) | Costo (<moneda>) |
 | --- | --- | --- | --- |
-| Base | <valor> | <valor/rango> | <valor> |
-| Conservador | <valor> | <valor/rango> | <valor> |
+| Base | <valor> | <valor> | <valor> |
+| Conservador | <valor> | <valor> | <valor> |
 
-Explicar qué cambia entre escenarios, condiciones y qué cubren los costos.
+<Explicar diferencia entre escenarios, costo frente a precio comercial y si el
+importe es parcial. Cifras tomadas del cálculo revisado; no inventarlas.>
 
-| Componente | Horas base | Horas conservadoras | Costo base (<moneda>) | Costo conservador (<moneda>) |
-| --- | --- | --- | --- | --- |
-| <ID y nombre> | <valor> | <valor> | <valor> | <valor> |
+## Condiciones de la estimación
 
-## Cómo se ejecutaría
-Equipo/capacidad considerada, secuencia, hitos, dependencias y esperas externas.
-Identificar el inicio condicionado y evitar fechas comprometidas sin calendario acordado.
+<Equipo y disponibilidad, dependencias, inicio condicionado, supuestos materiales,
+exclusiones y costos por confirmar. No prometer fecha sin calendario acordado.
+No ocultar incertidumbres que afecten la decisión.>
 
-## Supuestos y condiciones
-Condiciones de alcance, acceso, equipo, disponibilidad y decisiones que sustentan las cifras.
+## Siguiente paso
 
-## Exclusiones y costos por confirmar
-Separar nube/licencias/terceros/impuestos/margen/precio comercial según corresponda.
-Indicar claramente si la cifra es parcial y qué falta para completarla.
+<Qué debe validar el cliente. Resumen del método en una frase y versión de
+referencia. La aprobación interna no equivale a aceptación del cliente ni envío.>
 
-## Base de estimación y próximos pasos
-Resumen comprensible del método y sus limitaciones; referencias de versión.
-Validaciones con el cliente y decisiones requeridas. La aprobación interna del
-experto no implica aceptación del cliente ni publicación/envío automático.
+<Enlazar A4 para desglose por componente; no repetir todas sus tablas ni incluir
+códigos técnicos internos, huellas, rúbricas o controles en este documento.>

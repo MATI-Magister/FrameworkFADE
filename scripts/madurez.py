@@ -64,8 +64,7 @@ def main():
                     if old.exists():
                         shutil.copy2(old, archive / old.name)
             (work / 'madurez-resultado.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
-            text = information.render_report(args.project, result, model, model_hash,
-                    config['operation']['max_client_questions']) if b1 else render_report(args.project, result, model, model_hash)
+            text = information.render_report(args.project, result, model, model_hash) if b1 else render_report(args.project, result, model, model_hash)
             report.write_text(text, encoding='utf-8')
             print(f'{result["overall"]:.1%} - {result["level"]}. Informe: {report}')
         return 0

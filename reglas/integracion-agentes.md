@@ -41,7 +41,7 @@ humanos se pueden identificar en human_roles del mismo archivo.
 | INC-001 | Los números A1–A7 significan tareas diferentes | Adaptados por responsabilidad; se conservan comandos/estados actuales. |
 | INC-002 | Excel: 109/11/N1–N5; ZIP: 20/9/baja-media-alta | Resuelto por el usuario: activo ZIP. Sin migración automática de puntajes. |
 | INC-003 | Híbrido COCOMO frente a horas por proceso | Resuelto en dirección: evaluar procesos como principal; factores/calibración pendientes. |
-| INC-004 | Preguntas: cinco frente a diez | Resuelto: diez al cliente; equipo/contradicciones aparte. |
+| INC-004 | Preguntas: cinco frente a diez | Actualizado: preguntas necesarias sin tope. Equipo y contradicciones aparte. |
 | INC-005 | ZIP presupone complejidad 1, T3 fuera del mapa y T1 sin exigencias | Resuelto por el usuario: dejar por confirmar y preguntar al experto. No asignar complejidad 1 ni T1/T3 sin evidencia. |
 | INC-006 | ZIP produce optimista/esperado/pesimista; motor requiere Base/Conservador | Resuelto por el usuario: Base y Conservador; optimista solo como referencia. Bandas numéricas todavía pendientes. |
 | INC-007 | Carril rápido o máximo de sesiones puede conducir a preliminar | Resuelto: el experto decide. Sin registro, conteo, máximo ni cálculo de sesiones necesarias; el agente genera preguntas para resolver pendientes. No se activa preliminar ni avance por sesiones. |
@@ -83,3 +83,11 @@ No se declara completa la validación funcional del paquete original. Los tests 
 framework validan la adaptación; sus casos recibidos quedan separados de operación.
 Las referencias a anexos del «documento del framework» no sustituyen ese documento:
 no se recibió el cuerpo de todos esos anexos como fuente independiente.
+
+## Ruta unificada vigente · 8 de noviembre de 2026
+
+Leer `reglas/ruta-unificada-estimacion.md` antes de proponer método o pedir
+productividad. Tabla cargada primero; actividades O/M/P para trabajo sin cobertura
+suficiente. Recuperar respuestas y parámetros locales antes de preguntar. Esta
+ruta prevalece sobre instrucciones anteriores que exigían otra fuente para preparar
+una propuesta; conserva aprobaciones y salidas aceptadas.

@@ -32,6 +32,7 @@ def main():
     cmd = commands.add_parser('adjust'); cmd.add_argument('--reason', required=True)
     commands.add_parser('status'); commands.add_parser('board'); commands.add_parser('validate-rules')
     commands.add_parser('config')
+    commands.add_parser('estimation-route')
     commands.add_parser('roles')
     commands.add_parser('doctor')
     cmd = commands.add_parser('serve'); cmd.add_argument('--port', type=int, default=config['operation']['portal_port'])
@@ -54,16 +55,22 @@ def main():
         elif args.command == 'adjust': print(flow.adjust_review(args.reason))
         elif args.command == 'validate-rules': flow.validate_rules(); print('Estructura de reglas válida.')
         elif args.command == 'config':
+            config = load_config(ROOT, args.project)
             print('Configuración válida: configuracion/framework.json')
             print('Método: ' + config['estimation']['method'])
+            if config['estimation'].get('unified_route'):
+                print('Ruta activa: tabla cargada + actividades O/M/P para faltantes; consultar estimation-route.')
             print('Costeo: ' + str(config['estimation'].get('costing_mode') or 'por confirmar'))
-            print('Preguntas al cliente por ronda: ' + str(config['operation']['max_client_questions']))
+            print('Preguntas al cliente según necesidad, sin tope por ronda.')
             pending = [key for key, value in config['estimation'].items() if value is None or value == []]
             if config['estimation'].get('costing_mode') == 'costo_unico':
                 pending = [key for key in pending if key != 'rates']
             elif config['estimation'].get('costing_mode') == 'por_rol':
                 pending = [key for key in pending if key != 'cost_per_hour']
             print('Por confirmar: ' + ', '.join(pending))
+        elif args.command == 'estimation-route':
+            from framework.estimation_route import describe
+            print(describe(ROOT, args.project))
         elif args.command == 'roles':
             for role in load_roles(ROOT)['roles']:
                 print(f'{role["id"]}: {role["stage"]} | {role["skill"]}')

@@ -76,7 +76,7 @@ class MaturityTests(unittest.TestCase):
         scores['D11.01'] = 0
         result = calculate(self.model, scores, {'D11.01': 'condicion_conocida'})
         report = render_report('prueba', result, self.model, 'hash')
-        question_section = report.split('## Primeras diez preguntas por prioridad')[1].split('## Registro completo')[0]
+        question_section = report.split('## Preguntas por prioridad')[1].split('## Registro completo')[0]
         self.assertNotIn('D11.01', question_section)
         self.assertIn('condicion conocida', report)
 

@@ -1,10 +1,11 @@
 # Horas por proceso · método principal en evaluación
 
-Dirección elegida por el usuario el 2026-11-02; todavía requiere calibración y
-aprobación. Parámetros reales en configuracion/framework.json, sección estimation.
-El archivo valores_metodo.json del ZIP contiene candidatos ilustrativos: 40–70 h
-por proceso según arquetipo, factores, gestión 15 %, bandas de incertidumbre,
-costo 85000 y margen 35 %. No son defaults ni decisiones aprobadas del usuario.
+Desde el 2026-11-08 se usa la tabla cargada como referencia inicial autorizada
+para todos los proyectos, junto con actividades O/M/P para faltantes. Leer
+ruta-unificada-estimacion.md. Horas por proceso (40–70), factores, gestión 15 %
+y bandas técnicas están en configuracion/framework.json con su fuente y huella.
+No se importan costo 85000, margen 35 % ni capacidad comercial del ZIP. Los
+parámetros iniciales no demuestran calibración ni aprueban cada estimación.
 
 Fórmula candidata por componente: número de procesos × horas por proceso del
 arquetipo × factor de complejidad × factor de entorno × factor de reúso.
@@ -38,7 +39,9 @@ La calibración numérica y aprobación del método siguen siendo necesarias.
 
 Duración depende de capacidad, asignaciones y dependencias. Costo usa inicialmente un costo horario único del equipo, elegido en INC-014. Precio comercial,
 margen, impuestos e infraestructura son decisiones separadas. No inferir moneda.
-La configuración vacía bloquea el ensayo y A4 real hasta completar y aprobar.
+La tabla está disponible; costos y calendario dependen de los datos del expediente.
+Las aprobaciones pendientes bloquean A4 formal, no la preparación de una propuesta
+por la ruta unificada.
 COCOMO II queda como alternativa, sin sumar ambos métodos sobre el mismo trabajo.
 
 
@@ -78,3 +81,11 @@ classification.reuse de la configuración, congeladas con el snapshot. Para modo
 --approved cada componente incluye reuse_percentage (0–100) y reuse; se rechaza
 una clase inconsistente o un porcentaje desconocido. La escala no define por sí
 sola el descuento: reuse_factors permanece pendiente hasta revisión y calibración.
+
+## Ruta unificada vigente · 8 de noviembre de 2026
+
+Leer `reglas/ruta-unificada-estimacion.md` antes de proponer método o pedir
+productividad. Tabla cargada primero; actividades O/M/P para trabajo sin cobertura
+suficiente. Recuperar respuestas y parámetros locales antes de preguntar. Esta
+ruta prevalece sobre instrucciones anteriores que exigían otra fuente para preparar
+una propuesta; conserva aprobaciones y salidas aceptadas.

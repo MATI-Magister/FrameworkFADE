@@ -1,0 +1,44 @@
+{
+  "information_level": "alta",
+  "source": "Prueba sintética; no usar como expediente real",
+  "expected_work_ids": ["W-001", "W-002"],
+  "coverage_source": "Inventario A2 sintético: un proceso y una actividad sin solapamiento",
+  "management_role_split": {"Dev": 1},
+  "direct_costs": [],
+  "direct_costs_source": "Prueba sintética: costos directos excluidos del escenario",
+  "components": [
+    {
+      "id": "C-001",
+      "name": "Componente de demostración",
+      "source": "Prueba sintética",
+      "role_split": {"Dev": 1},
+      "dependencies": [],
+      "work_items": [
+        {
+          "id": "EST-001",
+          "kind": "process",
+          "description": "Operación funcional identificada",
+          "covers": ["W-001"],
+          "archetype": "aplicaciones",
+          "complexity": "media",
+          "environment": "T1",
+          "reuse": "R1",
+          "reuse_percentage": 0,
+          "includes_management": false,
+          "routing_reason": "Proceso sintético con clasificación explícita; la actividad adicional tiene cobertura diferente.",
+          "source": "Prueba sintética; clasificación ilustrativa, no default"
+        },
+        {
+          "id": "EST-002",
+          "kind": "activity",
+          "description": "Preparar una verificación técnica no cubierta por el proceso",
+          "covers": ["W-002"],
+          "omp": {"optimistic": 4, "likely": 8, "pessimistic": 12},
+          "includes_management": true,
+          "routing_reason": "Trabajo técnico específico sin equivalencia en tabla. El rango incluye coordinación: preparación y ejecución, con repetición en el caso pesimista.",
+          "source": "Prueba sintética: juicio documentado para comprobar el calculador"
+        }
+      ]
+    }
+  ]
+}

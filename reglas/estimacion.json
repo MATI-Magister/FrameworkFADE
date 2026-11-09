@@ -1,5 +1,5 @@
 {
-  "version": "0.5.2-borrador",
+  "version": "0.6-ruta-unificada",
   "status": "draft",
   "maturity": {
     "description": "Modelo B.1 del ZIP elegido el 2026-11-02: 9 dimensiones, 20 criterios, baja/media/alta, núcleo D1-D5. D9 y D11 alimentan experiencia. A1 requiere revisión y aprobación humana; preguntas para mejorar información, sin N3/N4.",
@@ -19,10 +19,10 @@
     "model_file": "reglas/modelo-madurez.json"
   },
   "method": {
-    "description": "Horas por proceso en evaluación como método principal. Fórmula candidata: procesos × horas/arquetipo × complejidad × entorno × reuso; gestión y bandas requieren revisión y parámetros aprobados. COCOMO II queda como alternativa, sin superponer cobertura.",
+    "description": "Ruta unificada: tabla cargada para procesos con cobertura suficiente; actividades O/M/P para faltantes. Base de actividades=(O+4M+P)/6 y Conservador=P, sin duplicar cobertura, gestión o incertidumbre. Parámetros iniciales autorizados para uso, sin afirmar calibración. Ver reglas/ruta-unificada-estimacion.md.",
     "cost": "Costo horario único del equipo por horas-persona, más costos directos explícitos. Mantener roles y capacidad para el calendario; precio comercial separado.",
-    "source": "Decisión del usuario 2026-11-02; ZIP calculo/valores_metodo.json ilustrativo",
-    "review_status": "pending_calibration"
+    "source": "Decisión del usuario 2026-11-08; configuracion/framework.json; referencia original calculo/valores_metodo.json.",
+    "review_status": "initial_use_authorized_pending_package_approval"
   },
   "capacity": {
     "description": "PROPUESTA: personas por rol, horas efectivas semanales y asignación al proyecto. Planificar actividades según dependencias sin sobreasignar personas; esperas externas separadas. Horas/capacidad de actividad da semanas de trabajo; max(horas por rol/capacidad del rol) solo es límite inferior, no duración comprometida. Sin equipo y dependencias suficientes: duración por confirmar.",

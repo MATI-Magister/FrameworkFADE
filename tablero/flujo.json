@@ -36,7 +36,7 @@
       "summary": "Evalúa la información y prepara preguntas para mejorarla.",
       "actions": [
         "Estructura fuentes y evalúa 9 dimensiones y 20 criterios B.1 con evidencia.",
-        "Genera hasta diez preguntas al cliente por ronda para mejorar información baja/media/alta.",
+        "Genera las preguntas necesarias para mejorar la información, sin tope por ronda.",
         "Usa !complementar con documentos o respuestas para reevaluar antes de aprobar.",
         "El experto indica !aprove a1 si autoriza pasar a componentes, incluso con pendientes explícitos."
       ],

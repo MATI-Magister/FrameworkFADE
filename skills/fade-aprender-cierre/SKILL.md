@@ -16,8 +16,14 @@ al flujo actual; los originales del ZIP solo son referencia comparativa.
 
 Preparar desviaciones, reuso real y lecciones tras ejecutar el proyecto. No registrar ni recalibrar sin confirmación del responsable.
 
-Conserva evidencia, identificadores y versiones. Entrega un informe Markdown legible;
-los JSON son soporte interno. Usa el estado real del expediente y las comprobaciones
+Para cotizaciones por paquetes, compara las cantidades y límites cotizados con lo
+ejecutado. Separa trabajo común, volumen adicional y cambios de alcance antes de
+atribuir una desviación a productividad. Si las horas se reconstruyeron desde
+equipo y duración, identifica la fuente y distingue esa referencia de horas medidas.
+
+Aplica `reglas/presentacion-resultados.md`: resultado breve del paso y siguiente
+acción; enlaza el respaldo sin volcarlo en el chat. Conserva evidencia, identificadores
+y versiones; los JSON son soporte interno. Usa el estado real del expediente y las comprobaciones
 del motor. Invocar una skill no inicia, finaliza ni aprueba por sí mismo una etapa.
 
 La correspondencia con el ZIP es `A7`; su especificación fuente está en

@@ -16,6 +16,7 @@ al flujo actual; los originales del ZIP solo son referencia comparativa.
 
 Conservar originales e inventariar fuentes. No declarar legible un adjunto no leído.
 
-Conserva evidencia, identificadores y versiones. Entrega un informe Markdown legible;
-los JSON son soporte interno. Usa el estado real del expediente y las comprobaciones
+Aplica `reglas/presentacion-resultados.md`: resultado breve del paso y siguiente
+acción; enlaza el respaldo sin volcarlo en el chat. Conserva evidencia, identificadores
+y versiones; los JSON son soporte interno. Usa el estado real del expediente y las comprobaciones
 del motor. Invocar una skill no inicia, finaliza ni aprueba por sí mismo una etapa.

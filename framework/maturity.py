@@ -115,10 +115,10 @@ def render_report(project, result, model, model_hash):
     if below:
         lines += ['**Dimensiones núcleo que mantienen el tope:** ' +
                   ', '.join(f'{d["id"]} · {d["name"]} ({d["maturity"]:.1%})' for d in below) + '.', '']
-    lines += ['## Primeras diez preguntas por prioridad', '',
+    lines += ['## Preguntas por prioridad', '',
               'Índice = (3 − puntaje) × peso interno × peso de dimensión. Sin calificar usa 0 para priorizar.', '']
     questions = [item for item in result['gaps'] if item['gap_type'] != 'condicion_conocida']
-    for item in questions[:10]:
+    for item in questions:
         lines += [f'### {item["id"]} · {clean(item["name"])}', '',
                   clean(item['question']), '', f'Evidencia que permitiría mejorar la calificación: {clean(item["evidence"])}.', '',
                   f'Estado: {"sin evaluar" if item["score"] is None else item["score"]}; prioridad: {item["priority"]:.3f}.', '']

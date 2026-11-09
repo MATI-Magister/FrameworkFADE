@@ -118,25 +118,31 @@ def schedule(components, workloads, capacity):
 def project_estimate(data, config, require_complete=False):
     """Compute effort, cost and calendar when explicit inputs are present; never invent missing data."""
     estimation = config['estimation']
+    unified = any('work_items' in c for c in data['components'])
     info = data['information_level']
     experience = data.get('experience_level')
     levels = ['baja', 'media', 'alta']
     if info not in levels or experience is not None and experience not in levels:
         raise ValueError('Nivel de información o experiencia inválido.')
-    if require_complete and (experience is None or not all(isinstance(data.get(k), str) and data[k].strip()
+    if require_complete and not unified and (experience is None or not all(isinstance(data.get(k), str) and data[k].strip()
             for k in ('information_confirmed_by', 'experience_confirmed_by', 'source'))):
         raise ValueError('Falta experiencia o confirmación del experto sobre información/experiencia.')
-    if require_complete and any('reuse_percentage' not in c for c in data['components']):
+    if require_complete and not unified and any('reuse_percentage' not in c for c in data['components']):
         raise ValueError('El cálculo completo requiere porcentaje de reúso explícito por componente.')
     confidence = min(info, experience, key=levels.index) if experience is not None else info
     bands = (config.get('classification') or {}).get('reuse', {}).get('bands')
-    result = calculate(data['components'], estimation['process_method'], confidence, bands)
+    if unified:
+        from framework.unified_estimation import calculate_unified
+        result = calculate_unified(data, config)
+    else:
+        result = calculate(data['components'], estimation['process_method'], confidence, bands)
     # Cost and duration belong to each scenario; remove obsolete unknown placeholders.
     result.pop('cost', None)
     result.pop('duration', None)
-    result.update(confidence=confidence if experience is not None else None,
-                  band_basis='Confianza = menor nivel entre información y experiencia confirmadas.' if experience is not None else
-                  'Ensayo solo con información; experiencia/confianza por confirmar.')
+    result['confidence'] = confidence if experience is not None else None
+    if not unified:
+        result['band_basis'] = ('Confianza = menor nivel entre información y experiencia confirmadas.' if experience is not None else
+                               'Ensayo solo con información; experiencia/confianza por confirmar.')
     components = data['components']
     by_id = {c['id']: c for c in components}
     management_fraction = estimation['process_method']['management_fraction']
@@ -144,7 +150,8 @@ def project_estimate(data, config, require_complete=False):
     can_plan = all(c.get('role_split') and 'dependencies' in c for c in components)
     if not can_plan: missing.append('Repartos por rol y dependencias de cada componente')
     management_roles = data.get('management_role_split')
-    if management_fraction and not management_roles:
+    needs_management = any(r.get('management_hours', 0) for r in result['components']) if unified else management_fraction
+    if needs_management and not management_roles:
         missing.append('Reparto de gestión por rol'); can_plan = False
     if management_roles: fractions(management_roles, 'Gestión')
     capacity = resource_capacities(estimation['team'])
@@ -179,9 +186,9 @@ def project_estimate(data, config, require_complete=False):
     for name, total in [('Base', result['base_hours']), ('Conservador', result['conservative_hours'])]:
         multiplier = total / result['base_hours']
         rows, workloads = [], {}
-        for row in result['components']:
-            cid = row['id']; technical = row['hours'] * multiplier
-            management = technical * management_fraction
+        for row in result.get('scenario_rows', {}).get(name, result['components']):
+            cid = row['id']; technical = row['hours'] * (1 if unified else multiplier)
+            management = row['management_hours'] if unified else technical * management_fraction
             workload = {}
             if can_plan:
                 split = fractions(by_id[cid]['role_split'], cid)
@@ -193,9 +200,9 @@ def project_estimate(data, config, require_complete=False):
                          'management_hours': management, 'hours': technical + management, 'role_hours': workload})
         plan = schedule(components, workloads, capacity) if can_plan and capacity else None
         labor_total = None
-        if can_plan and estimation['currency']:
+        if estimation['currency']:
             all_roles = {role for w in workloads.values() for role, h in w.items() if h > 0}
-            if estimation.get('costing_mode') == 'por_rol' and all_roles <= rates.keys():
+            if can_plan and estimation.get('costing_mode') == 'por_rol' and all_roles <= rates.keys():
                 for row in rows: row['labor_cost'] = math.fsum(h * rates[r] for r, h in row['role_hours'].items() if h)
             elif estimation.get('costing_mode') == 'costo_unico' and estimation.get('cost_per_hour') is not None:
                 for row in rows: row['labor_cost'] = row['hours'] * estimation['cost_per_hour']
@@ -233,17 +240,28 @@ def render_project(result, digest, experimental=True):
              '| Escenario | Horas-persona | Semanas del plan | Costo de ejecución |', '| --- | --- | --- | --- |']
     for s in result['scenarios']:
         lines.append(f'| {s["name"]} | {display(s["hours"])} | {display(s["duration_weeks"])} | {display(s["cost"])} |')
+    lines += ['', '## Resultado por componente', '',
+              '| Componente | Escenario | Horas-persona | Costo de ejecución |', '| --- | --- | --- | --- |']
     for s in result['scenarios']:
-        lines += ['', f'## Componentes · {s["name"]}', '',
-                  '| Componente | Horas-persona | Costo | Inicio (semana) | Fin (semana) |', '| --- | --- | --- | --- | --- |']
         for r in s['rows']:
-            lines.append(f'| {cell(r["id"])} · {cell(r["name"])} | {display(r["hours"])} | {display(r["cost"])} | {display(r.get("start_week"))} | {display(r.get("end_week"))} |')
-        lines += ['', f'Costos directos comunes fuera de componentes: {display(s["unallocated_direct_cost"])}.']
-        if s['schedule']: lines += ['', s['schedule']['basis']]
+            lines.append(f'| {cell(r["id"])} · {cell(r["name"])} | {cell(s["name"])} | {display(r["hours"])} | {display(r["cost"])} |')
+    lines += ['', '## Condiciones del calendario y costo', '']
+    common = {s['unallocated_direct_cost'] for s in result['scenarios']}
+    if len(common) == 1:
+        lines += [f'Costos directos comunes fuera de componentes: {display(next(iter(common)))}.']
+    else:
+        for s in result['scenarios']:
+            lines += [f'{s["name"]}: costos directos comunes fuera de componentes: {display(s["unallocated_direct_cost"])}.']
+    for basis in dict.fromkeys(s['schedule']['basis'] for s in result['scenarios'] if s['schedule']):
+        lines += ['', basis]
     lines += ['', '## Pendientes y condiciones', '']
     lines += ['- ' + cell(p) for p in result['pending']] or ['Sin pendientes numéricos detectados; la revisión semántica y aceptación siguen siendo humanas.']
     lines += ['', result['band_basis'], '',
               f'Optimista solo como referencia: {display(result["optimistic_reference_hours"])} horas-persona.', '',
-              '## Trazabilidad', '', f'Huella de reglas y parámetros: {digest}.',
+              '## Respaldo del cálculo', '',
+              '[Resultado completo: procesos, roles y calendario por componente](resultado.json).', '',
+              f'Huella de reglas y parámetros: {digest}.',
               'Conservar entrada, resultado y fuentes de esta ejecución. No sumar otro método sobre la misma cobertura.']
+    if result.get('coverage'):
+        lines += ['', '[Cobertura por partida y fundamento de horas](cobertura.md).']
     return '\n'.join(lines) + '\n'

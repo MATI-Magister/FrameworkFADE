@@ -1,76 +1,38 @@
-# Estimación preliminar · <nombre del proyecto>
+# Estimación · <proyecto>
 
-Estado: <borrador / para revisión / aprobado por responsable> · Fecha: <fecha>
-Reglas utilizadas: <versión> · Moneda: <moneda / por confirmar>
+<Qué se estimó y conclusión principal en dos frases. Indicar si es parcial o faltan
+datos para calcular. Versión y estado de revisión en una línea.>
 
-## Resultado en palabras
-Explicar qué solución se estimó, sus principales factores de esfuerzo y el nivel de
-incertidumbre. Indicar si faltan datos que impidan calcular costos o duración.
-
-## Comparación de escenarios
-| Escenario | Esfuerzo (horas-persona) | Duración aproximada (semanas) | Costo de ejecución (<moneda>) |
+| Escenario | Esfuerzo (horas-persona) | Duración (semanas) | Costo (<moneda>) |
 | --- | --- | --- | --- |
-| Base | <valor> | <valor/rango o por confirmar> | <valor o por confirmar> |
-| Conservador | <valor> | <valor/rango o por confirmar> | <valor o por confirmar> |
+| Base | <valor> | <valor> | <valor> |
+| Conservador | <valor> | <valor> | <valor> |
 
-Explicar en palabras qué cambia entre escenarios y qué condiciones mantienen.
-No presentar el conservador como garantía o probabilidad estadística.
+<Qué cambia entre escenarios en una frase. Conservador no es garantía.
+Costo de ejecución no equivale a precio comercial.>
 
-## Qué estamos estimando
-Alcance incluido y exclusiones; identificar las versiones de los componentes.
+## Resultado por componente
 
-| Componente | Trabajo considerado | Horas base | Horas conservadoras | Costo base (<moneda>) | Costo conservador (<moneda>) |
-| --- | --- | --- | --- | --- | --- |
-| <C-001 · nombre> | <descripción breve> | <valor> | <valor> | <valor/por confirmar> | <valor/por confirmar> |
-| Total | <sin duplicar transversales> | <total> | <total> | <total/por confirmar> | <total/por confirmar> |
-
-## Equipo y calendario considerado
-Roles, disponibilidad efectiva, dependencias, paralelismo y esperas. Explicar cómo
-se obtuvo la duración. Indicar si solo existe un límite inferior, sin prometer fechas.
-
-| Componente | Inicio base | Fin base | Duración base (semanas) | Duración conservadora (semanas) | Dependencias / esperas |
-| --- | --- | --- | --- | --- | --- |
-| <C-...> | <semana/fecha> | <semana/fecha> | <valor/por confirmar> | <valor/por confirmar> | <referencias> |
-
-El fin del proyecto corresponde a la última actividad. Las duraciones de componentes
-que se solapan no se suman. Verificar capacidad por persona y dependencias en ambos
-escenarios; contrastar con referencia de duración COCOMO cuando corresponda.
-
-| Componente | Rol | Horas base | Horas conservadoras | Tarifa (<moneda>/hora) | Costo base (<moneda>) | Costo conservador (<moneda>) |
-| --- | --- | --- | --- | --- | --- | --- |
-| <C-...> | <rol> | <valor> | <valor> | <valor/por confirmar> | <valor/por confirmar> | <valor/por confirmar> |
-
-Fundamentar el reparto por roles y reconciliar con los totales de componente.
-
-## Supuestos, riesgos y decisiones pendientes
-| Código PRE/PEN si aplica | Condición | Efecto en el resultado | Tratamiento o decisión requerida |
+| Componente | Horas base / conservadoras | Costo base / conservador (<moneda>) | Duración base / conservadora (semanas) |
 | --- | --- | --- | --- |
-| <ID existente o nuevo según registro> | <condición> | <impacto> | <responsable, estado y acción> |
+| C-001 · <nombre> | <valores> | <valores> | <valores> |
 
-## Costos adicionales y condiciones económicas
-Licencias, servicios, impuestos y margen, según lo acordado. Distinguir costo de
-precio comercial. «Por confirmar» no equivale a cero ni a incluido.
+## Condiciones que pueden cambiar el resultado
 
-## Anexo · Cómo calculamos
-Primero explicar el método principal y su cobertura por componente/actividad.
-Para COCOMO II declarar variante, tamaño y conversión, factores, calibración,
-personas-mes, paso a horas, fases y reparto reconciliado. No usar el porcentaje
-de madurez como multiplicador ni sumar estimaciones alternativas del mismo trabajo.
+<Supuestos, dependencias, disponibilidad, exclusiones y costos no incluidos que
+afecten las cifras. Por confirmar no es cero. Explicar paralelismo si determina
+el plazo; duraciones solapadas no se suman.>
 
-| Componente / partida | Método principal | Fases o actividades cubiertas | Qué queda fuera | Fuente de las entradas |
-| --- | --- | --- | --- | --- |
-| <ID y partida> | <COCOMO / actividades / analogía> | <cobertura explícita> | <partidas separadas o exclusiones> | <referencias> |
+## Tu siguiente paso
 
-Si falta estimar una parte, identificar el total como parcial sin reemplazarla por cero.
-Si se aprueba juicio experto para trabajo fuera de cobertura, explicar O (bajo),
-M (probable), P (alto); base = (O + 4 × M + P) / 6 y conservador = P solo para esas filas.
+<Si el cálculo completo está listo, !revisar. Si está bloqueado, pedir los datos
+pendientes sin presentar cifras como aprobadas.>
 
-| Componente | Actividad | Rol | O (horas) | M (horas) | P (horas) | Fundamento del rango |
-| --- | --- | --- | --- | --- | --- | --- |
-| <código> | <actividad> | <rol> | <valor> | <valor> | <valor> | <tareas, referencia o juicio experto> |
+Respaldo: <enlace al informe del cálculo versionado en 02-trabajo/>.
+Reglas: <versión del snapshot>.
 
-Referenciar tarifas, capacidad, operaciones verificadas y archivo reproducible.
-Explicar redondeos, versión/huella de reglas y fuentes sin saturar el resumen.
-
-## Revisión y aprobación
-Responsable, observaciones y decisión explícita; pendiente hasta su aceptación.
+<!-- Respaldo: procesos, métodos y cobertura, roles y horas, capacidad,
+tarifas/costo único, costos adicionales, calendario por componente y escenario,
+fórmulas, factores, fuentes, unidades, huellas y reconciliación de totales.
+No sumar métodos sobre igual cobertura ni usar madurez como multiplicador.
+COCOMO solo si se habilitó: variante, tamaño, calibración y conversión. -->

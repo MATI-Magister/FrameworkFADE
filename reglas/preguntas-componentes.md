@@ -4,6 +4,24 @@ Regla solicitada por el usuario: cada pregunta y cada pendiente tiene su código
 para responderlos o resolverlos individualmente. Aplica desde A2 y continúa en
 A3 y cierre; no altera los IDs de criterios del modelo de madurez A1.
 
+## Filtro para cotización
+
+Aplicar también a las preguntas de A1. Antes de preguntar, consultar los insumos
+y respuestas vigentes. Presentar al cliente solo decisiones cuyo resultado pueda
+cambiar materialmente el alcance, el esfuerzo o el precio. Indicar qué cambiaría.
+Para una integración, partir de su propósito, si se adapta o se construye el
+conector, quién controla el otro sistema y restricciones que cambien el trabajo.
+Los campos de entrada, formatos exactos, ejemplos de mensajes y contratos API se
+registran como pendientes de diseño. Si alguna restricción contractual es material,
+preguntar por su efecto o por la decisión de alcance al nivel de cotización.
+
+Si el cliente todavía no sabe un dato material, proponer un escenario con cantidad,
+límite y condición de recotización. Registrar fuente y mantener el supuesto como
+tal. El cierre solo se bloquea cuando la brecha impide definir un escenario viable
+y razonablemente acotado. Conservar los códigos de los pendientes diferidos. Si A1
+necesita evidencia para un criterio, registrar la brecha aunque la pregunta se
+difiera. Tras el filtro, incluir todas las preguntas necesarias sin tope por ronda.
+
 ## Identificación estable
 
 - `C-001-PRE-001`: primera pregunta del componente C-001.

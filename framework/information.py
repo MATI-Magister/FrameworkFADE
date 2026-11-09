@@ -84,28 +84,28 @@ def calculate(model, scores, applicability=None):
             'excluded_dimensions': [d['id'] for d in dims if not d['included']]}
 
 
-def render_report(project, result, model, digest, limit=10):
+def render_report(project, result, model, digest):
     lines = [f'# Información disponible · {project}', '',
              f'**Resultado: {result["overall"]:.1%} · {result["level"]}.**', '',
              'Mide la información para estimar; el experto decide si completar o autorizar componentes.',
-             'El nivel no aprueba etapas ni determina esfuerzo.', '',
-             '| Dimensión | Información | Aplicación |', '| --- | --- | --- |']
+             'El nivel no aprueba etapas ni determina esfuerzo.']
+    if result['core_cap_applied']:
+        lines += ['', 'El nivel se limita a media porque falta información esencial, aunque el porcentaje general sea alto.']
+    lines += ['', '## Preguntas para completar la información']
+    questions = result['gaps']
+    for q in questions:
+        lines += ['', f'### {q["id"]}', '', q['question']]
+    if not questions:
+        lines += ['', 'Sin preguntas de mejora identificadas en los criterios evaluados.']
+    lines += ['', 'Estas preguntas son un apoyo al agente: debe revisar responsables, contradicciones y pendientes internos.', '',
+              '## Siguiente paso', '',
+              'Revisar el resumen del requerimiento y las preguntas de A1. Puedes aportar información con '
+              '`!complementar` o autorizar componentes con `!aprove a1` cuando A1 esté esperando tu aprobación.', '',
+              '## Respaldo de la evaluación', '',
+              '| Dimensión | Información | Aplicación |', '| --- | --- | --- |']
     for d in result['dimensions']:
         lines.append(f'| {d["id"]} · {d["name"]} | {d["maturity"]:.1%} | {"Incluida" if d["included"] else "No aplica"} |')
-    lines += ['', '## Qué falta y qué preguntar', '',
-              'Prioridad: incremento posible del porcentaje general; primero se atiende el núcleo que impide nivel alto.']
-    questions = result['gaps'] if limit is None else result['gaps'][:limit]
-    for q in questions:
-        lines += ['', f'### {q["id"]}', '', q['question'], '',
-                  f'Para subir al siguiente puntaje: {q["next_descriptor"]}', '',
-                  f'Prioridad: {q["priority"]:.2f} puntos porcentuales. Responsable: por confirmar.']
-    lines += ['', '## Brechas que conserva la evaluación', '',
-              'Las restantes brechas están en el resultado técnico de esta ronda. Las contradicciones abiertas '
-              'y las preguntas internas se registran aparte; el límite del cliente no las elimina.', '',
-              '## Criterios y trazabilidad', '',
-              'Baja: <40 %. Media: 40–<67 %. Alta: ≥67 %. Un núcleo por debajo de 40 % limita alta a media. '
-              'Las complementarias sin información cuentan como cero; solo se excluyen si no aplican y se justifica.', '',
-              'D9 y D11 se consideran en experiencia, fuera de este porcentaje. Sin equivalencia automática N3/N4.', '',
-              f'Modelo: {model["version"]}. Fuente: {model["source"]["reference"]}. Huella: {digest}.', '',
-              'Las citas y su fidelidad deben revisarse contra los originales; el chequeo de estructura no certifica su contenido.']
+    lines += ['', '[Criterios, citas y brechas completas](madurez-resultado.json). '
+              'El agente conserva la explicación verificable en respaldo-a1.md.', '',
+              f'Modelo: {model["version"]}. Fuente: {model["source"]["reference"]}. Huella: {digest}.']
     return '\n'.join(lines) + '\n'

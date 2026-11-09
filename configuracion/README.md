@@ -7,13 +7,13 @@ está reservado y excluido de Git para evitar su exposición accidental.
 
 | Sección | Uso real |
 | --- | --- |
-| operation | Proyecto predeterminado, puerto y preguntas por ronda; sin conteo ni límite de sesiones |
+| operation | Proyecto predeterminado, puerto; sin conteo ni límite de sesiones |
 | estimation | Unidad, moneda, tarifas, costo horario, capacidad, margen y escenarios |
-| estimation.process_method | Horas/arquetipo, factores, gestión, bandas y umbrales: todos pendientes |
+| estimation.process_method | Tabla técnica, factores, gestión y bandas iniciales cargados; calibración y umbrales opcionales pendientes |
 | policies | Tratamiento actual de desconocidos y aprobación; cambios requieren adaptar las reglas |
 | catalogs | Ubicaciones de activos, tecnologías e historia, mantenidos solo localmente |
 | roles_file | Mapa de roles, skills y responsables humanos; sin dependencia de proveedor |
-| source_candidates | Archivo original ilustrativo; se consulta, nunca se carga como defaults |
+| source_candidates | Fuente original conservada; la ruta unificada habilita expresamente su tabla técnica, no sus cifras comerciales |
 
 Consulta: python scripts/framework.py config
 
@@ -54,3 +54,34 @@ R1 [0,10), R2 [10,30), R3 [30,50], R4 (50,100]. El motor comprueba ausencia de
 huecos/superposición y coherencia con la clase del componente. Las bandas entran
 en la huella de reglas A4; cambiarlas requiere otra revisión y aprobación. Estos
 umbrales no asignan automáticamente factores de ahorro ni porcentajes desconocidos.
+
+## Ruta unificada y parámetros del expediente
+
+Desde el 8 de noviembre de 2026 process_method contiene la tabla técnica cargada
+y sus factores/bandas, habilitados como referencia inicial por el usuario.
+status=draft y calibration_status=initial_reference_not_calibrated distinguen
+su uso inicial de una validación productiva. No se importan cifras económicas
+ni capacidades ilustrativas. unified_route define la selección común de métodos.
+Los párrafos anteriores sobre no adoptar ejemplos no excluyen esta decisión explícita.
+
+Antes de pedir información, consultar estimation-route con --project y leer las
+fuentes vigentes. La consolidación de valores del propio proyecto se guarda en
+01-entradas/respuestas/parametros-estimacion.json con dos objetos: estimation y
+sources. estimation admite currency, cost_per_hour, costing_mode, rates, team y
+cfo_parameters. sources requiere una referencia identificable por cada campo
+aportado. Los valores se validan igual que los globales y entran en la huella
+y snapshot del expediente. No permite cambiar la ruta ni aprobarla por un override.
+Una fuente de chat del experto se conserva como tal, sin atribuirla al cliente.
+
+No sustituir parámetros del proyecto al editar configuracion/framework.json:
+eso afectaría a todos. No pedir valores nuevamente porque aún no estén consolidados.
+Ejemplo mínimo de forma (cifras ilustrativas; no copiar a un proyecto):
+
+```json
+{
+  "estimation": {"currency": "COP", "cost_per_hour": 100000},
+  "sources": {"currency": "respuestas-componentes.md, R-001", "cost_per_hour": "respuestas-componentes.md, R-002"}
+}
+```
+
+Detalles y contrato de partidas: reglas/ruta-unificada-estimacion.md.

@@ -1,13 +1,13 @@
-# <Etapa> · <Proyecto>
+# <Paso> · <Proyecto>
 
-## Entradas y fuentes
-Identificador, ruta y versión de cada fuente utilizada.
+<Resultado concreto del paso en dos o tres frases.>
 
-## Resultado
-Contenido del análisis; separar hechos, propuestas y supuestos.
+## Qué debes revisar
 
-## Pendientes y decisiones
-Preguntas abiertas, responsable y efecto sobre la siguiente etapa.
+<Solo hallazgos o decisiones que necesitan atención. Omitir si no hay.>
 
-## Revisión
-Validaciones realizadas y aprobación humana pendiente cuando corresponda.
+## Tu siguiente paso
+
+<Acción y comando según estado real, o dato necesario si está bloqueado.>
+
+Respaldo: <enlace al detalle y las fuentes en 02-trabajo/>.

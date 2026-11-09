@@ -13,7 +13,8 @@ Usar el modelo activo indicado por reglas/estimacion.json, no elegirlo por memor
 Desde 2026-11-02 es B.1 (9 dimensiones, 20 criterios, baja/media/alta). Las fuentes
 del Excel se conservan para clasificación e historia, no para evaluar A1 nuevo.
 
-No adoptar valores ilustrativos de referencias/. Leer datos-locales/ solo cuando
+No adoptar valores ilustrativos de referencias/ fuera de la tabla técnica habilitada
+por reglas/ruta-unificada-estimacion.md. Leer datos-locales/ solo cuando
 el rol necesita activos, tecnologías o historia. Los casos de insumos-locales/ no
 son datos de un cliente ni calibración y no se usan en una estimación real.
 
@@ -30,3 +31,15 @@ Cada PRE/PEN conserva código estable. El código se muestra como etiqueta separ
 de la pregunta para que la persona responda individualmente. Hechos, propuestas,
 supuestos y desconocidos siempre se distinguen. Publicar o enviar no forma parte
 de aprobar un informe. Actualizar el tablero tras cada operación del motor.
+
+La presentación de todos los resultados sigue `reglas/presentacion-resultados.md`.
+Las plantillas actuales separan informe breve y respaldo verificable; esta pauta
+prevalece sobre ejemplos anteriores extensos. No altera aprobaciones ni evidencia.
+
+## Ruta unificada vigente · 8 de noviembre de 2026
+
+Leer `reglas/ruta-unificada-estimacion.md` antes de proponer método o pedir
+productividad. Tabla cargada primero; actividades O/M/P para trabajo sin cobertura
+suficiente. Recuperar respuestas y parámetros locales antes de preguntar. Esta
+ruta prevalece sobre instrucciones anteriores que exigían otra fuente para preparar
+una propuesta; conserva aprobaciones y salidas aceptadas.

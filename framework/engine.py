@@ -68,7 +68,7 @@ class Workflow:
         if rules.get('configuration_file'):
             if rules['configuration_file'] != 'configuracion/framework.json':
                 raise ValueError('Archivo de configuración no soportado.')
-            rules = apply_configuration(self.root, rules)
+            rules = apply_configuration(self.root, rules, self.project)
             data = json.dumps(rules, ensure_ascii=False, sort_keys=True, indent=2).encode('utf-8')
         model_file = (rules.get('maturity') or {}).get('model_file')
         if model_file:
@@ -100,7 +100,7 @@ class Workflow:
             if process['status'] != 'approved' or any(process[k] is None for k in
                     ('hours_per_process', 'complexity_factors', 'environment_factors', 'reuse_factors',
                      'management_fraction', 'range_bands')):
-                raise ValueError('Horas por proceso: faltan parámetros calibrados y aprobación del método.')
+                raise ValueError('Falta aprobar el paquete de parámetros para A4. La tabla ya cargada y la ruta por actividades permiten preparar una propuesta; consultar estimation-route, sin pedir nuevamente productividad.')
             estimation = parameters['estimation']
             if estimation.get('costing_mode') is None or not estimation['team']:
                 raise ValueError('Falta elegir el costeo y definir la capacidad del equipo.')

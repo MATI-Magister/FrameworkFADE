@@ -35,7 +35,7 @@ def main():
                 raise ValueError('Snapshot o reglas cambiados; requiere reintentar y aprobar de nuevo.')
             config = json.loads(raw)['configuration_parameters']
         else:
-            config = load_config(ROOT)
+            config = load_config(ROOT, args.project)
             digest = flow.rules()[1]
         source = args.input.resolve()
         if not source.is_relative_to(flow.base.resolve()):
@@ -50,8 +50,13 @@ def main():
         folder.mkdir(parents=True, exist_ok=False)
         (folder / 'resultado.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
         (folder / 'informe.md').write_text(render_project(result, digest, experimental=not args.approved), encoding='utf-8')
+        files = [source, folder / 'resultado.json', folder / 'informe.md']
+        if result.get('coverage'):
+            from framework.unified_estimation import render_coverage
+            (folder / 'cobertura.md').write_text(render_coverage(result), encoding='utf-8')
+            files.append(folder / 'cobertura.md')
         if args.approved:
-            flow.record_calculation([source, folder / 'resultado.json', folder / 'informe.md'], digest)
+            flow.record_calculation(files, digest)
         print(folder / 'informe.md')
         return 0
     except (OSError, ValueError, KeyError, TypeError) as error:

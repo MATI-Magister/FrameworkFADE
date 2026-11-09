@@ -32,3 +32,9 @@ components con id/hours; cambios es una lista de id/component/hours/source/appro
 El script detecta faltantes, registros sin correspondencia y bases inválidas; no
 finaliza la estimación ni confirma causas, activos o reutilización automáticamente.
 Completa el informe con el criterio y las evidencias que exige este rol.
+
+## Presentación del resultado
+
+Aplicar `reglas/presentacion-resultados.md`: informe breve centrado en este paso,
+pendientes materiales y siguiente acción. Conservar el detalle verificable en
+`02-trabajo/` y enlazarlo; no pegarlo completo en el informe ni en el chat.

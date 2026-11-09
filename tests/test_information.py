@@ -95,8 +95,8 @@ class InformationTests(unittest.TestCase):
         entries['D6.1']['evidence_items'] = [self.fact('equipo', 'notas_internas')]
         self.assertEqual(validate_evidence(MODEL, entries)['D6.1'], 3)
 
-    def test_question_limit_does_not_drop_full_gap_register(self):
+    def test_report_includes_all_twenty_questions(self):
         result = calculate(MODEL, {})
-        report = render_report('prueba', result, MODEL, 'hash', limit=5)
-        self.assertEqual(report.count('### D'), 5)
+        report = render_report('prueba', result, MODEL, 'hash')
+        self.assertEqual(report.count('### D'), 20)
         self.assertEqual(len(result['gaps']), 20)

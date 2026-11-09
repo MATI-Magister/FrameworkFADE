@@ -1,10 +1,9 @@
 {
   "schema_version": 1,
-  "version": "1.5-borrador",
+  "version": "1.6-ruta-unificada",
   "operation": {
     "default_project": "piloto",
-    "portal_port": 8765,
-    "max_client_questions": 10
+    "portal_port": 8765
   },
   "estimation": {
     "method": "horas_por_proceso_en_evaluacion",
@@ -35,26 +34,71 @@
     ],
     "process_method": {
       "status": "draft",
-      "hours_per_process": null,
-      "complexity_factors": null,
-      "environment_factors": null,
-      "reuse_factors": null,
-      "management_fraction": null,
-      "range_bands": null,
+      "hours_per_process": {
+        "aplicaciones": 40,
+        "integracion": 60,
+        "datos_ia": 70,
+        "plataforma": 50,
+        "seguridad": 60,
+        "modernizacion": 50
+      },
+      "complexity_factors": {
+        "baja": 0.85,
+        "media": 1.0,
+        "alta": 1.2,
+        "muy_alta": 1.4
+      },
+      "environment_factors": {
+        "T1": 1.0,
+        "T2": 1.1,
+        "T3": 1.25,
+        "T4": 1.5
+      },
+      "reuse_factors": {
+        "R1": 1.0,
+        "R2": 0.9,
+        "R3": 0.75,
+        "R4": 0.6
+      },
+      "management_fraction": 0.15,
+      "range_bands": {
+        "alta": {
+          "optimistic": -0.1,
+          "conservative": 0.15
+        },
+        "media": {
+          "optimistic": -0.2,
+          "conservative": 0.35
+        },
+        "baja": {
+          "optimistic": -0.3,
+          "conservative": 0.6
+        }
+      },
       "secondary_archetype_threshold": null,
       "near_tie_margin": null,
       "deviation_threshold": null,
       "recalibration_project_count": null,
-      "first_block_hours": null
+      "first_block_hours": null,
+      "source": "referencias/onedrive-2026-11-02/calculo/valores_metodo.json",
+      "source_sha256": "98a555dadd687da62440b96d34659f279c7365bd7071d0fecdc67c507f29ebf8",
+      "calibration_status": "initial_reference_not_calibrated"
     },
     "cocomo": {
       "status": "alternative_not_selected",
       "variant": null,
       "calibration_source": null
     },
-    "version": "0.4-borrador",
+    "version": "0.5-ruta-unificada",
     "source": "Decisiones del usuario 2026-11-02; reglas/revision.md; valores reales pendientes",
-    "costing_mode": "costo_unico"
+    "costing_mode": "costo_unico",
+    "unified_route": {
+      "version": 1,
+      "primary": "process_table",
+      "fallback": "activities_omp",
+      "repeat_known_questions": false,
+      "source": "Decisión del usuario 2026-11-08: implementar ruta unificada para todos los proyectos usando tabla cargada y actividades para faltantes."
+    }
   },
   "policies": {
     "missing_complexity": "por_confirmar",

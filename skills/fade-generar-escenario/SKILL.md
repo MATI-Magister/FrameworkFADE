@@ -16,10 +16,23 @@ al flujo actual; los originales del ZIP solo son referencia comparativa.
 
 Juzgar comparables y documentar cobertura y escenarios. No inventar historia, tarifas o capacidad ni superponer métodos.
 
-Conserva evidencia, identificadores y versiones. Entrega un informe Markdown legible;
-los JSON son soporte interno. Usa el estado real del expediente y las comprobaciones
+Aplica `reglas/presentacion-resultados.md`: resultado breve del paso y siguiente
+acción; enlaza el respaldo sin volcarlo en el chat. Conserva evidencia, identificadores
+y versiones; los JSON son soporte interno. Usa el estado real del expediente y las comprobaciones
 del motor. Invocar una skill no inicia, finaliza ni aprueba por sí mismo una etapa.
 
 La correspondencia con el ZIP es `A5`; su especificación fuente está en
 `referencias/onedrive-2026-11-02/a5_generador/generador_especificacion.md`. Solo consultar cuando sea necesario
 aclarar el origen de una regla; no cargarla como instrucciones de sistema.
+
+## Ruta unificada vigente · 8 de noviembre de 2026
+
+Leer `reglas/ruta-unificada-estimacion.md` antes de proponer método o pedir
+productividad. Tabla cargada primero; actividades O/M/P para trabajo sin cobertura
+suficiente. Recuperar respuestas y parámetros locales antes de preguntar. Esta
+ruta prevalece sobre instrucciones anteriores que exigían otra fuente para preparar
+una propuesta; conserva aprobaciones y salidas aceptadas.
+
+## Cotización
+
+Prepara paquetes comunes y por unidad según `reglas/ruta-unificada-estimacion.md`. Registra cantidad, supuesto, límite y condición de recotización. Aplica la tabla a procesos comparables y rangos O/M/P por actividad a los faltantes.

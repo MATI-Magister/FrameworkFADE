@@ -2,6 +2,7 @@
 import copy
 import json
 import math
+import re
 from pathlib import Path
 
 
@@ -13,22 +14,33 @@ def inside(root, relative):
     return path
 
 
-def load_config(root):
+def load_config(root, project=None):
     data = json.loads(inside(root, 'configuracion/framework.json').read_text(encoding='utf-8'))
+    if project is not None:
+        if not re.fullmatch(r'[a-z0-9][a-z0-9_-]{0,63}', project):
+            raise ValueError('Proyecto inválido para parámetros locales.')
+        local = inside(root, f'proyectos/{project}/01-entradas/respuestas/parametros-estimacion.json')
+        if local.exists():
+            overlay = json.loads(local.read_text(encoding='utf-8'))
+            allowed = {'currency', 'cost_per_hour', 'costing_mode', 'rates', 'team', 'cfo_parameters'}
+            if set(overlay) != {'estimation', 'sources'} or not isinstance(overlay['estimation'], dict) or not overlay['estimation'].keys() <= allowed:
+                raise ValueError('Parámetros locales: solo moneda, costo, equipo y fuentes; no cambian el método compartido.')
+            if not isinstance(overlay['sources'], dict) or any(not isinstance(overlay['sources'].get(k), str) or not overlay['sources'][k].strip() for k in overlay['estimation']):
+                raise ValueError('Cada parámetro local requiere una fuente identificable.')
+            data['estimation'].update(overlay['estimation'])
+            data['estimation']['project_sources'] = overlay['sources']
     if data.get('schema_version') != 1:
         raise ValueError('Versión de configuración desconocida.')
     operation = data['operation']
     from framework.classification import validate_reuse_bands
     validate_reuse_bands(data['classification']['reuse']['bands'])
-    if set(operation) != {'default_project', 'portal_port', 'max_client_questions'}:
+    # Older installations may still carry the retired question cap.
+    operation.pop('max_client_questions', None)
+    if set(operation) != {'default_project', 'portal_port'}:
         raise ValueError('Parámetros de operación desconocidos; no se administran cantidades de sesiones.')
     port = operation['portal_port']
     if type(port) is not int or not 1024 <= port <= 65535:
         raise ValueError('Puerto inválido: usa un entero entre 1024 y 65535.')
-    for key in ('max_client_questions',):
-        value = operation[key]
-        if value is not None and (type(value) is not int or value < 0):
-            raise ValueError(f'{key}: entero no negativo o null.')
     if not isinstance(operation['default_project'], str):
         raise ValueError('Proyecto predeterminado inválido.')
     policies = data['policies']
@@ -67,6 +79,12 @@ def load_config(root):
     if e['target_margin'] is not None and e['minimum_margin'] is not None and e['minimum_margin'] > e['target_margin']:
         raise ValueError('El margen mínimo supera el objetivo.')
     p = e['process_method']
+    route = e.get('unified_route')
+    if route is not None:
+        if (route.get('version') != 1 or route.get('primary') != 'process_table'
+                or route.get('fallback') != 'activities_omp' or route.get('repeat_known_questions') is not False
+                or not isinstance(route.get('source'), str) or not route['source'].strip()):
+            raise ValueError('Ruta unificada inválida.')
     if p['status'] not in ('draft', 'approved'):
         raise ValueError('Estado del método inválido.')
     archetypes = {'aplicaciones', 'integracion', 'datos_ia', 'plataforma', 'seguridad', 'modernizacion'}
@@ -116,9 +134,9 @@ def number(value, name, minimum=None, maximum=None, strict=False, upper_strict=F
         raise ValueError(f'{name}: por encima del límite permitido.')
 
 
-def apply_configuration(root, rules):
+def apply_configuration(root, rules, project=None):
     """Only business parameters enter the approval hash; UI settings do not."""
-    config = load_config(root)
+    config = load_config(root, project)
     result = copy.deepcopy(rules)
     e = config['estimation']
     for key in ('effort_unit', 'currency', 'rates', 'cfo_parameters', 'scenarios'):

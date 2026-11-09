@@ -16,8 +16,9 @@ al flujo actual; los originales del ZIP solo son referencia comparativa.
 
 Extraer datos con citas, autores y contradicciones. No calificar madurez, resolver conflictos ni ampliar alcance.
 
-Conserva evidencia, identificadores y versiones. Entrega un informe Markdown legible;
-los JSON son soporte interno. Usa el estado real del expediente y las comprobaciones
+Aplica `reglas/presentacion-resultados.md`: resultado breve del paso y siguiente
+acción; enlaza el respaldo sin volcarlo en el chat. Conserva evidencia, identificadores
+y versiones; los JSON son soporte interno. Usa el estado real del expediente y las comprobaciones
 del motor. Invocar una skill no inicia, finaliza ni aprueba por sí mismo una etapa.
 
 La correspondencia con el ZIP es `A1`; su especificación fuente está en

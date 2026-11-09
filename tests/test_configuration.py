@@ -27,12 +27,13 @@ class ConfigurationTests(unittest.TestCase):
         fn(data)
         self.path.write_text(json.dumps(data), encoding='utf-8')
 
-    def test_no_illustrative_business_defaults(self):
+    def test_authorized_table_does_not_import_financial_examples(self):
         data = load_config(self.root)
         self.assertIsNone(data['estimation']['cost_per_hour'])
         self.assertIsNone(data['estimation']['target_margin'])
-        self.assertIsNone(data['estimation']['process_method']['hours_per_process'])
-        self.assertEqual(data['operation']['max_client_questions'], 10)
+        self.assertEqual(data['estimation']['process_method']['hours_per_process']['aplicaciones'], 40)
+        self.assertEqual(data['estimation']['process_method']['status'], 'draft')
+        self.assertNotIn('max_client_questions', data['operation'])
 
     def test_business_change_changes_hash_ui_change_does_not(self):
         flow = Workflow(self.root)

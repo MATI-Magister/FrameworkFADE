@@ -101,6 +101,22 @@ class IntegratedTests(unittest.TestCase):
         self.assertFalse((self.root / 'proyectos/piloto').exists())
         self.assertEqual(len(list((self.root / 'installed-skills').glob('*/SKILL.md'))), 11)
 
+    def test_unified_calculation_uses_approved_snapshot_and_freezes_coverage(self):
+        self.begin_a4()
+        self.data = json.loads((self.root / 'ejemplos/ruta-unificada/entrada.json').read_text(encoding='utf-8'))
+        self.data['management_role_split'] = {'Gestion': 1}
+        folder = self.run_calculation()
+        result = json.loads((folder / 'resultado.json').read_text(encoding='utf-8'))
+        self.assertEqual(result['method'], 'unified_processes_activities')
+        self.assertAlmostEqual(result['scenarios'][0]['hours'], 19)
+        self.assertAlmostEqual(result['scenarios'][0]['cost'], 1920)
+        self.assertAlmostEqual(result['scenarios'][1]['hours'], 25.2)
+        self.assertTrue((folder / 'cobertura.md').exists())
+        (self.flow.base / '03-entregables/a4.md').write_text('Resultado sintético con cobertura revisada', encoding='utf-8')
+        self.flow.finish('a4')
+        (folder / 'cobertura.md').write_text('Cambio posterior', encoding='utf-8')
+        with self.assertRaises(ValueError): self.flow.check_calculation(self.flow.read())
+
     def test_demo_is_reproducible_without_mutating_configuration_or_project(self):
         before_config = self.config_path.read_bytes()
         before_state = self.flow.path.read_bytes()

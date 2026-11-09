@@ -131,3 +131,22 @@ Se completa la verificación de instalación limpia, skills y flujo numérico,
 protección de entregables aceptados y demostración reproducible. Los parámetros
 reales y la calibración se mantienen por confirmar, sin bloquear el desarrollo
 ni convertir la orden de terminar en aprobación de reglas o del piloto.
+
+
+## 8 de noviembre de 2026 · ruta unificada para todos los proyectos
+
+Instrucción literal: «Listo, implementa esa ruta unificada para todos los proyectos, usando la tabla que cargué y el método por actividades para los faltantes, sin volver a pedirme información que ya tenemos».
+
+Se activa el uso de la tabla y parámetros técnicos del archivo cargado como referencia inicial, con fuente y huella; no se importan sus valores económicos ni de equipo. Trabajo sin cobertura suficiente usa actividades O/M/P propuestas con fundamento. Se consultan primero las fuentes vigentes del expediente y se consolidan parámetros locales sin copiar datos de otros proyectos. Esta decisión no es calibración ni aprobación automática de rangos, reglas completas o etapas. No se recalculan salidas aceptadas. Detalle operativo: reglas/ruta-unificada-estimacion.md.
+
+
+## 9 de noviembre de 2026 · cotización por paquetes
+
+Decisión del usuario. «Listo, implementa los tres primeros cambios para todos los proyectos: filtra las preguntas de cotización, usa supuestos con límites claros y estima por paquetes usando la tabla cargada y actividades para los faltantes.»
+
+El filtro se aplica antes de presentar preguntas. Las partidas de cotización registran cantidad, supuesto, límite y condición de recotización. El cálculo distingue trabajo común de trabajo por unidad.
+
+
+### Preguntas de cotización sin tope
+
+El usuario pidió «eliminemola y que genere las preguntas que considere necesarias». Esta decisión sustituye el límite anterior de diez. Aplicar el filtro de cotización y conservar la priorización.

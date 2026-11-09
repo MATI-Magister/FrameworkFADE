@@ -13,3 +13,9 @@ el cliente sí recibe cifras revisadas en el mismo informe Markdown.
 Guardar cliente.md como parte del paquete de revisión, antes de finish revision.
 Conservar códigos internos en anexos de trazabilidad, sin recargar la descripción
 de negocio. Revisar que cada total coincida con A4. No enviar ni publicar.
+
+## Presentación del resultado
+
+Aplicar `reglas/presentacion-resultados.md`: informe breve centrado en este paso,
+pendientes materiales y siguiente acción. Conservar el detalle verificable en
+`02-trabajo/` y enlazarlo; no pegarlo completo en el informe ni en el chat.
